@@ -38,6 +38,8 @@
 }
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 html,body { height:100%; background:var(--bg); color:var(--text); font-family:'Noto Sans KR',sans-serif; overflow:hidden; }
+* { touch-action:manipulation; }
+[style*="overflow-y:scroll"] { touch-action:pan-y !important; }
 
 .hd {
   position:fixed; top:0; left:0; right:0; height:var(--HEAD);
@@ -509,6 +511,7 @@ async function fetchRate() {
 function switchTab(i) {
   document.querySelectorAll('.screen').forEach((s,j) => s.classList.toggle('active', i===j));
   document.querySelectorAll('.tab').forEach((t,j) => t.classList.toggle('active', i===j));
+  history.pushState({tab:i}, '');
 }
 
 function pk(k) {
@@ -542,7 +545,12 @@ function swapCurrency() {
   document.getElementById('to-amt').className = 'fx-amount '+(fromCNY?'krw':'cny');
   cur='0'; updateFX();
 }
-function fmt(n) { if(!n)return'0'; return Math.round(n).toLocaleString('ko-KR'); }
+function fmt(n) {
+  if(!n) return '0';
+  if(n < 10) return parseFloat(n.toFixed(2)).toString(); // 소수점 표시
+  if(n < 100) return parseFloat(n.toFixed(1)).toString();
+  return Math.round(n).toLocaleString('ko-KR');
+}
 
 function openShowMode() {
   const v = parseFloat(cur)||0;
@@ -661,6 +669,32 @@ const mb = new Blob([JSON.stringify({name:"中韩 여행 도우미",short_name:"
 document.getElementById('manifest-link').href = URL.createObjectURL(mb);
 
 fetchRate();
+
+// 뒤로가기 처리 - 탭 전환용 히스토리
+history.pushState({tab:0}, '');
+window.addEventListener('popstate', function(e) {
+  const activeTab = document.querySelector('.tab.active');
+  const tabs = document.querySelectorAll('.tab');
+  const activeIdx = Array.from(tabs).indexOf(activeTab);
+  if (activeIdx > 0) {
+    // 다른 탭이면 환율탭으로
+    switchTab(0);
+    history.pushState({tab:0}, '');
+  } else {
+    // 오버레이가 열려있으면 닫기
+    const overlays = ['show-ov','ci-ov','num-ov','phr-ov','interstitial-ov','install-guide-ov'];
+    let closed = false;
+    overlays.forEach(id => {
+      const el = document.getElementById(id);
+      if(el && (el.classList.contains('active') || el.style.display === 'flex')) {
+        el.classList.remove('active');
+        el.style.display = 'none';
+        closed = true;
+      }
+    });
+    if(closed) history.pushState({tab:0}, '');
+  }
+});
 </script>
 </body>
 </html>
