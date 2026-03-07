@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#07070f">
+<link rel="manifest" id="manifest-link">
+<!-- 썸네일 / SNS 공유 메타태그 -->
+<meta property="og:title" content="중국 여행 필수 앱 - 환율계산기 + 필수 문장">
+<meta property="og:description" content="위안↔원 실시간 환율계산, 중국어 필수 문장, 홈화면에 앱으로 추가 가능!">
+<meta property="og:image" content="https://blogger.googleusercontent.com/img/a/AVvXsEiD1_MeBCHfy_6VNQCVUyoqwJjBMiG2L9D1swVE2bk5-OJNHKQEYgBC2iKOjVx-pRVL2tF4J0M3DJJWvhKV-8xMf3JJM1zN8PMuxWELw-0_XCiKmYKGWLZkiDny7GOJ_NONBja1QV9zFmB5UxwN4VI5K5Q5WghaM1qAR6L5RbGjuT3p0jpsy-jDRdprBhZx">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="중국 여행 필수 앱 - 환율계산기 + 필수 문장">
+<meta name="twitter:image" content="https://blogger.googleusercontent.com/img/a/AVvXsEiD1_MeBCHfy_6VNQCVUyoqwJjBMiG2L9D1swVE2bk5-OJNHKQEYgBC2iKOjVx-pRVL2tF4J0M3DJJWvhKV-8xMf3JJM1zN8PMuxWELw-0_XCiKmYKGWLZkiDny7GOJ_NONBja1QV9zFmB5UxwN4VI5K5Q5WghaM1qAR6L5RbGjuT3p0jpsy-jDRdprBhZx">
+<title>中韩 환율</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1790215424507586" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #07070f;
+  --card: #111120;
+  --card2: #181828;
+  --border: rgba(255,255,255,0.07);
+  --red: #FF2442;
+  --red-g: rgba(255,36,66,0.2);
+  --gold: #FFB800;
+  --gold-g: rgba(255,184,0,0.15);
+  --text: #f0f0f8;
+  --muted: #5a5a78;
+  --TAB: 68px;
+  --HEAD: 56px;
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html,body { height:100%; background:var(--bg); color:var(--text); font-family:'Noto Sans KR',sans-serif; overflow:hidden; }
+
+.hd {
+  position:fixed; top:0; left:0; right:0; height:var(--HEAD);
+  background:rgba(7,7,15,0.97); backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 18px; z-index:100;
+}
+.hd-logo { font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:3px; background:linear-gradient(135deg,var(--red),var(--gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.rate-pill { display:flex; align-items:center; gap:7px; background:var(--card); border:1px solid var(--border); border-radius:20px; padding:5px 12px; cursor:pointer; }
+.rate-dot { width:6px; height:6px; background:var(--red); border-radius:50%; animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.rate-val { font-family:'DM Mono',monospace; font-size:14px; color:var(--gold); }
+.rate-lbl { font-size:13px; color:var(--muted); }
+
+.main { position:fixed; top:var(--HEAD); left:0; right:0; bottom:var(--TAB); overflow:hidden; }
+
+.screen { display:none; height:100%; animation:fadeUp 0.25s ease; }
+.screen.active { display:flex; flex-direction:column; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+
+.fx-wrap { flex:1; overflow-y:auto; padding:16px; -webkit-overflow-scrolling:touch; }
+
+.fx-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:22px; padding:22px 20px; margin-bottom:12px;
+  position:relative; overflow:hidden;
+}
+.fx-card::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent); }
+.fx-row { display:flex; align-items:center; gap:16px; }
+.fx-flag { font-size:44px; flex-shrink:0; }
+.fx-info { flex:1; min-width:0; }
+.fx-name { font-size:13px; color:var(--muted); letter-spacing:1px; margin-bottom:4px; }
+.fx-amount { font-family:'Bebas Neue',sans-serif; font-size:64px; line-height:1; letter-spacing:2px; transition:all 0.2s; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.fx-amount.cny { color:var(--red); text-shadow:0 0 30px var(--red-g); }
+.fx-amount.krw { color:var(--gold); text-shadow:0 0 30px var(--gold-g); }
+
+.swap-btn { width:48px; height:48px; background:linear-gradient(135deg,var(--red),#b0102a); border:none; border-radius:50%; font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; box-shadow:0 4px 18px var(--red-g); transition:transform 0.3s; }
+.swap-btn:active { transform:rotate(180deg) scale(0.9); }
+
+.show-btn { width:100%; height:54px; background:linear-gradient(135deg,var(--red),#b0102a); border:none; border-radius:16px; color:white; font-size:16px; font-weight:700; letter-spacing:1px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:12px; box-shadow:0 4px 20px var(--red-g); }
+.show-btn:active { transform:scale(0.97); }
+
+.action-row { display:flex; gap:10px; margin-bottom:12px; }
+.chinese-btn { flex:1; height:64px; background:linear-gradient(135deg,#1e1e30,#252538); border:1px solid rgba(255,36,66,0.3); border-radius:16px; color:white; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:12px; }
+.chinese-btn:active { transform:scale(0.96); }
+.chinese-btn .zh { font-family:'Noto Sans SC',sans-serif; font-size:24px; font-weight:700; color:var(--red); }
+.chinese-btn .ko { font-size:14px; color:rgba(255,255,255,0.7); }
+.alipay-btn { width:72px; height:64px; flex-shrink:0; background:linear-gradient(135deg,#1677FF,#0e50c0); border-radius:16px; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(22,119,255,0.25); line-height:1.2; }
+.alipay-btn:active { transform:scale(0.95); }
+.alipay-btn span { font-size:20px; font-weight:800; color:white; display:block; }
+
+.rate-info { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+.rate-info-txt { font-family:'DM Mono',monospace; font-size:13px; color:var(--muted); }
+.refresh-btn { background:rgba(255,184,0,0.1); border:1px solid rgba(255,184,0,0.25); border-radius:10px; padding:7px 12px; color:var(--gold); font-size:12px; cursor:pointer; }
+
+.keypad { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; }
+.key { background:var(--card2); border:1px solid var(--border); border-radius:15px; height:62px; font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--text); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.1s; }
+.key:active { transform:scale(0.93); background:var(--card); }
+.key.dot { color:var(--gold); background:rgba(255,184,0,0.07); border-color:rgba(255,184,0,0.2); }
+.key.del { color:var(--red); }
+.key.clear { font-family:'Noto Sans KR',sans-serif; font-size:14px; font-weight:700; color:var(--red); background:rgba(255,36,66,0.07); border-color:rgba(255,36,66,0.2); grid-column:span 3; height:50px; }
+
+.phrase-wrap { flex:1; overflow-y:auto; padding:16px; -webkit-overflow-scrolling:touch; }
+.phrase-section { font-size:12px; font-weight:700; letter-spacing:2px; color:var(--red); text-transform:uppercase; margin:18px 0 10px; }
+.phrase-section:first-child { margin-top:0; }
+.phrase-card { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:16px 18px; margin-bottom:10px; cursor:pointer; position:relative; overflow:hidden; transition:all 0.15s; }
+.phrase-card:active { transform:scale(0.97); border-color:rgba(255,36,66,0.4); }
+.p-zh { font-family:'Noto Sans SC',sans-serif; font-size:26px; font-weight:700; margin-bottom:4px; }
+.p-pin { font-size:13px; color:var(--gold); font-style:italic; margin-bottom:3px; }
+.p-ko { font-size:14px; color:var(--muted); }
+.p-hint { position:absolute; right:14px; bottom:12px; font-size:10px; color:rgba(255,184,0,0.4); letter-spacing:1px; }
+
+.overlay { display:none; position:fixed; inset:0; background:var(--bg); z-index:200; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:30px; animation:fadeUp 0.25s ease; }
+.overlay.active { display:flex; }
+.ov-close { position:absolute; top:20px; right:20px; width:42px; height:42px; background:var(--card); border:1px solid var(--border); border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:18px; color:var(--muted); }
+.ov-flag { font-size:70px; margin-bottom:10px; }
+.ov-label { font-size:14px; letter-spacing:3px; color:var(--muted); font-family:'DM Mono',monospace; margin-bottom:12px; }
+.ov-num { font-family:'Bebas Neue',sans-serif; font-size:130px; line-height:1; letter-spacing:4px; word-break:break-all; background:linear-gradient(135deg,var(--red),var(--gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.ov-unit { font-family:'Bebas Neue',sans-serif; font-size:36px; color:var(--muted); letter-spacing:4px; margin-top:8px; }
+.ov-sub { font-family:'DM Mono',monospace; font-size:20px; color:var(--muted); margin-top:12px; }
+
+.ci-overlay { display:none; position:fixed; inset:0; background:var(--bg); z-index:200; flex-direction:column; animation:fadeUp 0.25s ease; }
+.ci-overlay.active { display:flex; }
+.ci-top { background:rgba(255,36,66,0.07); border-bottom:1px solid rgba(255,36,66,0.15); padding:20px; text-align:center; position:relative; flex-shrink:0; }
+.ci-close { position:absolute; top:16px; right:16px; width:40px; height:40px; background:var(--card); border:1px solid var(--border); border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:18px; color:var(--muted); }
+.ci-zh { font-family:'Noto Sans SC',sans-serif; font-size:48px; font-weight:700; }
+.ci-pin { font-family:'DM Mono',monospace; font-size:14px; color:var(--gold); font-style:italic; margin-top:2px; }
+.ci-hint-txt { font-size:13px; color:var(--muted); margin-top:4px; }
+.ci-display { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:10px 24px; }
+.ci-num { font-family:'Bebas Neue',sans-serif; font-size:160px; line-height:1; color:var(--red); text-shadow:0 0 50px var(--red-g); letter-spacing:4px; word-break:break-all; min-height:160px; }
+.ci-unit { font-family:'Noto Sans SC',sans-serif; font-size:34px; color:var(--gold); margin-top:4px; }
+.ci-krw { font-family:'DM Mono',monospace; font-size:24px; color:var(--muted); margin-top:10px; }
+.ci-pad { padding:12px 16px 20px; flex-shrink:0; }
+.ci-key { background:var(--card2); border:1px solid var(--border); border-radius:16px; height:66px; font-family:'Bebas Neue',sans-serif; font-size:30px; color:var(--text); cursor:pointer; display:flex; align-items:center; justify-content:center; }
+.ci-key:active { transform:scale(0.92); }
+.ci-key.dot { color:var(--gold); background:rgba(255,184,0,0.07); border-color:rgba(255,184,0,0.2); }
+.ci-key.del { color:var(--red); }
+.ci-key.clr { font-family:'Noto Sans KR',sans-serif; font-size:14px; font-weight:700; color:var(--red); background:rgba(255,36,66,0.07); border-color:rgba(255,36,66,0.2); grid-column:span 3; height:52px; }
+
+.phr-overlay { display:none; position:fixed; inset:0; background:#000; z-index:200; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:40px; animation:fadeUp 0.25s ease; }
+.phr-overlay.active { display:flex; }
+.phr-close { position:absolute; top:20px; right:20px; width:42px; height:42px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12); border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:18px; color:rgba(255,255,255,0.5); }
+.phr-zh { font-family:'Noto Sans SC',sans-serif; font-size:72px; font-weight:700; color:white; margin-bottom:16px; }
+.phr-pin { font-family:'DM Mono',monospace; font-size:22px; color:var(--gold); font-style:italic; margin-bottom:10px; }
+.phr-ko { font-size:20px; color:rgba(255,255,255,0.5); }
+
+.tabs { position:fixed; bottom:0; left:0; right:0; height:var(--TAB); background:rgba(7,7,15,0.97); backdrop-filter:blur(20px); border-top:1px solid var(--border); display:grid; grid-template-columns:1fr 1fr; z-index:100; padding-bottom:env(safe-area-inset-bottom,0); }
+.tab { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; cursor:pointer; padding-top:6px; }
+.tab-icon { font-size:24px; filter:grayscale(1) opacity(0.35); transition:filter 0.2s; }
+.tab-lbl { font-size:11px; color:var(--muted); font-weight:500; transition:color 0.2s; }
+.tab.active .tab-icon { filter:none; }
+.tab.active .tab-lbl { color:var(--red); }
+
+.toast { position:fixed; bottom:80px; left:50%; transform:translateX(-50%) translateY(10px); background:var(--card2); border:1px solid var(--border); border-radius:12px; padding:10px 20px; font-size:13px; color:var(--muted); z-index:300; opacity:0; transition:all 0.3s; white-space:nowrap; }
+.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+::-webkit-scrollbar { width:3px; }
+::-webkit-scrollbar-thumb { background:var(--card2); border-radius:2px; }
+</style>
+</head>
+<body>
+
+<div class="hd">
+  <div class="hd-logo">中韩 TRAVEL</div>
+  <div class="rate-pill" onclick="fetchRate()">
+    <div class="rate-dot"></div>
+    <span class="rate-lbl">¥1 =</span>
+    <span class="rate-val" id="hd-rate">...</span>
+    <span class="rate-lbl">₩</span>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- 탭1: 환율 -->
+  <div class="screen active" id="s0">
+    <div class="fx-wrap">
+      <div class="fx-card">
+        <div class="fx-row">
+          <span class="fx-flag" id="from-flag">🇨🇳</span>
+          <div class="fx-info">
+            <div class="fx-name" id="from-name">중국 위안 CNY</div>
+            <div class="fx-amount cny" id="from-amt">0</div>
+          </div>
+        </div>
+        <button class="swap-btn" onclick="swapCurrency()">⇅</button>
+        <div class="fx-row">
+          <span class="fx-flag" id="to-flag">🇰🇷</span>
+          <div class="fx-info">
+            <div class="fx-name" id="to-name">대한민국 원 KRW</div>
+            <div class="fx-amount krw" id="to-amt">0</div>
+          </div>
+        </div>
+      </div>
+
+      <button class="show-btn" onclick="openShowMode()">📱 상대방에게 크게 보여주기</button>
+
+      <div class="action-row">
+        <div class="chinese-btn" onclick="openCI()">
+          <span class="zh">多少钱？</span>
+          <span class="ko">중국인 직접입력</span>
+        </div>
+        <div class="alipay-btn" onclick="openAlipay()">
+          <span>알리</span>
+          <span>페이</span>
+        </div>
+      </div>
+
+      <div onclick="openNumShow()" style="width:100%;height:54px;background:linear-gradient(135deg,#1e1e30,#252538);border:1px solid rgba(255,184,0,0.25);border-radius:16px;color:white;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px" ontouchstart="this.style.transform='scale(0.97)'" ontouchend="this.style.transform='scale(1)'">
+        <span style="font-size:20px">🔢</span>
+        <span>숫자 크게 보여주기</span>
+        <span style="font-size:12px;color:var(--muted);font-weight:400">전화번호·주소 등</span>
+      </div>
+
+      <div class="rate-info">
+        <span class="rate-info-txt" id="rate-detail">불러오는 중...</span>
+        <button class="refresh-btn" onclick="fetchRate()">새로고침</button>
+      </div>
+
+      <!-- 홈화면 추가 버튼 -->
+      <div onclick="addToHome()" style="width:100%;height:52px;background:linear-gradient(135deg,#1e1e30,#252538);border:1px solid rgba(255,184,0,0.3);border-radius:16px;color:white;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px" ontouchstart="this.style.transform='scale(0.97)'" ontouchend="this.style.transform='scale(1)'">
+        <span style="font-size:20px">📲</span>
+        <span style="color:var(--gold)">홈화면에 앱으로 추가하기</span>
+      </div>
+
+      <div class="keypad">
+        <div class="key" onclick="pk('1')">1</div>
+        <div class="key" onclick="pk('2')">2</div>
+        <div class="key" onclick="pk('3')">3</div>
+        <div class="key" onclick="pk('4')">4</div>
+        <div class="key" onclick="pk('5')">5</div>
+        <div class="key" onclick="pk('6')">6</div>
+        <div class="key" onclick="pk('7')">7</div>
+        <div class="key" onclick="pk('8')">8</div>
+        <div class="key" onclick="pk('9')">9</div>
+        <div class="key dot" onclick="pk('.')">.</div>
+        <div class="key" onclick="pk('0')">0</div>
+        <div class="key del" onclick="pkDel()">⌫</div>
+        <div class="key clear" onclick="pkClear()">전체 지우기</div>
+      </div>
+    </div>
+
+      <!-- 하단 광고 배너 -->
+      <div style="margin-top:12px;border-radius:14px;overflow:hidden">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1790215424507586"
+             data-ad-slot="1340479668"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      </div>
+      <div style="height:12px"></div>
+
+    </div>
+  </div>
+
+  <!-- 탭2: 필수 문장 -->
+  <div class="screen" id="s1">
+    <div class="phrase-wrap">
+      <div class="phrase-section">🛍️ 쇼핑</div>
+      <div class="phrase-card" onclick="showPhrase('多少钱？','Duōshao qián?','얼마예요?')">
+        <div class="p-zh">多少钱？</div><div class="p-pin">Duōshao qián?</div><div class="p-ko">얼마예요?</div><div class="p-hint">탭 → 크게 보기</div>
+      </div>
+      <div class="phrase-card" onclick="showPhrase('太贵了！','Tài guì le!','너무 비싸요!')">
+        <div class="p-zh">太贵了！</div><div class="p-pin">Tài guì le!</div><div class="p-ko">너무 비싸요!</div><div class="p-hint">탭 → 크게 보기</div>
+      </div>
+      <div class="phrase-card" onclick="showPhrase('便宜一点','Piányí yīdiǎn','좀 깎아주세요')">
+        <div class="p-zh">便宜一点</div><div class="p-pin">Piányí yīdiǎn</div><div class="p-ko">좀 깎아주세요</div><div class="p-hint">탭 → 크게 보기</div>
+      </div>
+      <div class="phrase-card" onclick="showPhrase('我要这个','Wǒ yào zhège','이걸 살게요')">
+        <div class="p-zh">我要这个</div><div class="p-pin">Wǒ yào zhège</div><div class="p-ko">이걸 살게요</div><div class="p-hint">탭 → 크게 보기</div>
+      </div>
+      <div class="phrase-card" onclick="showPhrase('不要','Bú yào','필요 없어요')">
+        <div class="p-zh">不要</div><div class="p-pin">Bú yào</div><div class="p-ko">필요 없어요</div><div class="p-hint">탭 → 크게 보기</div>
+      </div>
+
+      <div class="phrase-section">🍜 식당</div>
+      <div class="phrase-card" onclick="showPhrase('菜单','Càidān','메뉴 주세요')">
+        <div class="p-zh">菜单</div><div class="p-pin">Càidān</div><div class="p-ko">메뉴 주세요</div><div class="p-hint">탭 → 크게 보기</div>
+      </div>
+      <div class="phrase-card" onclick="showPhrase('好吃！','Hào chī!','맛있어요!')">
+        <div class="p-zh">好吃！</div><div class="p-pin">Hào chī!</div><div class="p-ko">맛있어요!</div><div class="p-hint">탭 → 크게 보기</div>
+      </div>
+      <div class="phrase-card" onclick="showPhrase('买单','Mǎi dān','계산해 주세요')">
+        <div class="p-zh">买单</div><div class="p-pin">Mǎi dān</div><div class="p-ko">계산해 주세요</div><div class="p-hint">탭 → 크게 보기</div>
+      </div>
+      <div class="phrase-card" onclick="showPhrase('辣的','Là de','매운 거예요?')">
+        <div class="p-zh">辣的</div><div class="p-pin">Là de</div><div class="p-ko">매운 거예요?</div><div class="p-hint">탭 → 크게 보기</div>
+      </div>
+
+      <div class="phrase-section">🚕 교통 · 기타</div>
+      <div class="phrase-card" onclick="showPhrase('去这里','Qù zhèlǐ','여기로 가주세요')">
+        <div class="p-zh">去这里</div><div class="p-pin">Qù zhèlǐ</div><div class="p-ko">여기로 가주세요</div><div class="p-hint">탭 → 크게 보기</div>
+      </div>
+      <div class="phrase-card" onclick="showPhrase('谢谢','Xièxiè','감사합니다')">
+        <div class="p-zh">谢谢</div><div class="p-pin">Xièxiè</div><div class="p-ko">감사합니다</div><div class="p-hint">탭 → 크게 보기</div>
+      </div>
+      <div class="phrase-card" onclick="showPhrase('厕所在哪里？','Cèsuǒ zài nǎlǐ?','화장실이 어디예요?')">
+        <div class="p-zh">厕所在哪里？</div><div class="p-pin">Cèsuǒ zài nǎlǐ?</div><div class="p-ko">화장실이 어디예요?</div><div class="p-hint">탭 → 크게 보기</div>
+      </div>
+      <div class="phrase-card" onclick="showPhrase('听不懂','Tīng bù dǒng','못 알아듣겠어요')">
+        <div class="p-zh">听不懂</div><div class="p-pin">Tīng bù dǒng</div><div class="p-ko">못 알아듣겠어요</div><div class="p-hint">탭 → 크게 보기</div>
+      </div>
+      <div style="height:16px"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab active" onclick="switchTab(0)">
+    <span class="tab-icon">💱</span>
+    <span class="tab-lbl">환율</span>
+  </div>
+  <div class="tab" onclick="switchTab(1)">
+    <span class="tab-icon">💬</span>
+    <span class="tab-lbl">필수 문장</span>
+  </div>
+</div>
+
+<!-- 크게 보여주기 오버레이 -->
+<div class="overlay" id="show-ov">
+  <div class="ov-close" onclick="closeOv('show-ov')">✕</div>
+  <div class="ov-flag" id="ov-flag">🇨🇳</div>
+  <div class="ov-label" id="ov-label">CNY · 위안</div>
+  <div class="ov-num" id="ov-num">0</div>
+  <div class="ov-unit" id="ov-unit">元</div>
+  <div class="ov-sub" id="ov-sub"></div>
+</div>
+
+<!-- 숫자 크게 보여주기 오버레이 -->
+<div class="ci-overlay" id="num-ov">
+  <div class="ci-top" style="background:rgba(255,184,0,0.07);border-bottom:1px solid rgba(255,184,0,0.15)">
+    <div class="ci-close" onclick="closeOv('num-ov')">✕</div>
+    <div style="font-size:18px;font-weight:700;color:var(--gold);letter-spacing:1px">🔢 숫자 보여주기</div>
+    <div class="ci-hint-txt">숫자를 입력하면 크게 표시돼요</div>
+  </div>
+  <div class="ci-display">
+    <div id="num-display" style="font-family:'Bebas Neue',sans-serif;font-size:120px;line-height:1;color:var(--gold);text-shadow:0 0 50px var(--gold-g);letter-spacing:8px;word-break:break-all;min-height:120px;text-align:center">＿</div>
+    <div style="font-size:14px;color:var(--muted);margin-top:12px" id="num-hint">입력하세요</div>
+  </div>
+  <div class="ci-pad">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+      <div class="ci-key" onclick="numPk('1')">1</div>
+      <div class="ci-key" onclick="numPk('2')">2</div>
+      <div class="ci-key" onclick="numPk('3')">3</div>
+      <div class="ci-key" onclick="numPk('4')">4</div>
+      <div class="ci-key" onclick="numPk('5')">5</div>
+      <div class="ci-key" onclick="numPk('6')">6</div>
+      <div class="ci-key" onclick="numPk('7')">7</div>
+      <div class="ci-key" onclick="numPk('8')">8</div>
+      <div class="ci-key" onclick="numPk('9')">9</div>
+      <div class="ci-key" onclick="numPk('-')" style="color:var(--muted);font-size:22px">—</div>
+      <div class="ci-key" onclick="numPk('0')">0</div>
+      <div class="ci-key del" onclick="numDel()">⌫</div>
+      <div class="ci-key clr" onclick="numClr()">전체 지우기</div>
+    </div>
+  </div>
+</div>
+
+<!-- 중국인 직접입력 오버레이 -->
+<div class="ci-overlay" id="ci-ov">
+  <div class="ci-top">
+    <div class="ci-close" onclick="closeOv('ci-ov')">✕</div>
+    <div class="ci-zh">多少钱？</div>
+    <div class="ci-pin">Duōshao qián?</div>
+    <div class="ci-hint-txt">금액을 입력해주세요</div>
+  </div>
+  <div class="ci-display">
+    <div class="ci-num" id="ci-num">0</div>
+    <div class="ci-unit">元 (위안)</div>
+    <div class="ci-krw" id="ci-krw">= ₩ 0</div>
+  </div>
+  <div class="ci-pad">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+      <div class="ci-key" onclick="ciPk('1')">1</div>
+      <div class="ci-key" onclick="ciPk('2')">2</div>
+      <div class="ci-key" onclick="ciPk('3')">3</div>
+      <div class="ci-key" onclick="ciPk('4')">4</div>
+      <div class="ci-key" onclick="ciPk('5')">5</div>
+      <div class="ci-key" onclick="ciPk('6')">6</div>
+      <div class="ci-key" onclick="ciPk('7')">7</div>
+      <div class="ci-key" onclick="ciPk('8')">8</div>
+      <div class="ci-key" onclick="ciPk('9')">9</div>
+      <div class="ci-key dot" onclick="ciPk('.')">.</div>
+      <div class="ci-key" onclick="ciPk('0')">0</div>
+      <div class="ci-key del" onclick="ciDel()">⌫</div>
+      <div class="ci-key clr" onclick="ciClr()">전체 지우기</div>
+    </div>
+  </div>
+</div>
+
+<!-- 문장 크게보기 오버레이 -->
+<div class="phr-overlay" id="phr-ov">
+  <div class="phr-close" onclick="closeOv('phr-ov')">✕</div>
+  <div class="phr-zh" id="phr-zh"></div>
+  <div class="phr-pin" id="phr-pin"></div>
+  <div class="phr-ko" id="phr-ko"></div>
+</div>
+
+<!-- 전면광고 오버레이 -->
+<div id="interstitial-ov" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:500;flex-direction:column;align-items:center;justify-content:center;animation:fadeUp 0.3s ease">
+  <div style="width:100%;max-width:400px;padding:20px">
+    <!-- 상단 카운트다운 -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <div style="font-size:13px;color:var(--muted)">잠시 후 설치 안내로 이동합니다</div>
+      <div id="ad-countdown" style="background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-family:'DM Mono',monospace;font-size:13px;color:var(--gold)">5초</div>
+    </div>
+
+    <!-- 광고 영역 -->
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center">
+      <!-- 여기에 애드센스 전면광고 코드 삽입 -->
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="auto" data-full-width-responsive="true" data-ad-client="ca-pub-XXXXXXXX" data-ad-slot="XXXXXXXX"></ins> -->
+      <div style="text-align:center;color:var(--muted);padding:40px 20px">
+        <div style="font-size:40px;margin-bottom:12px">📢</div>
+        <div style="font-size:12px;letter-spacing:1px">광고 영역</div>
+        <div style="font-size:11px;margin-top:6px;opacity:0.6">애드센스 코드를 여기에 삽입하세요</div>
+      </div>
+    </div>
+
+    <!-- 건너뛰기 버튼 (카운트다운 후 활성화) -->
+    <div id="ad-skip-btn" onclick="showInstallGuide()" style="width:100%;height:52px;background:var(--card2);border:1px solid var(--border);border-radius:16px;color:var(--muted);font-size:14px;font-weight:700;cursor:not-allowed;display:flex;align-items:center;justify-content:center;margin-top:12px;transition:all 0.3s">
+      설치 안내 보기 (5초)
+    </div>
+  </div>
+</div>
+
+<!-- 설치 안내 오버레이 (공통) -->
+<div id="install-guide-ov" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.97);z-index:500;flex-direction:column;align-items:center;justify-content:center;padding:24px;animation:fadeUp 0.3s ease">
+  <div style="width:100%;max-width:360px">
+    <div style="text-align:center;margin-bottom:24px">
+      <div style="font-size:48px;margin-bottom:10px">📲</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;color:var(--gold)">홈화면에 추가하기</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:6px">앱처럼 바로 실행할 수 있어요</div>
+    </div>
+
+    <!-- 안드로이드 안내 (기본 표시) -->
+    <div id="guide-android" style="background:var(--card);border:1px solid rgba(255,184,0,0.2);border-radius:18px;padding:20px;margin-bottom:12px">
+      <div style="font-size:14px;font-weight:700;color:var(--gold);margin-bottom:14px">🤖 안드로이드</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:28px;height:28px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">1</div>
+          <div style="font-size:14px;color:var(--text)">크롬 브라우저로 열기</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:28px;height:28px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">2</div>
+          <div style="font-size:14px;color:var(--text)">우측 상단 <span style="color:var(--gold)">⋮</span> 메뉴 탭</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:28px;height:28px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">3</div>
+          <div style="font-size:14px;color:var(--text)"><span style="color:var(--gold)">"홈 화면에 추가"</span> 선택</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- iOS 안내 -->
+    <div id="guide-ios" style="background:var(--card);border:1px solid rgba(255,184,0,0.2);border-radius:18px;padding:20px;margin-bottom:20px">
+      <div style="font-size:14px;font-weight:700;color:var(--gold);margin-bottom:14px">🍎 아이폰</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:28px;height:28px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">1</div>
+          <div style="font-size:14px;color:var(--text)">사파리로 열기</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:28px;height:28px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">2</div>
+          <div style="font-size:14px;color:var(--text)">하단 <span style="color:var(--gold)">공유 버튼 □↑</span> 탭</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:28px;height:28px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">3</div>
+          <div style="font-size:14px;color:var(--text)"><span style="color:var(--gold)">"홈 화면에 추가"</span> 선택</div>
+        </div>
+      </div>
+    </div>
+
+    <div onclick="closeInstallGuide()" style="width:100%;height:52px;background:linear-gradient(135deg,var(--red),#b0102a);border-radius:16px;color:white;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px var(--red-g)" ontouchstart="this.style.transform='scale(0.97)'" ontouchend="this.style.transform='scale(1)'">
+      확인
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let rate = 193, cur = '0', fromCNY = true, ciIn = '0';
+
+async function fetchRate() {
+  try {
+    const res = await fetch('https://open.er-api.com/v6/latest/CNY');
+    const data = await res.json();
+    if (data?.rates?.KRW) {
+      rate = data.rates.KRW;
+      const t = new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'});
+      document.getElementById('hd-rate').textContent = rate.toFixed(1);
+      document.getElementById('rate-detail').textContent = `¥1 = ₩${rate.toFixed(2)} · ${t} 업데이트`;
+      try { localStorage.setItem('cr',rate); localStorage.setItem('ct',t); } catch(e){}
+      updateFX(); showToast('환율 업데이트 완료 ✓');
+    }
+  } catch(e) {
+    try {
+      const cr = localStorage.getItem('cr'), ct = localStorage.getItem('ct');
+      if (cr) {
+        rate = parseFloat(cr);
+        document.getElementById('hd-rate').textContent = rate.toFixed(1);
+        document.getElementById('rate-detail').textContent = `¥1 = ₩${rate.toFixed(2)} · ${ct} 저장값`;
+        showToast('오프라인 — 저장된 환율 사용 중');
+      } else {
+        document.getElementById('rate-detail').textContent = `¥1 = ₩${rate} · 기본값`;
+        document.getElementById('hd-rate').textContent = rate.toFixed(1);
+      }
+    } catch(e2){}
+    updateFX();
+  }
+}
+
+function switchTab(i) {
+  document.querySelectorAll('.screen').forEach((s,j) => s.classList.toggle('active', i===j));
+  document.querySelectorAll('.tab').forEach((t,j) => t.classList.toggle('active', i===j));
+}
+
+function pk(k) {
+  if (k==='.') { if (cur.includes('.')) return; cur+='.'; }
+  else { if (cur.includes('.') && cur.split('.')[1].length>=2) return; if (cur==='0') cur=k; else if (cur.length<10) cur+=k; }
+  updateFX();
+}
+function pkDel() { cur = cur.length>1 ? cur.slice(0,-1) : '0'; updateFX(); }
+function pkClear() { cur='0'; updateFX(); }
+function updateFX() {
+  const v = parseFloat(cur)||0;
+  document.getElementById('from-amt').textContent = cur.endsWith('.')?cur:fmt(v);
+  document.getElementById('to-amt').textContent = fmt(fromCNY ? v*rate : v/rate);
+}
+function swapCurrency() {
+  fromCNY = !fromCNY;
+  document.getElementById('from-flag').textContent = fromCNY?'🇨🇳':'🇰🇷';
+  document.getElementById('to-flag').textContent = fromCNY?'🇰🇷':'🇨🇳';
+  document.getElementById('from-name').textContent = fromCNY?'중국 위안 CNY':'대한민국 원 KRW';
+  document.getElementById('to-name').textContent = fromCNY?'대한민국 원 KRW':'중국 위안 CNY';
+  document.getElementById('from-amt').className = 'fx-amount '+(fromCNY?'cny':'krw');
+  document.getElementById('to-amt').className = 'fx-amount '+(fromCNY?'krw':'cny');
+  cur='0'; updateFX();
+}
+function fmt(n) { if(!n)return'0'; return Math.round(n).toLocaleString('ko-KR'); }
+
+function openShowMode() {
+  const v = parseFloat(cur)||0;
+  document.getElementById('ov-flag').textContent = fromCNY?'🇨🇳':'🇰🇷';
+  document.getElementById('ov-label').textContent = fromCNY?'CNY · 위안':'KRW · 원';
+  document.getElementById('ov-num').textContent = fmt(v);
+  document.getElementById('ov-unit').textContent = fromCNY?'元':'원';
+  document.getElementById('ov-sub').textContent = fromCNY ? '= ₩'+Math.round(v*rate).toLocaleString('ko-KR') : '= ¥'+Math.round(v/rate).toLocaleString('ko-KR');
+  document.getElementById('show-ov').classList.add('active');
+}
+
+function openCI() { ciIn='0'; document.getElementById('ci-num').textContent='0'; document.getElementById('ci-krw').textContent='= ₩ 0'; document.getElementById('ci-ov').classList.add('active'); }
+function ciPk(k) {
+  if (k==='.') { if (ciIn.includes('.')) return; ciIn+='.'; }
+  else { if (ciIn.includes('.') && ciIn.split('.')[1].length>=2) return; if (ciIn==='0') ciIn=k; else if (ciIn.length<8) ciIn+=k; }
+  const v = parseFloat(ciIn)||0;
+  document.getElementById('ci-num').textContent = ciIn.endsWith('.')?ciIn:(ciIn.includes('.')?ciIn:v.toLocaleString('ko-KR'));
+  document.getElementById('ci-krw').textContent = '= ₩ '+Math.round(v*rate).toLocaleString('ko-KR');
+}
+function ciDel() { ciIn = ciIn.length>1?ciIn.slice(0,-1):'0'; ciPk(''); }
+function ciClr() { ciIn='0'; document.getElementById('ci-num').textContent='0'; document.getElementById('ci-krw').textContent='= ₩ 0'; }
+
+// ===== 숫자 보여주기 =====
+let numIn = '';
+function openNumShow() {
+  numIn = '';
+  document.getElementById('num-display').textContent = '＿';
+  document.getElementById('num-hint').textContent = '입력하세요';
+  document.getElementById('num-ov').classList.add('active');
+}
+function numPk(k) {
+  if (numIn.length >= 20) return;
+  numIn += k;
+  numUpdate();
+}
+function numDel() {
+  numIn = numIn.slice(0, -1);
+  numUpdate();
+}
+function numClr() {
+  numIn = '';
+  numUpdate();
+}
+function numUpdate() {
+  const el = document.getElementById('num-display');
+  const hint = document.getElementById('num-hint');
+  if (!numIn) {
+    el.textContent = '＿';
+    hint.textContent = '입력하세요';
+    el.style.fontSize = '120px';
+  } else {
+    el.textContent = numIn;
+    hint.textContent = '';
+    // 길이에 따라 폰트 크기 조절
+    const len = numIn.length;
+    el.style.fontSize = len <= 4 ? '160px' : len <= 8 ? '120px' : len <= 12 ? '88px' : '64px';
+  }
+}
+
+// ===== 홈화면 추가 =====
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+});
+
+function addToHome() {
+  // 전면광고 먼저 표시
+  const ov = document.getElementById('interstitial-ov');
+  ov.style.display = 'flex';
+  let sec = 5;
+  const btn = document.getElementById('ad-skip-btn');
+  const countdown = document.getElementById('ad-countdown');
+  const timer = setInterval(() => {
+    sec--;
+    countdown.textContent = sec + '초';
+    btn.textContent = sec > 0 ? `설치 안내 보기 (${sec}초)` : '설치 안내 보기 →';
+    if (sec <= 0) {
+      clearInterval(timer);
+      btn.style.cursor = 'pointer';
+      btn.style.background = 'linear-gradient(135deg,var(--gold),#cc9200)';
+      btn.style.color = '#000';
+      btn.style.borderColor = 'var(--gold)';
+    }
+  }, 1000);
+}
+
+function showInstallGuide() {
+  const btn = document.getElementById('ad-skip-btn');
+  if (btn.style.cursor === 'not-allowed') return;
+  document.getElementById('interstitial-ov').style.display = 'none';
+
+  // 안드로이드 자동 설치 팝업
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+    return;
+  }
+  // iOS 또는 수동 안내
+  document.getElementById('install-guide-ov').style.display = 'flex';
+}
+
+function closeInstallGuide() {
+  document.getElementById('install-guide-ov').style.display = 'none';
+}
+
+function openAlipay() {
+  const s = Date.now(); window.location.href='alipays://';
+  setTimeout(()=>{ if(Date.now()-s<1500) showToast('알리페이 앱을 먼저 설치해주세요 📱'); },800);
+}
+function showPhrase(zh,pin,ko) { document.getElementById('phr-zh').textContent=zh; document.getElementById('phr-pin').textContent=pin; document.getElementById('phr-ko').textContent=ko; document.getElementById('phr-ov').classList.add('active'); }
+function closeOv(id) { document.getElementById(id).classList.remove('active'); }
+function showToast(msg) { const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2200); }
+
+const mb = new Blob([JSON.stringify({name:"中韩 여행 도우미",short_name:"중한 환율",start_url:"./",display:"standalone",background_color:"#07070f",theme_color:"#07070f",icons:[{src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='40' fill='%2307070f'/%3E%3Ctext x='96' y='130' font-size='110' text-anchor='middle'%3E🇨🇳%3C/text%3E%3C/svg%3E",sizes:"192x192",type:"image/svg+xml"}]})],{type:'application/json'});
+document.getElementById('manifest-link').href = URL.createObjectURL(mb);
+
+fetchRate();
+</script>
+</body>
+</html>
