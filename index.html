@@ -687,36 +687,51 @@ document.getElementById('manifest-link').href = URL.createObjectURL(mb);
 fetchRate();
 
 // 뒤로가기 처리 - 탭 전환용 히스토리
-// 뒤로가기 처리 - 항상 히스토리 유지
+// 뒤로가기 처리
 function pushDummy() {
   history.pushState({app:true}, '');
 }
-pushDummy();
+// 초기 히스토리 3개 쌓기
+pushDummy(); pushDummy(); pushDummy();
 
-window.addEventListener('popstate', function(e) {
-  // 항상 다시 히스토리 쌓아서 앱 밖으로 못 나가게
-  pushDummy();
+function handleBack() {
+  // setTimeout으로 pushDummy를 나중에 실행 (삼성 인터넷 타이밍 문제 해결)
+  setTimeout(pushDummy, 50);
 
+  // exit-ov 열려있으면 닫기
+  const exitOv = document.getElementById('exit-ov');
+  if(exitOv && exitOv.classList.contains('active')) {
+    exitOv.classList.remove('active');
+    return;
+  }
+
+  // 다른 오버레이 열려있으면 닫기
   const overlays = ['show-ov','ci-ov','num-ov','phr-ov','interstitial-ov','install-guide-ov'];
-  let closed = false;
-  overlays.forEach(id => {
+  for(let id of overlays) {
     const el = document.getElementById(id);
-    if(el && (el.classList.contains('active') || el.style.display === 'flex')) {
+    if(el && el.classList.contains('active')) {
       el.classList.remove('active');
-      el.style.display = 'none';
-      closed = true;
+      return;
     }
-  });
-  if(closed) return;
+    if(el && el.style.display === 'flex') {
+      el.style.display = 'none';
+      return;
+    }
+  }
 
+  // 탭 확인
   const tabs = document.querySelectorAll('.tab');
   const activeIdx = Array.from(tabs).findIndex(t => t.classList.contains('active'));
-  if (activeIdx > 0) {
+  if(activeIdx > 0) {
     switchTab(0);
-  } else {
-    document.getElementById('exit-ov').classList.add('active');
+    return;
   }
-});
+
+  // 환율탭에서 뒤로가기 → 종료 확인
+  exitOv.classList.add('active');
+}
+
+window.addEventListener('popstate', handleBack);
 </script>
 </body>
 </html>
