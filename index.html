@@ -687,25 +687,20 @@ document.getElementById('manifest-link').href = URL.createObjectURL(mb);
 fetchRate();
 
 // 뒤로가기 처리 - 탭 전환용 히스토리
-// 뒤로가기 처리 - 삼성 인터넷 강화버전
-function pushDummy() {
-  history.pushState({app:true}, '');
+// ===== 뒤로가기 처리 - 해시(#) 방식 (삼성 인터넷 호환) =====
+// 해시를 #app으로 설정해서 뒤로가기를 hashchange로 잡음
+function setAppHash() {
+  if(location.hash !== '#app') location.hash = '#app';
 }
-// 초기 히스토리 10개 쌓기
-for(let i=0;i<10;i++) pushDummy();
+setAppHash();
 
-let backLock = false;
 function handleBack() {
-  if(backLock) return;
-  backLock = true;
+  // 즉시 해시 복구
+  setTimeout(setAppHash, 10);
 
-  // 즉시 + 지연으로 이중 pushDummy
-  pushDummy();
-  setTimeout(()=>{ pushDummy(); backLock=false; }, 100);
-  setTimeout(pushDummy, 300);
+  const exitOv = document.getElementById('exit-ov');
 
   // exit-ov 열려있으면 닫기
-  const exitOv = document.getElementById('exit-ov');
   if(exitOv && exitOv.classList.contains('active')) {
     exitOv.classList.remove('active');
     return;
@@ -725,7 +720,7 @@ function handleBack() {
     }
   }
 
-  // 탭 확인
+  // 다른 탭이면 환율탭으로
   const tabs = document.querySelectorAll('.tab');
   const activeIdx = Array.from(tabs).findIndex(t => t.classList.contains('active'));
   if(activeIdx > 0) {
@@ -733,15 +728,23 @@ function handleBack() {
     return;
   }
 
-  // 환율탭에서 뒤로가기 → 종료 확인
+  // 환율탭에서 → 종료 확인
   exitOv.classList.add('active');
 }
 
-window.addEventListener('popstate', handleBack);
+// hashchange: 삼성 인터넷에서 가장 안정적
+window.addEventListener('hashchange', function() {
+  handleBack();
+});
 
-// 포커스 돌아올 때마다 히스토리 보충
-window.addEventListener('focus', ()=>{ for(let i=0;i<5;i++) pushDummy(); });
-window.addEventListener('pageshow', ()=>{ for(let i=0;i<10;i++) pushDummy(); });
+// popstate도 같이 처리 (크롬 등)
+window.addEventListener('popstate', function() {
+  handleBack();
+});
+
+// 앱으로 돌아올 때 해시 복구
+window.addEventListener('focus', setAppHash);
+window.addEventListener('pageshow', setAppHash);
 </script>
 </body>
 </html>
