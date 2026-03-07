@@ -528,7 +528,6 @@ async function fetchRate() {
 function switchTab(i) {
   document.querySelectorAll('.screen').forEach((s,j) => s.classList.toggle('active', i===j));
   document.querySelectorAll('.tab').forEach((t,j) => t.classList.toggle('active', i===j));
-  history.pushState({tab:i}, '');
 }
 
 function pk(k) {
@@ -688,16 +687,16 @@ document.getElementById('manifest-link').href = URL.createObjectURL(mb);
 fetchRate();
 
 // 뒤로가기 처리 - 탭 전환용 히스토리
-// 초기에 히스토리 2개 쌓기 (뒤로가기 1번은 앱 내에서 처리)
-history.replaceState({tab:0, init:true}, '');
-history.pushState({tab:0}, '');
+// 뒤로가기 처리 - 항상 히스토리 유지
+function pushDummy() {
+  history.pushState({app:true}, '');
+}
+pushDummy();
 
 window.addEventListener('popstate', function(e) {
-  const activeTab = document.querySelector('.tab.active');
-  const tabs = document.querySelectorAll('.tab');
-  const activeIdx = Array.from(tabs).indexOf(activeTab);
+  // 항상 다시 히스토리 쌓아서 앱 밖으로 못 나가게
+  pushDummy();
 
-  // 오버레이 열려있으면 먼저 닫기
   const overlays = ['show-ov','ci-ov','num-ov','phr-ov','interstitial-ov','install-guide-ov'];
   let closed = false;
   overlays.forEach(id => {
@@ -708,16 +707,14 @@ window.addEventListener('popstate', function(e) {
       closed = true;
     }
   });
-  if(closed) { history.pushState({tab:activeIdx}, ''); return; }
+  if(closed) return;
 
+  const tabs = document.querySelectorAll('.tab');
+  const activeIdx = Array.from(tabs).findIndex(t => t.classList.contains('active'));
   if (activeIdx > 0) {
-    // 다른 탭이면 환율탭으로
     switchTab(0);
-    history.pushState({tab:0}, '');
   } else {
-    // 환율탭에서 뒤로가기 → 종료 확인
     document.getElementById('exit-ov').classList.add('active');
-    history.pushState({tab:0}, '');
   }
 });
 </script>
