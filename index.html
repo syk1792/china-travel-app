@@ -474,6 +474,23 @@ html,body { height:100%; background:var(--bg); color:var(--text); font-family:'N
   </div>
 </div>
 
+<!-- 종료 확인 오버레이 -->
+<div class="overlay" id="exit-ov" style="background:rgba(0,0,0,0.85);backdrop-filter:blur(10px)">
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:24px;padding:32px 24px;width:100%;max-width:320px;text-align:center">
+    <div style="font-size:48px;margin-bottom:16px">🇨🇳</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;margin-bottom:8px;color:var(--text)">앱을 종료할까요?</div>
+    <div style="font-size:14px;color:var(--muted);margin-bottom:28px">中韩 TRAVEL을 닫습니다</div>
+    <div style="display:flex;gap:10px">
+      <div onclick="document.getElementById('exit-ov').classList.remove('active')" style="flex:1;height:52px;background:var(--card2);border:1px solid var(--border);border-radius:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:var(--muted)">
+        계속 사용
+      </div>
+      <div onclick="window.close();history.go(-999)" style="flex:1;height:52px;background:linear-gradient(135deg,var(--red),#b0102a);border-radius:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:white;box-shadow:0 4px 16px var(--red-g)">
+        종료
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -676,23 +693,28 @@ window.addEventListener('popstate', function(e) {
   const activeTab = document.querySelector('.tab.active');
   const tabs = document.querySelectorAll('.tab');
   const activeIdx = Array.from(tabs).indexOf(activeTab);
+
+  // 오버레이 열려있으면 먼저 닫기
+  const overlays = ['show-ov','ci-ov','num-ov','phr-ov','interstitial-ov','install-guide-ov'];
+  let closed = false;
+  overlays.forEach(id => {
+    const el = document.getElementById(id);
+    if(el && (el.classList.contains('active') || el.style.display === 'flex')) {
+      el.classList.remove('active');
+      el.style.display = 'none';
+      closed = true;
+    }
+  });
+  if(closed) { history.pushState({tab:activeIdx}, ''); return; }
+
   if (activeIdx > 0) {
     // 다른 탭이면 환율탭으로
     switchTab(0);
     history.pushState({tab:0}, '');
   } else {
-    // 오버레이가 열려있으면 닫기
-    const overlays = ['show-ov','ci-ov','num-ov','phr-ov','interstitial-ov','install-guide-ov'];
-    let closed = false;
-    overlays.forEach(id => {
-      const el = document.getElementById(id);
-      if(el && (el.classList.contains('active') || el.style.display === 'flex')) {
-        el.classList.remove('active');
-        el.style.display = 'none';
-        closed = true;
-      }
-    });
-    if(closed) history.pushState({tab:0}, '');
+    // 환율탭에서 뒤로가기 → 종료 확인
+    document.getElementById('exit-ov').classList.add('active');
+    history.pushState({tab:0}, '');
   }
 });
 </script>
