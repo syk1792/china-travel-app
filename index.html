@@ -688,7 +688,10 @@ document.getElementById('manifest-link').href = URL.createObjectURL(mb);
 fetchRate();
 
 // 뒤로가기 처리 - 탭 전환용 히스토리
+// 초기에 히스토리 2개 쌓기 (뒤로가기 1번은 앱 내에서 처리)
+history.replaceState({tab:0, init:true}, '');
 history.pushState({tab:0}, '');
+
 window.addEventListener('popstate', function(e) {
   const activeTab = document.querySelector('.tab.active');
   const tabs = document.querySelectorAll('.tab');
