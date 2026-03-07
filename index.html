@@ -687,16 +687,22 @@ document.getElementById('manifest-link').href = URL.createObjectURL(mb);
 fetchRate();
 
 // 뒤로가기 처리 - 탭 전환용 히스토리
-// 뒤로가기 처리
+// 뒤로가기 처리 - 삼성 인터넷 강화버전
 function pushDummy() {
   history.pushState({app:true}, '');
 }
-// 초기 히스토리 3개 쌓기
-pushDummy(); pushDummy(); pushDummy();
+// 초기 히스토리 10개 쌓기
+for(let i=0;i<10;i++) pushDummy();
 
+let backLock = false;
 function handleBack() {
-  // setTimeout으로 pushDummy를 나중에 실행 (삼성 인터넷 타이밍 문제 해결)
-  setTimeout(pushDummy, 50);
+  if(backLock) return;
+  backLock = true;
+
+  // 즉시 + 지연으로 이중 pushDummy
+  pushDummy();
+  setTimeout(()=>{ pushDummy(); backLock=false; }, 100);
+  setTimeout(pushDummy, 300);
 
   // exit-ov 열려있으면 닫기
   const exitOv = document.getElementById('exit-ov');
@@ -732,6 +738,10 @@ function handleBack() {
 }
 
 window.addEventListener('popstate', handleBack);
+
+// 포커스 돌아올 때마다 히스토리 보충
+window.addEventListener('focus', ()=>{ for(let i=0;i<5;i++) pushDummy(); });
+window.addEventListener('pageshow', ()=>{ for(let i=0;i<10;i++) pushDummy(); });
 </script>
 </body>
 </html>
