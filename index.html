@@ -542,6 +542,7 @@ async function fetchRate() {
 function switchTab(i) {
   document.querySelectorAll('.screen').forEach((s,j) => s.classList.toggle('active', i===j));
   document.querySelectorAll('.tab').forEach((t,j) => t.classList.toggle('active', i===j));
+  push();
 }
 
 function pk(k) {
@@ -589,10 +590,10 @@ function openShowMode() {
   document.getElementById('ov-num').textContent = fmt(v);
   document.getElementById('ov-unit').textContent = fromCNY?'元':'원';
   document.getElementById('ov-sub').textContent = fromCNY ? '= ₩'+Math.round(v*rate).toLocaleString('ko-KR') : '= ¥'+Math.round(v/rate).toLocaleString('ko-KR');
-  document.getElementById('show-ov').classList.add('active');
+  document.getElementById('show-ov').classList.add('active'); push();
 }
 
-function openCI() { ciIn='0'; document.getElementById('ci-num').textContent='0'; document.getElementById('ci-krw').textContent='= ₩ 0'; document.getElementById('ci-ov').classList.add('active'); }
+function openCI() { ciIn='0'; document.getElementById('ci-num').textContent='0'; document.getElementById('ci-krw').textContent='= ₩ 0'; document.getElementById('ci-ov').classList.add('active'); push(); }
 function ciPk(k) {
   if (k==='.') { if (ciIn.includes('.')) return; ciIn+='.'; }
   else { if (ciIn.includes('.') && ciIn.split('.')[1].length>=2) return; if (ciIn==='0') ciIn=k; else if (ciIn.length<8) ciIn+=k; }
@@ -609,7 +610,7 @@ function openNumShow() {
   numIn = '';
   document.getElementById('num-display').textContent = '＿';
   document.getElementById('num-hint').textContent = '입력하세요';
-  document.getElementById('num-ov').classList.add('active');
+  document.getElementById('num-ov').classList.add('active'); push();
 }
 function numPk(k) {
   if (numIn.length >= 20) return;
@@ -661,7 +662,7 @@ function isSamsungBrowser() {
 function addToHome() {
   // 전면광고 먼저 표시
   const ov = document.getElementById('interstitial-ov');
-  ov.style.display = 'flex';
+  ov.style.display = 'flex'; push();
   let sec = 5;
   const btn = document.getElementById('ad-skip-btn');
   const countdown = document.getElementById('ad-countdown');
@@ -718,7 +719,7 @@ function openAlipay() {
   const s = Date.now(); window.location.href='alipays://';
   setTimeout(()=>{ if(Date.now()-s<1500) showToast('알리페이 앱을 먼저 설치해주세요 📱'); },800);
 }
-function showPhrase(zh,pin,ko) { document.getElementById('phr-zh').textContent=zh; document.getElementById('phr-pin').textContent=pin; document.getElementById('phr-ko').textContent=ko; document.getElementById('phr-ov').classList.add('active'); }
+function showPhrase(zh,pin,ko) { document.getElementById('phr-zh').textContent=zh; document.getElementById('phr-pin').textContent=pin; document.getElementById('phr-ko').textContent=ko; document.getElementById('phr-ov').classList.add('active'); push(); }
 function closeOv(id) { document.getElementById(id).classList.remove('active'); }
 function showToast(msg) { const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2200); }
 
@@ -728,14 +729,12 @@ document.getElementById('manifest-link').href = URL.createObjectURL(mb);
 fetchRate();
 
 // ===== 뒤로가기 처리 =====
-// 초기 히스토리 쌓기
-history.pushState({step:1}, '');
+function push() { history.pushState({app:true}, ''); }
+push(); push(); push();
 
 window.addEventListener('popstate', function() {
-  // 즉시 히스토리 다시 쌓기
-  history.pushState({step:1}, '');
+  push();
 
-  // 오버레이 열려있으면 닫기
   const overlays = ['show-ov','ci-ov','num-ov','phr-ov'];
   for(let id of overlays) {
     const el = document.getElementById(id);
@@ -744,18 +743,15 @@ window.addEventListener('popstate', function() {
       return;
     }
   }
-  // 전면광고/설치안내 닫기
   const ov1 = document.getElementById('interstitial-ov');
   const ov2 = document.getElementById('install-guide-ov');
-  if(ov1 && ov1.style.display === 'flex') { ov1.style.display='none'; return; }
-  if(ov2 && ov2.style.display === 'flex') { ov2.style.display='none'; return; }
+  if(ov1 && ov1.style.display==='flex') { ov1.style.display='none'; return; }
+  if(ov2 && ov2.style.display==='flex') { ov2.style.display='none'; return; }
 
-  // 필수문장 탭이면 환율탭으로
   const activeIdx = Array.from(document.querySelectorAll('.tab')).findIndex(t=>t.classList.contains('active'));
   if(activeIdx > 0) { switchTab(0); return; }
 
-  // 환율탭이면 종료 확인
-  if(confirm('앱을 종료할까요?')) { history.go(-10); }
+  if(confirm('앱을 종료할까요?')) { history.go(-100); }
 });
 </script>
 </body>
