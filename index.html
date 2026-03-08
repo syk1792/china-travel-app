@@ -645,7 +645,18 @@ let deferredPrompt = null;
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
+  // ?install=1 파라미터로 열렸으면 자동으로 설치 팝업 띄우기
+  if(location.search.includes('install=1')) {
+    setTimeout(()=>{
+      e.prompt();
+      e.userChoice.then(()=>{ deferredPrompt = null; });
+    }, 800);
+  }
 });
+
+function isSamsungBrowser() {
+  return /SamsungBrowser/i.test(navigator.userAgent);
+}
 
 function addToHome() {
   // 전면광고 먼저 표시
@@ -673,13 +684,29 @@ function showInstallGuide() {
   if (btn.style.cursor === 'not-allowed') return;
   document.getElementById('interstitial-ov').style.display = 'none';
 
-  // 안드로이드 자동 설치 팝업
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  // 삼성 인터넷이면 크롬으로 강제 이동 + 자동 설치
+  if(isSamsungBrowser()) {
+    const url = 'syk1792.github.io/china-travel-app/?install=1';
+    location.href = 'intent://' + url + '#Intent;scheme=https;package=com.android.chrome;end';
     return;
   }
-  // iOS 또는 수동 안내
+
+  // 크롬 안드로이드 → beforeinstallprompt 자동 팝업
+  if(deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(()=>{ deferredPrompt = null; });
+    return;
+  }
+
+  // iOS → 사파리 안내
+  if(isIOS) {
+    document.getElementById('install-guide-ov').style.display = 'flex';
+    return;
+  }
+
+  // 기타 → 안내
   document.getElementById('install-guide-ov').style.display = 'flex';
 }
 
