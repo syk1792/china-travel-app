@@ -37,7 +37,38 @@
   --HEAD: 56px;
 }
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-html,body { height:100%; background:var(--bg); color:var(--text); font-family:'Noto Sans KR',sans-serif; overflow:hidden; }
+html { height:100%; background:#0a0a0a; }
+body {
+  height:100%;
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Noto Sans KR',sans-serif;
+  overflow:hidden;
+}
+
+/* PC에서 폰 액자 */
+@media (min-width: 600px) {
+  html { background:#111; display:flex; align-items:center; justify-content:center; }
+  body {
+    width:390px;
+    height:844px;
+    max-height:100vh;
+    border-radius:44px;
+    box-shadow:0 0 0 12px #222, 0 0 0 14px #333, 0 30px 80px rgba(0,0,0,0.8);
+    position:relative;
+    overflow:hidden;
+  }
+  body::before {
+    content:'';
+    position:absolute;
+    top:0; left:50%;
+    transform:translateX(-50%);
+    width:120px; height:28px;
+    background:#000;
+    border-radius:0 0 18px 18px;
+    z-index:999;
+  }
+}
 * { touch-action:manipulation; }
 [style*="overflow-y:scroll"] { touch-action:pan-y !important; }
 
