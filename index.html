@@ -505,23 +505,6 @@ body {
   </div>
 </div>
 
-<!-- 종료 확인 오버레이 -->
-<div class="overlay" id="exit-ov" style="background:rgba(0,0,0,0.85);backdrop-filter:blur(10px)">
-  <div style="background:var(--card);border:1px solid var(--border);border-radius:24px;padding:32px 24px;width:100%;max-width:320px;text-align:center">
-    <div style="font-size:48px;margin-bottom:16px">🇨🇳</div>
-    <div style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;margin-bottom:8px;color:var(--text)">앱을 종료할까요?</div>
-    <div style="font-size:14px;color:var(--muted);margin-bottom:28px">中韩 TRAVEL을 닫습니다</div>
-    <div style="display:flex;gap:10px">
-      <div onclick="document.getElementById('exit-ov').classList.remove('active')" style="flex:1;height:52px;background:var(--card2);border:1px solid var(--border);border-radius:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:var(--muted)">
-        계속 사용
-      </div>
-      <div onclick="window.close();history.go(-999)" style="flex:1;height:52px;background:linear-gradient(135deg,var(--red),#b0102a);border-radius:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:white;box-shadow:0 4px 16px var(--red-g)">
-        종료
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="toast" id="toast"></div>
 
 <script>
@@ -718,54 +701,7 @@ document.getElementById('manifest-link').href = URL.createObjectURL(mb);
 fetchRate();
 
 // 뒤로가기 처리 - 탭 전환용 히스토리
-// ===== 뒤로가기 처리 =====
-function doBack() {
-  const exitOv = document.getElementById('exit-ov');
 
-  // exit-ov 열려있으면 닫기
-  if(exitOv && exitOv.classList.contains('active')) {
-    exitOv.classList.remove('active');
-    history.pushState(null,'',location.href);
-    return;
-  }
-
-  // 다른 오버레이 열려있으면 닫기
-  const overlays = ['show-ov','ci-ov','num-ov','phr-ov','interstitial-ov','install-guide-ov'];
-  for(let id of overlays) {
-    const el = document.getElementById(id);
-    if(el && el.classList.contains('active')) {
-      el.classList.remove('active');
-      history.pushState(null,'',location.href);
-      return;
-    }
-    if(el && el.style.display === 'flex') {
-      el.style.display = 'none';
-      history.pushState(null,'',location.href);
-      return;
-    }
-  }
-
-  // 다른 탭이면 환율탭으로
-  const tabs = document.querySelectorAll('.tab');
-  const activeIdx = Array.from(tabs).findIndex(t => t.classList.contains('active'));
-  if(activeIdx > 0) {
-    switchTab(0);
-    history.pushState(null,'',location.href);
-    return;
-  }
-
-  // 환율탭에서 → 종료 확인
-  exitOv.classList.add('active');
-  history.pushState(null,'',location.href);
-}
-
-// 페이지 완전히 로딩된 후 2초 뒤에 뒤로가기 리스너 등록
-window.addEventListener('load', function() {
-  setTimeout(function() {
-    history.pushState(null,'',location.href);
-    window.addEventListener('popstate', doBack);
-  }, 2000);
-});
 </script>
 </body>
 </html>
