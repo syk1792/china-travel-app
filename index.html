@@ -718,25 +718,14 @@ document.getElementById('manifest-link').href = URL.createObjectURL(mb);
 fetchRate();
 
 // 뒤로가기 처리 - 탭 전환용 히스토리
-// ===== 뒤로가기 처리 - 해시(#) 방식 =====
-let appReady = false; // 초기 로딩 중 이벤트 무시
-function setAppHash() {
-  if(location.hash !== '#app') location.hash = '#app';
-}
-setAppHash();
-// 1초 후에 뒤로가기 처리 활성화 (초기 hashchange 무시)
-setTimeout(()=>{ appReady = true; }, 1000);
-
-function handleBack() {
-  if(!appReady) return; // 초기 로딩 중 무시
-  // 즉시 해시 복구
-  setTimeout(setAppHash, 10);
-
+// ===== 뒤로가기 처리 =====
+function doBack() {
   const exitOv = document.getElementById('exit-ov');
 
   // exit-ov 열려있으면 닫기
   if(exitOv && exitOv.classList.contains('active')) {
     exitOv.classList.remove('active');
+    history.pushState(null,'',location.href);
     return;
   }
 
@@ -746,10 +735,12 @@ function handleBack() {
     const el = document.getElementById(id);
     if(el && el.classList.contains('active')) {
       el.classList.remove('active');
+      history.pushState(null,'',location.href);
       return;
     }
     if(el && el.style.display === 'flex') {
       el.style.display = 'none';
+      history.pushState(null,'',location.href);
       return;
     }
   }
@@ -759,26 +750,22 @@ function handleBack() {
   const activeIdx = Array.from(tabs).findIndex(t => t.classList.contains('active'));
   if(activeIdx > 0) {
     switchTab(0);
+    history.pushState(null,'',location.href);
     return;
   }
 
   // 환율탭에서 → 종료 확인
   exitOv.classList.add('active');
+  history.pushState(null,'',location.href);
 }
 
-// hashchange: 삼성 인터넷에서 가장 안정적
-window.addEventListener('hashchange', function() {
-  handleBack();
+// 페이지 완전히 로딩된 후 2초 뒤에 뒤로가기 리스너 등록
+window.addEventListener('load', function() {
+  setTimeout(function() {
+    history.pushState(null,'',location.href);
+    window.addEventListener('popstate', doBack);
+  }, 2000);
 });
-
-// popstate도 같이 처리 (크롬 등)
-window.addEventListener('popstate', function() {
-  handleBack();
-});
-
-// 앱으로 돌아올 때 해시 복구
-window.addEventListener('focus', setAppHash);
-window.addEventListener('pageshow', setAppHash);
 </script>
 </body>
 </html>
