@@ -718,14 +718,17 @@ document.getElementById('manifest-link').href = URL.createObjectURL(mb);
 fetchRate();
 
 // 뒤로가기 처리 - 탭 전환용 히스토리
-// ===== 뒤로가기 처리 - 해시(#) 방식 (삼성 인터넷 호환) =====
-// 해시를 #app으로 설정해서 뒤로가기를 hashchange로 잡음
+// ===== 뒤로가기 처리 - 해시(#) 방식 =====
+let appReady = false; // 초기 로딩 중 이벤트 무시
 function setAppHash() {
   if(location.hash !== '#app') location.hash = '#app';
 }
 setAppHash();
+// 1초 후에 뒤로가기 처리 활성화 (초기 hashchange 무시)
+setTimeout(()=>{ appReady = true; }, 1000);
 
 function handleBack() {
+  if(!appReady) return; // 초기 로딩 중 무시
   // 즉시 해시 복구
   setTimeout(setAppHash, 10);
 
