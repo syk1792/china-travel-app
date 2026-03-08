@@ -727,8 +727,36 @@ document.getElementById('manifest-link').href = URL.createObjectURL(mb);
 
 fetchRate();
 
-// 뒤로가기 처리 - 탭 전환용 히스토리
+// ===== 뒤로가기 처리 =====
+// 초기 히스토리 쌓기
+history.pushState({step:1}, '');
 
+window.addEventListener('popstate', function() {
+  // 즉시 히스토리 다시 쌓기
+  history.pushState({step:1}, '');
+
+  // 오버레이 열려있으면 닫기
+  const overlays = ['show-ov','ci-ov','num-ov','phr-ov'];
+  for(let id of overlays) {
+    const el = document.getElementById(id);
+    if(el && el.classList.contains('active')) {
+      el.classList.remove('active');
+      return;
+    }
+  }
+  // 전면광고/설치안내 닫기
+  const ov1 = document.getElementById('interstitial-ov');
+  const ov2 = document.getElementById('install-guide-ov');
+  if(ov1 && ov1.style.display === 'flex') { ov1.style.display='none'; return; }
+  if(ov2 && ov2.style.display === 'flex') { ov2.style.display='none'; return; }
+
+  // 필수문장 탭이면 환율탭으로
+  const activeIdx = Array.from(document.querySelectorAll('.tab')).findIndex(t=>t.classList.contains('active'));
+  if(activeIdx > 0) { switchTab(0); return; }
+
+  // 환율탭이면 종료 확인
+  if(confirm('앱을 종료할까요?')) { history.go(-10); }
+});
 </script>
 </body>
 </html>
