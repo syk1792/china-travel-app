@@ -80,7 +80,7 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
 
 .swap-btn { width:32px; height:32px; background:linear-gradient(135deg,var(--red),#b0102a); border:none; border-radius:50%; font-size:14px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 4px 18px var(--red-g); transition:transform 0.3s; }
 .swap-btn:active { transform:rotate(180deg) scale(0.9); }
-.show-btn { width:100%; height:54px; background:linear-gradient(135deg,var(--red),#b0102a); border:none; border-radius:16px; color:white; font-size:16px; font-weight:700; letter-spacing:1px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:12px; box-shadow:0 4px 20px var(--red-g); }
+.show-btn { width:100%; height:54px; background:linear-gradient(135deg,var(--red),#b0102a); border:none; border-radius:16px; color:white; font-size:18px; font-weight:700; letter-spacing:1px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:12px; box-shadow:0 4px 20px var(--red-g); }
 .show-btn:active { transform:scale(0.97); }
 .action-row { display:flex; gap:10px; margin-bottom:12px; }
 .chinese-btn { flex:1; height:64px; background:linear-gradient(135deg,#1e1e30,#252538); border:1px solid rgba(255,36,66,0.3); border-radius:16px; color:white; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:12px; }
@@ -94,14 +94,14 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
 .rate-info-txt { font-family:'DM Mono',monospace; font-size:13px; color:var(--muted); }
 .refresh-btn { background:rgba(255,184,0,0.1); border:1px solid rgba(255,184,0,0.25); border-radius:10px; padding:7px 12px; color:var(--gold); font-size:12px; cursor:pointer; }
 .keypad { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
-.key { background:var(--card2); border:1px solid var(--border); border-radius:13px; height:52px; font-family:'Bebas Neue',sans-serif; font-size:26px; color:var(--text); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.1s; }
+.key { background:var(--card2); border:1px solid var(--border); border-radius:13px; height:56px; font-family:'Bebas Neue',sans-serif; font-size:30px; color:var(--text); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.1s; }
 .key:active { transform:scale(0.93); background:var(--card); }
 .key.dot { color:var(--gold); background:rgba(255,184,0,0.07); border-color:rgba(255,184,0,0.2); }
 .key.del { color:var(--red); }
 .key.clear { font-family:'Noto Sans KR',sans-serif; font-size:14px; font-weight:700; color:var(--red); background:rgba(255,36,66,0.07); border-color:rgba(255,36,66,0.2); grid-column:span 3; height:52px; display:flex; align-items:center; justify-content:center; }
 
 .phrase-wrap { flex:1; overflow-y:auto; padding:16px; -webkit-overflow-scrolling:touch; }
-.phrase-section { font-size:12px; font-weight:700; letter-spacing:2px; color:var(--red); text-transform:uppercase; margin:18px 0 10px; cursor:pointer; display:flex; align-items:center; justify-content:space-between; padding:8px 12px; background:rgba(255,36,66,0.07); border-radius:10px; }
+.phrase-section { font-size:14px; font-weight:700; letter-spacing:2px; color:var(--red); text-transform:uppercase; margin:18px 0 10px; cursor:pointer; display:flex; align-items:center; justify-content:space-between; padding:8px 12px; background:rgba(255,36,66,0.07); border-radius:10px; }
 .phrase-section::after { content:'▲'; font-size:10px; color:var(--red); transition:transform 0.3s; }
 .phrase-section.collapsed::after { content:'▼'; }
 .phrase-cat { overflow:hidden; transition:max-height 0.3s ease; }
@@ -109,9 +109,9 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
 .phrase-section:first-child { margin-top:0; }
 .phrase-card { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:16px 18px; margin-bottom:10px; cursor:pointer; position:relative; overflow:hidden; transition:all 0.15s; }
 .phrase-card:active { transform:scale(0.97); border-color:rgba(255,36,66,0.4); }
-.p-zh { font-family:'Noto Sans SC',sans-serif; font-size:26px; font-weight:700; margin-bottom:4px; }
-.p-pin { font-size:13px; color:var(--gold); font-style:italic; margin-bottom:3px; }
-.p-ko { font-size:14px; color:var(--muted); }
+.p-zh { font-family:'Noto Sans SC',sans-serif; font-size:30px; font-weight:700; margin-bottom:4px; }
+.p-pin { font-size:15px; color:var(--gold); font-style:italic; margin-bottom:3px; }
+.p-ko { font-size:16px; color:var(--muted); }
 
 .overlay { display:none; position:fixed; inset:0; background:var(--bg); z-index:200; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:30px; animation:fadeUp 0.25s ease; }
 .overlay.active { display:flex; }
@@ -149,8 +149,8 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
 
 .tabs { flex-shrink:0; height:var(--TAB); background:rgba(7,7,15,0.97); backdrop-filter:blur(20px); border-top:1px solid var(--border); display:grid; grid-template-columns:1fr 1fr 1fr; z-index:100; padding-bottom:env(safe-area-inset-bottom,0); }
 .tab { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; cursor:pointer; padding-top:6px; }
-.tab-icon { font-size:24px; filter:grayscale(1) opacity(0.35); transition:filter 0.2s; }
-.tab-lbl { font-size:11px; color:var(--muted); font-weight:500; transition:color 0.2s; }
+.tab-icon { font-size:28px; filter:grayscale(1) opacity(0.35); transition:filter 0.2s; }
+.tab-lbl { font-size:13px; color:var(--muted); font-weight:500; transition:color 0.2s; }
 .tab.active .tab-icon { filter:none; }
 .tab.active .tab-lbl { color:var(--red); }
 
@@ -181,7 +181,7 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
       <div style="text-align:center;margin-bottom:8px;animation:bounce 1.5s infinite">
         <span style="font-size:11px;color:var(--muted)">아래로 스크롤 ↓</span>
       </div>
-      <button class="show-btn" onclick="openShowMode()">📱 상대방에게 크게 보여주기</button>
+      <button class="show-btn" style="font-size:18px" onclick="openShowMode()">📱 상대방에게 크게 보여주기</button>
       <div class="action-row">
         <div class="chinese-btn" onclick="openCI()">
           <span class="zh">多少钱？</span>
@@ -194,11 +194,11 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
       <div style="display:flex;gap:8px;margin-bottom:10px">
         <div onclick="openNumShow()" style="flex:1;height:50px;background:linear-gradient(135deg,#1e1e30,#252538);border:1px solid rgba(255,184,0,0.25);border-radius:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px">
           <span style="font-size:20px">🔢</span>
-          <span style="font-size:13px;font-weight:700;color:var(--muted)">숫자 크게 보여주기</span>
+          <span style="font-size:15px;font-weight:700;color:var(--muted)">숫자 크게 보여주기</span>
         </div>
         <div onclick="addToHome()" style="flex:1;height:50px;background:linear-gradient(135deg,#1e1e30,#252538);border:1px solid rgba(255,184,0,0.3);border-radius:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px">
           <span style="font-size:20px">📲</span>
-          <span style="font-size:13px;font-weight:700;color:var(--gold)">홈화면에 추가</span>
+          <span style="font-size:15px;font-weight:700;color:var(--gold)">홈화면에 추가</span>
         </div>
       </div>
       <div class="rate-info" style="margin-bottom:0">
@@ -241,56 +241,56 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
       <div class="phrase-section">📱 앱 바로가기</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px">
         <div onclick="openAppSmart('alipays://','https://play.google.com/store/apps/details?id=com.eg.android.AlipayGphone','https://apps.apple.com/app/id333206289')" style="background:var(--card);border:1px solid rgba(22,119,255,0.25);border-radius:16px;padding:14px 6px;cursor:pointer;text-align:center">
-          <div style="font-size:28px">💙</div><div style="font-size:11px;font-weight:700;color:#1677FF;margin-top:6px;line-height:1.3">알리페이</div><div style="font-size:9px;color:var(--muted);margin-top:2px">支付宝</div>
+          <div style="font-size:28px">💙</div><div style="font-size:13px;font-weight:700;color:#1677FF;margin-top:6px;line-height:1.3">알리페이</div><div style="font-size:9px;color:var(--muted);margin-top:2px">支付宝</div>
         </div>
         <div onclick="openAppSmart('androidamap://;iosamap://','https://play.google.com/store/apps/details?id=com.autonavi.minimap','https://apps.apple.com/app/id461703208')" style="background:var(--card);border:1px solid rgba(255,99,0,0.25);border-radius:16px;padding:14px 6px;cursor:pointer;text-align:center">
-          <div style="font-size:28px">🗺️</div><div style="font-size:11px;font-weight:700;color:#FF6300;margin-top:6px;line-height:1.3">고덕지도</div><div style="font-size:9px;color:var(--muted);margin-top:2px">高德地图</div>
+          <div style="font-size:28px">🗺️</div><div style="font-size:13px;font-weight:700;color:#FF6300;margin-top:6px;line-height:1.3">고덕지도</div><div style="font-size:9px;color:var(--muted);margin-top:2px">高德地图</div>
         </div>
         <div onclick="openAppSmart('dianping://','https://play.google.com/store/apps/details?id=com.dianping.v1','https://apps.apple.com/app/id351091731')" style="background:var(--card);border:1px solid rgba(255,36,66,0.25);border-radius:16px;padding:14px 6px;cursor:pointer;text-align:center">
-          <div style="font-size:28px">⭐</div><div style="font-size:11px;font-weight:700;color:var(--red);margin-top:6px;line-height:1.3">따종디엔핑</div><div style="font-size:9px;color:var(--muted);margin-top:2px">大众点评</div>
+          <div style="font-size:28px">⭐</div><div style="font-size:13px;font-weight:700;color:var(--red);margin-top:6px;line-height:1.3">따종디엔핑</div><div style="font-size:9px;color:var(--muted);margin-top:2px">大众点评</div>
         </div>
         <div onclick="openGoogleTranslate()" style="background:var(--card);border:1px solid rgba(66,133,244,0.25);border-radius:16px;padding:14px 6px;cursor:pointer;text-align:center">
-          <div style="font-size:28px">🎙️</div><div style="font-size:11px;font-weight:700;color:#4285F4;margin-top:6px;line-height:1.3">구글 번역</div><div style="font-size:9px;color:var(--muted);margin-top:2px">음성통역</div>
+          <div style="font-size:28px">🎙️</div><div style="font-size:13px;font-weight:700;color:#4285F4;margin-top:6px;line-height:1.3">구글 번역</div><div style="font-size:9px;color:var(--muted);margin-top:2px">음성통역</div>
         </div>
         <div onclick="openGoogleLens()" style="background:var(--card);border:1px solid rgba(234,67,53,0.25);border-radius:16px;padding:14px 6px;cursor:pointer;text-align:center">
-          <div style="font-size:28px">📷</div><div style="font-size:11px;font-weight:700;color:#EA4335;margin-top:6px;line-height:1.3">구글 렌즈</div><div style="font-size:9px;color:var(--muted);margin-top:2px">글자·사물인식</div>
+          <div style="font-size:28px">📷</div><div style="font-size:13px;font-weight:700;color:#EA4335;margin-top:6px;line-height:1.3">구글 렌즈</div><div style="font-size:9px;color:var(--muted);margin-top:2px">글자·사물인식</div>
         </div>
-        <div onclick="window.open('https://papago.naver.com','_blank')" style="background:var(--card);border:1px solid rgba(3,199,90,0.25);border-radius:16px;padding:14px 6px;cursor:pointer;text-align:center">
-          <div style="font-size:28px">🌐</div><div style="font-size:11px;font-weight:700;color:#03C75A;margin-top:6px;line-height:1.3">파파고</div><div style="font-size:9px;color:var(--muted);margin-top:2px">한글→한자</div>
+        <div onclick="openPapago()" style="background:var(--card);border:1px solid rgba(3,199,90,0.25);border-radius:16px;padding:14px 6px;cursor:pointer;text-align:center">
+          <div style="font-size:28px">🌐</div><div style="font-size:13px;font-weight:700;color:#03C75A;margin-top:6px;line-height:1.3">파파고</div><div style="font-size:9px;color:var(--muted);margin-top:2px">한글→한자</div>
         </div>
       </div>
 
       <div class="phrase-section">🙏 인사</div>
       <div class="phrase-cat" id="cat-greet">
-        <div class="phrase-card" onclick="showPhrase('你好','Nǐ hǎo','안녕하세요')"><div class="p-zh">你好</div><div class="p-pin">Nǐ hǎo</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 니 하오</div><div class="p-ko">안녕하세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('你好')">🔊</div></div>
-        <div class="phrase-card" onclick="showPhrase('谢谢','Xièxiè','감사합니다')"><div class="p-zh">谢谢</div><div class="p-pin">Xièxiè</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 씨에씨에</div><div class="p-ko">감사합니다</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('谢谢')">🔊</div></div>
-        <div class="phrase-card" onclick="showPhrase('对不起','Duìbuqǐ','죄송합니다')"><div class="p-zh">对不起</div><div class="p-pin">Duìbuqǐ</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 뚜이부치</div><div class="p-ko">죄송합니다</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('对不起')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('你好','Nǐ hǎo','안녕하세요')"><div class="p-zh">你好</div><div class="p-pin">Nǐ hǎo</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 니 하오</div><div class="p-ko">안녕하세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('你好')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('谢谢','Xièxiè','감사합니다')"><div class="p-zh">谢谢</div><div class="p-pin">Xièxiè</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 씨에씨에</div><div class="p-ko">감사합니다</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('谢谢')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('对不起','Duìbuqǐ','죄송합니다')"><div class="p-zh">对不起</div><div class="p-pin">Duìbuqǐ</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 뚜이부치</div><div class="p-ko">죄송합니다</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('对不起')">🔊</div></div>
       </div>
 
       <div class="phrase-section">🛍️ 쇼핑</div>
       <div class="phrase-cat" id="cat-shop">
-        <div class="phrase-card" onclick="showPhrase('多少钱？','Duōshao qián?','얼마예요?')"><div class="p-zh">多少钱？</div><div class="p-pin">Duōshao qián?</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 뚜어샤오 치엔?</div><div class="p-ko">얼마예요?</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('多少钱？')">🔊</div></div>
-        <div class="phrase-card" onclick="showPhrase('太贵了！','Tài guì le!','너무 비싸요!')"><div class="p-zh">太贵了！</div><div class="p-pin">Tài guì le!</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 타이 꾸에이 러!</div><div class="p-ko">너무 비싸요!</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('太贵了！')">🔊</div></div>
-        <div class="phrase-card" onclick="showPhrase('便宜一点','Piányí yīdiǎn','좀 깎아주세요')"><div class="p-zh">便宜一点</div><div class="p-pin">Piányí yīdiǎn</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 피엔이 이디엔</div><div class="p-ko">좀 깎아주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('便宜一点')">🔊</div></div>
-        <div class="phrase-card" onclick="showPhrase('我要这个','Wǒ yào zhège','이걸 살게요')"><div class="p-zh">我要这个</div><div class="p-pin">Wǒ yào zhège</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 야오 쩌거</div><div class="p-ko">이걸 살게요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('我要这个')">🔊</div></div>
-        <div class="phrase-card" onclick="showPhrase('不要','Bú yào','필요 없어요')"><div class="p-zh">不要</div><div class="p-pin">Bú yào</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 뿌 야오</div><div class="p-ko">필요 없어요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('不要')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('多少钱？','Duōshao qián?','얼마예요?')"><div class="p-zh">多少钱？</div><div class="p-pin">Duōshao qián?</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 뚜어샤오 치엔?</div><div class="p-ko">얼마예요?</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('多少钱？')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('太贵了！','Tài guì le!','너무 비싸요!')"><div class="p-zh">太贵了！</div><div class="p-pin">Tài guì le!</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 타이 꾸에이 러!</div><div class="p-ko">너무 비싸요!</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('太贵了！')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('便宜一点','Piányí yīdiǎn','좀 깎아주세요')"><div class="p-zh">便宜一点</div><div class="p-pin">Piányí yīdiǎn</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 피엔이 이디엔</div><div class="p-ko">좀 깎아주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('便宜一点')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('我要这个','Wǒ yào zhège','이걸 살게요')"><div class="p-zh">我要这个</div><div class="p-pin">Wǒ yào zhège</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 야오 쩌거</div><div class="p-ko">이걸 살게요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('我要这个')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('不要','Bú yào','필요 없어요')"><div class="p-zh">不要</div><div class="p-pin">Bú yào</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 뿌 야오</div><div class="p-ko">필요 없어요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('不要')">🔊</div></div>
       </div>
 
       <div class="phrase-section">🍜 식당</div>
       <div class="phrase-cat" id="cat-food">
-        <div class="phrase-card" onclick="showPhrase('菜单','Càidān','메뉴 주세요')"><div class="p-zh">菜单</div><div class="p-pin">Càidān</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 차이단</div><div class="p-ko">메뉴 주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('菜单')">🔊</div></div>
-        <div class="phrase-card" onclick="showPhrase('好吃！','Hào chī!','맛있어요!')"><div class="p-zh">好吃！</div><div class="p-pin">Hào chī!</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 하오 츠!</div><div class="p-ko">맛있어요!</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('好吃！')">🔊</div></div>
-        <div class="phrase-card" onclick="showPhrase('买单','Mǎi dān','계산해 주세요')"><div class="p-zh">买单</div><div class="p-pin">Mǎi dān</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 마이 단</div><div class="p-ko">계산해 주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('买单')">🔊</div></div>
-        <div class="phrase-card" onclick="showPhrase('辣的','Là de','매운 거예요?')"><div class="p-zh">辣的</div><div class="p-pin">Là de</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 라 더</div><div class="p-ko">매운 거예요?</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('辣的')">🔊</div></div>
-        <div class="phrase-card" onclick="showPhrase('这里最受欢迎的是什么？','Zhèlǐ zuì shòu huānyíng de shì shénme?','여기서 많이 찾는 거 추천해주세요')"><div class="p-zh">这里最受欢迎的是什么？</div><div class="p-pin">Zhèlǐ zuì shòu huānyíng...</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 쩌리 쭈이 쇼우 환잉...</div><div class="p-ko">여기서 많이 찾는 거 추천해주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('这里最受欢迎的是什么？')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('菜单','Càidān','메뉴 주세요')"><div class="p-zh">菜单</div><div class="p-pin">Càidān</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 차이단</div><div class="p-ko">메뉴 주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('菜单')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('好吃！','Hào chī!','맛있어요!')"><div class="p-zh">好吃！</div><div class="p-pin">Hào chī!</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 하오 츠!</div><div class="p-ko">맛있어요!</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('好吃！')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('买单','Mǎi dān','계산해 주세요')"><div class="p-zh">买单</div><div class="p-pin">Mǎi dān</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 마이 단</div><div class="p-ko">계산해 주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('买单')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('辣的','Là de','매운 거예요?')"><div class="p-zh">辣的</div><div class="p-pin">Là de</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 라 더</div><div class="p-ko">매운 거예요?</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('辣的')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('这里最受欢迎的是什么？','Zhèlǐ zuì shòu huānyíng de shì shénme?','여기서 많이 찾는 거 추천해주세요')"><div class="p-zh">这里最受欢迎的是什么？</div><div class="p-pin">Zhèlǐ zuì shòu huānyíng...</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 쩌리 쭈이 쇼우 환잉...</div><div class="p-ko">여기서 많이 찾는 거 추천해주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('这里最受欢迎的是什么？')">🔊</div></div>
       </div>
 
       <div class="phrase-section">🚕 교통·길찾기</div>
       <div class="phrase-cat" id="cat-trans">
-        <div class="phrase-card" onclick="showPhrase('去这里','Qù zhèlǐ','여기로 가주세요')"><div class="p-zh">去这里</div><div class="p-pin">Qù zhèlǐ</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 취 쩌리</div><div class="p-ko">여기로 가주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('去这里')">🔊</div></div>
-        <div class="phrase-card" onclick="showPhrase('听不懂','Tīng bù dǒng','못 알아듣겠어요')"><div class="p-zh">听不懂</div><div class="p-pin">Tīng bù dǒng</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 팅 뿌 동</div><div class="p-ko">못 알아듣겠어요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('听不懂')">🔊</div></div>
-        <div class="phrase-card" onclick="showPhrase('请帮我叫出租车','Qǐng bāng wǒ jiào chūzū chē','택시 불러주세요')"><div class="p-zh">请帮我叫出租车</div><div class="p-pin">Qǐng bāng wǒ jiào chūzū chē</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 칭 방 워 지아오 추주 처</div><div class="p-ko">택시 불러주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('请帮我叫出租车')">🔊</div></div>
-        <div class="phrase-card" onclick="showPhrase('怎么走？','Zěnme zǒu?','어떻게 가요?')"><div class="p-zh">怎么走？</div><div class="p-pin">Zěnme zǒu?</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 전머 저우?</div><div class="p-ko">어떻게 가요?</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('怎么走？')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('去这里','Qù zhèlǐ','여기로 가주세요')"><div class="p-zh">去这里</div><div class="p-pin">Qù zhèlǐ</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 취 쩌리</div><div class="p-ko">여기로 가주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('去这里')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('听不懂','Tīng bù dǒng','못 알아듣겠어요')"><div class="p-zh">听不懂</div><div class="p-pin">Tīng bù dǒng</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 팅 뿌 동</div><div class="p-ko">못 알아듣겠어요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('听不懂')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('请帮我叫出租车','Qǐng bāng wǒ jiào chūzū chē','택시 불러주세요')"><div class="p-zh">请帮我叫出租车</div><div class="p-pin">Qǐng bāng wǒ jiào chūzū chē</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 칭 방 워 지아오 추주 처</div><div class="p-ko">택시 불러주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('请帮我叫出租车')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('怎么走？','Zěnme zǒu?','어떻게 가요?')"><div class="p-zh">怎么走？</div><div class="p-pin">Zěnme zǒu?</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 전머 저우?</div><div class="p-ko">어떻게 가요?</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('怎么走？')">🔊</div></div>
       </div>
 
       <div class="phrase-section" style="color:#FF2442;background:rgba(255,36,66,0.12)">🚨 긴급 전화번호</div>
@@ -313,26 +313,26 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
 
       <div class="phrase-section">🥜 음식 알레르기·금기</div>
       <div class="phrase-cat" id="cat-allergy">
-        <div class="phrase-card" onclick="showPhrase('我不能吃猪肉','Wǒ bù néng chī zhūròu','돼지고기 못 먹어요')"><div class="p-zh">我不能吃猪肉</div><div class="p-pin">Wǒ bù néng chī zhūròu</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 뿌 넝 츠 주로우</div><div class="p-ko">돼지고기 못 먹어요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('我不能吃猪肉')">🔊</div></div>
-        <div class="phrase-card" onclick="showPhrase('我对坚果过敏','Wǒ duì jiānguǒ guòmǐn','견과류 알레르기 있어요')"><div class="p-zh">我对坚果过敏</div><div class="p-pin">Wǒ duì jiānguǒ guòmǐn</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 뚜이 지엔궈 궈민</div><div class="p-ko">견과류 알레르기 있어요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('我对坚果过敏')">🔊</div></div>
-        <div class="phrase-card" onclick="showPhrase('不要放辣椒','Bú yào fàng làjiāo','고추 넣지 마세요')"><div class="p-zh">不要放辣椒</div><div class="p-pin">Bú yào fàng làjiāo</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 뿌야오 팡 라지아오</div><div class="p-ko">고추 넣지 마세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('不要放辣椒')">🔊</div></div>
-        <div class="phrase-card" onclick="showPhrase('我是素食者','Wǒ shì sùshí zhě','채식주의자예요')"><div class="p-zh">我是素食者</div><div class="p-pin">Wǒ shì sùshí zhě</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 스 쑤스 저</div><div class="p-ko">채식주의자예요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('我是素食者')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('我不能吃猪肉','Wǒ bù néng chī zhūròu','돼지고기 못 먹어요')"><div class="p-zh">我不能吃猪肉</div><div class="p-pin">Wǒ bù néng chī zhūròu</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 뿌 넝 츠 주로우</div><div class="p-ko">돼지고기 못 먹어요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('我不能吃猪肉')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('我对坚果过敏','Wǒ duì jiānguǒ guòmǐn','견과류 알레르기 있어요')"><div class="p-zh">我对坚果过敏</div><div class="p-pin">Wǒ duì jiānguǒ guòmǐn</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 뚜이 지엔궈 궈민</div><div class="p-ko">견과류 알레르기 있어요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('我对坚果过敏')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('不要放辣椒','Bú yào fàng làjiāo','고추 넣지 마세요')"><div class="p-zh">不要放辣椒</div><div class="p-pin">Bú yào fàng làjiāo</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 뿌야오 팡 라지아오</div><div class="p-ko">고추 넣지 마세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('不要放辣椒')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('我是素食者','Wǒ shì sùshí zhě','채식주의자예요')"><div class="p-zh">我是素食者</div><div class="p-pin">Wǒ shì sùshí zhě</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 스 쑤스 저</div><div class="p-ko">채식주의자예요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('我是素食者')">🔊</div></div>
       </div>
 
       <div class="phrase-section">🏨 호텔</div>
       <div class="phrase-cat" id="cat-hotel">
-        <div class="phrase-card" onclick="showPhrase('我来办理入住','Wǒ lái bànlǐ rùzhù','체크인 하러 왔어요')"><div class="p-zh">我来办理入住</div><div class="p-pin">Wǒ lái bànlǐ rùzhù</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 라이 반리 루주</div><div class="p-ko">체크인 하러 왔어요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('我来办理入住')">🔊</div></div>
-        <div class="phrase-card" onclick="showPhrase('WiFi密码是多少？','WiFi mìmǎ shì duōshao?','와이파이 비밀번호가 뭐예요?')"><div class="p-zh">WiFi密码是多少？</div><div class="p-pin">WiFi mìmǎ shì duōshao?</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 와이파이 미마 스 뚜어샤오?</div><div class="p-ko">와이파이 비밀번호가 뭐예요?</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('WiFi密码是多少？')">🔊</div></div>
-        <div class="phrase-card" onclick="showPhrase('空调坏了','Kōngtiáo huài le','에어컨이 고장났어요')"><div class="p-zh">空调坏了</div><div class="p-pin">Kōngtiáo huài le</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 쿵티아오 화이 러</div><div class="p-ko">에어컨이 고장났어요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('空调坏了')">🔊</div></div>
-        <div class="phrase-card" onclick="showPhrase('我要退房','Wǒ yào tuìfáng','체크아웃 할게요')"><div class="p-zh">我要退房</div><div class="p-pin">Wǒ yào tuìfáng</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 야오 투이팡</div><div class="p-ko">체크아웃 할게요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('我要退房')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('我来办理入住','Wǒ lái bànlǐ rùzhù','체크인 하러 왔어요')"><div class="p-zh">我来办理入住</div><div class="p-pin">Wǒ lái bànlǐ rùzhù</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 라이 반리 루주</div><div class="p-ko">체크인 하러 왔어요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('我来办理入住')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('WiFi密码是多少？','WiFi mìmǎ shì duōshao?','와이파이 비밀번호가 뭐예요?')"><div class="p-zh">WiFi密码是多少？</div><div class="p-pin">WiFi mìmǎ shì duōshao?</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 와이파이 미마 스 뚜어샤오?</div><div class="p-ko">와이파이 비밀번호가 뭐예요?</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('WiFi密码是多少？')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('空调坏了','Kōngtiáo huài le','에어컨이 고장났어요')"><div class="p-zh">空调坏了</div><div class="p-pin">Kōngtiáo huài le</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 쿵티아오 화이 러</div><div class="p-ko">에어컨이 고장났어요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('空调坏了')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('我要退房','Wǒ yào tuìfáng','체크아웃 할게요')"><div class="p-zh">我要退房</div><div class="p-pin">Wǒ yào tuìfáng</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 야오 투이팡</div><div class="p-ko">체크아웃 할게요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('我要退房')">🔊</div></div>
       </div>
 
       <div class="phrase-section">💊 약국·병원</div>
       <div class="phrase-cat" id="cat-pharmacy">
-        <div class="phrase-card" onclick="showPhrase('我肚子疼','Wǒ dùzi téng','배가 아파요')"><div class="p-zh">我肚子疼</div><div class="p-pin">Wǒ dùzi téng</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 두쯔 텅</div><div class="p-ko">배가 아파요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('我肚子疼')">🔊</div></div>
-        <div class="phrase-card" onclick="showPhrase('我发烧了','Wǒ fāshāo le','열이 나요')"><div class="p-zh">我发烧了</div><div class="p-pin">Wǒ fāshāo le</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 파샤오 러</div><div class="p-ko">열이 나요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('我发烧了')">🔊</div></div>
-        <div class="phrase-card" onclick="showPhrase('请给我退烧药','Qǐng gěi wǒ tuìshāoyào','해열제 주세요')"><div class="p-zh">请给我退烧药</div><div class="p-pin">Qǐng gěi wǒ tuìshāoyào</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 칭 게이 워 투이샤오야오</div><div class="p-ko">해열제 주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('请给我退烧药')">🔊</div></div>
-        <div class="phrase-card" onclick="showPhrase('最近的医院在哪里？','Zuìjìn de yīyuàn zài nǎlǐ?','가장 가까운 병원이 어디예요?')"><div class="p-zh">最近的医院在哪里？</div><div class="p-pin">Zuìjìn de yīyuàn zài nǎlǐ?</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 쭈이진 더 이위엔 짜이 나리?</div><div class="p-ko">가장 가까운 병원이 어디예요?</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('最近的医院在哪里？')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('我肚子疼','Wǒ dùzi téng','배가 아파요')"><div class="p-zh">我肚子疼</div><div class="p-pin">Wǒ dùzi téng</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 두쯔 텅</div><div class="p-ko">배가 아파요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('我肚子疼')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('我发烧了','Wǒ fāshāo le','열이 나요')"><div class="p-zh">我发烧了</div><div class="p-pin">Wǒ fāshāo le</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 파샤오 러</div><div class="p-ko">열이 나요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('我发烧了')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('请给我退烧药','Qǐng gěi wǒ tuìshāoyào','해열제 주세요')"><div class="p-zh">请给我退烧药</div><div class="p-pin">Qǐng gěi wǒ tuìshāoyào</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 칭 게이 워 투이샤오야오</div><div class="p-ko">해열제 주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('请给我退烧药')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('最近的医院在哪里？','Zuìjìn de yīyuàn zài nǎlǐ?','가장 가까운 병원이 어디예요?')"><div class="p-zh">最近的医院在哪里？</div><div class="p-pin">Zuìjìn de yīyuàn zài nǎlǐ?</div><div style="font-size:14px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 쭈이진 더 이위엔 짜이 나리?</div><div class="p-ko">가장 가까운 병원이 어디예요?</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('最近的医院在哪里？')">🔊</div></div>
       </div>
       <div style="height:16px"></div>
     </div>
@@ -547,7 +547,7 @@ function updateFX() {
   fromEl.textContent = fromTxt;
   toEl.textContent = toTxt;
   const maxLen = Math.max(fromTxt.length, toTxt.length);
-  const size = maxLen <= 5 ? '44px' : maxLen <= 7 ? '36px' : maxLen <= 9 ? '28px' : '22px';
+  const size = maxLen <= 5 ? '48px' : maxLen <= 7 ? '38px' : maxLen <= 9 ? '30px' : '24px';
   fromEl.style.fontSize = size;
   toEl.style.fontSize = size;
 }
@@ -640,29 +640,120 @@ function speakChinese(text) {
 }
 try { window.speechSynthesis.onvoiceschanged = function(){ window.speechSynthesis.getVoices(); }; } catch(e){}
 
+// 앱 실행 - intent:// 방식 (Chrome이 네이티브 처리, JS 타이머 불필요)
+function intentUrl(pkg, scheme, path) {
+  var fallback = encodeURIComponent('https://play.google.com/store/apps/details?id=' + pkg);
+  return 'intent://' + path + '#Intent;scheme=' + scheme + ';package=' + pkg + ';S.browser_fallback_url=' + fallback + ';end';
+}
+
 function openAppSmart(scheme, androidStore, iosStore) {
-  const isAndroid=/Android/i.test(navigator.userAgent), isIOS=/iPhone|iPad|iPod/i.test(navigator.userAgent);
-  let appScheme=scheme;
-  if(scheme.includes(';')){const[a,b]=scheme.split(';');appScheme=isAndroid?a:b;}
-  const start=Date.now(); window.location.href=appScheme;
-  setTimeout(function(){if(Date.now()-start<2000){if(isAndroid&&androidStore)window.location.href=androidStore;else if(isIOS&&iosStore)window.location.href=iosStore;else showToast('앱을 먼저 설치해주세요 📱');}},1500);
+  var isAndroid = /Android/i.test(navigator.userAgent);
+  var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  if (isAndroid) {
+    // 고덕지도
+    if (scheme.includes('androidamap') || scheme.includes('amap')) {
+      window.location.href = intentUrl('com.autonavi.minimap', 'androidamap', 'route/plan');
+      return;
+    }
+    // 알리페이
+    if (scheme.includes('alipay')) {
+      window.location.href = intentUrl('com.eg.android.AlipayGphone', 'alipays', '');
+      return;
+    }
+    // 따종디엔핑
+    if (scheme.includes('dianping')) {
+      window.location.href = intentUrl('com.dianping.v1', 'dianping', '');
+      return;
+    }
+    // 기본: intent 방식 시도
+    if (androidStore) window.location.href = androidStore;
+  } else if (isIOS) {
+    var appScheme = scheme.includes(';') ? scheme.split(';')[1] : scheme;
+    var opened = false;
+    function onHide() { opened = true; }
+    document.addEventListener('visibilitychange', onHide);
+    window.location.href = appScheme;
+    setTimeout(function() {
+      document.removeEventListener('visibilitychange', onHide);
+      if (!opened && iosStore) window.location.href = iosStore;
+    }, 1500);
+  }
 }
-function openGoogleLens() {
-  const isAndroid=/Android/i.test(navigator.userAgent), isIOS=/iPhone|iPad|iPod/i.test(navigator.userAgent);
-  const start=Date.now();
-  if(isAndroid) window.location.href='intent://lens.google.com#Intent;scheme=https;package=com.google.ar.lens;end';
-  else if(isIOS) window.location.href='googlelens://';
-  else { window.open('https://lens.google.com','_blank'); return; }
-  setTimeout(function(){if(Date.now()-start<2000){if(isAndroid)window.location.href='https://play.google.com/store/apps/details?id=com.google.ar.lens';else if(isIOS)window.location.href='https://apps.apple.com/app/id284815942';}},1500);
-}
+
 function openGoogleTranslate() {
-  const isAndroid=/Android/i.test(navigator.userAgent), isIOS=/iPhone|iPad|iPod/i.test(navigator.userAgent);
-  const start=Date.now(); window.location.href='googletranslate://';
-  setTimeout(function(){if(Date.now()-start<2000){if(isAndroid)window.location.href='https://play.google.com/store/apps/details?id=com.google.android.apps.translate';else if(isIOS)window.location.href='https://apps.apple.com/app/id414706506';}},1500);
+  var isAndroid = /Android/i.test(navigator.userAgent);
+  var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if (isAndroid) {
+    window.location.href = intentUrl('com.google.android.apps.translate', 'googletranslate', '');
+  } else if (isIOS) {
+    var opened = false;
+    function onHide() { opened = true; }
+    document.addEventListener('visibilitychange', onHide);
+    window.location.href = 'googletranslate://';
+    setTimeout(function() {
+      document.removeEventListener('visibilitychange', onHide);
+      if (!opened) window.location.href = 'https://apps.apple.com/app/id414706506';
+    }, 1500);
+  } else {
+    window.open('https://translate.google.com', '_blank');
+  }
 }
+
+function openGoogleLens() {
+  var isAndroid = /Android/i.test(navigator.userAgent);
+  var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if (isAndroid) {
+    // 구글 렌즈 앱 (com.google.ar.lens) 또는 구글 앱 내 렌즈
+    window.location.href = intentUrl('com.google.ar.lens', 'googlelens', '');
+  } else if (isIOS) {
+    var opened = false;
+    function onHide() { opened = true; }
+    document.addEventListener('visibilitychange', onHide);
+    window.location.href = 'googlelens://';
+    setTimeout(function() {
+      document.removeEventListener('visibilitychange', onHide);
+      if (!opened) window.location.href = 'https://apps.apple.com/app/id284815942';
+    }, 1500);
+  } else {
+    window.open('https://lens.google.com', '_blank');
+  }
+}
+
+function openPapago() {
+  var isAndroid = /Android/i.test(navigator.userAgent);
+  var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if (isAndroid) {
+    window.location.href = intentUrl('com.naver.labs.translator', 'naverpapagoapp', 'translate');
+  } else if (isIOS) {
+    var opened = false;
+    function onHide() { opened = true; }
+    document.addEventListener('visibilitychange', onHide);
+    window.location.href = 'naverpapagoapp://translate';
+    setTimeout(function() {
+      document.removeEventListener('visibilitychange', onHide);
+      if (!opened) window.location.href = 'https://apps.apple.com/app/id1225370913';
+    }, 1500);
+  } else {
+    window.open('https://papago.naver.com', '_blank');
+  }
+}
+
 function openAlipay() {
-  const s=Date.now(); window.location.href='alipays://';
-  setTimeout(function(){if(Date.now()-s<1500)showToast('알리페이 앱을 먼저 설치해주세요 📱');},800);
+  var isAndroid = /Android/i.test(navigator.userAgent);
+  var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if (isAndroid) {
+    window.location.href = intentUrl('com.eg.android.AlipayGphone', 'alipays', '');
+  } else {
+    var opened = false;
+    function onHide() { opened = true; }
+    document.addEventListener('visibilitychange', onHide);
+    window.location.href = 'alipays://';
+    setTimeout(function() {
+      document.removeEventListener('visibilitychange', onHide);
+      if (!opened) showToast('알리페이 앱을 먼저 설치해주세요 📱');
+    }, 1500);
+  }
 }
 
 let phrPriceIn='0';
@@ -760,7 +851,7 @@ function buildChecklist() {
   let html = '';
   CL_DATA.forEach(function(cat) {
     html += '<div style="margin-bottom:6px">';
-    html += '<div style="font-size:12px;font-weight:700;letter-spacing:2px;color:'+cat.color+';background:rgba(255,255,255,0.04);border-radius:10px;padding:8px 12px;margin-bottom:8px">'+cat.cat+'</div>';
+    html += '<div style="font-size:15px;font-weight:700;color:'+cat.color+';background:rgba(255,255,255,0.05);border-radius:12px;padding:12px 16px;margin-bottom:10px">'+cat.cat+'</div>';
     html += '<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px">';
     cat.items.forEach(function(item) {
       const checked = saved.indexOf(item.id) >= 0;
@@ -775,7 +866,7 @@ function buildChecklist() {
       html += '<div onclick="toggleCheck(\''+item.id+'\',this)" data-id="'+item.id+'" style="background:'+bg+';border:1px solid '+bd+';border-radius:14px;padding:13px 14px;cursor:pointer;display:flex;align-items:flex-start;gap:12px;transition:all 0.2s">';
       html += '<div style="width:24px;height:24px;border-radius:50%;border:2px solid '+circleBd+';background:'+circleBg+';display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">'+check+'</div>';
       html += '<div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:'+textWeight+';color:'+textColor+';text-decoration:'+textDeco+';line-height:1.4">'+item.text+'</div>';
-      html += '<div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:4px;line-height:1.4">'+item.tip+'</div></div>';
+      html += '<div style="font-size:13px;color:rgba(255,255,255,0.3);margin-top:4px;line-height:1.5">'+item.tip+'</div></div>';
       html += '</div>';
     });
     html += '</div></div>';
