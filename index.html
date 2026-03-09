@@ -8,20 +8,15 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#07070f">
 <link rel="manifest" id="manifest-link">
-<!-- 썸네일 / SNS 공유 메타태그 -->
 <meta property="og:title" content="중국 여행 필수 앱 - 환율계산기 + 필수 문장">
 <meta property="og:description" content="위안↔원 실시간 환율계산, 중국어 필수 문장, 홈화면에 앱으로 추가 가능!">
 <meta property="og:image" content="https://blogger.googleusercontent.com/img/a/AVvXsEiD1_MeBCHfy_6VNQCVUyoqwJjBMiG2L9D1swVE2bk5-OJNHKQEYgBC2iKOjVx-pRVL2tF4J0M3DJJWvhKV-8xMf3JJM1zN8PMuxWELw-0_XCiKmYKGWLZkiDny7GOJ_NONBja1QV9zFmB5UxwN4VI5K5Q5WghaM1qAR6L5RbGjuT3p0jpsy-jDRdprBhZx">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
 <meta property="og:type" content="website">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="중국 여행 필수 앱 - 환율계산기 + 필수 문장">
-<meta name="twitter:image" content="https://blogger.googleusercontent.com/img/a/AVvXsEiD1_MeBCHfy_6VNQCVUyoqwJjBMiG2L9D1swVE2bk5-OJNHKQEYgBC2iKOjVx-pRVL2tF4J0M3DJJWvhKV-8xMf3JJM1zN8PMuxWELw-0_XCiKmYKGWLZkiDny7GOJ_NONBja1QV9zFmB5UxwN4VI5K5Q5WghaM1qAR6L5RbGjuT3p0jpsy-jDRdprBhZx">
 <title>中韩 환율</title>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1790215424507586" crossorigin="anonymous"></script>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- AdSense: 깃허브 배포용 (미리보기에서는 제거) -->
+<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1790215424507586" crossorigin="anonymous"></script> -->
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@700&family=DM+Mono:wght@400;500&display=swap');
 :root {
   --bg: #07070f;
   --card: #111120;
@@ -36,44 +31,30 @@
   --TAB: 68px;
   --HEAD: 56px;
 }
-* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-html { height:100%; background:#0a0a0a; }
-body {
-  height:100%;
-  background:var(--bg);
-  color:var(--text);
-  font-family:'Noto Sans KR',sans-serif;
-  overflow:hidden;
-}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
 
-/* PC에서 폰 액자 */
-@media (min-width: 600px) {
+/* ★ 핵심 레이아웃: flexbox (position:fixed 대신) */
+html, body { height:100%; background:var(--bg); color:var(--text); font-family:'Noto Sans KR',sans-serif; overflow:hidden; }
+.app { width:100%; height:100%; display:flex; flex-direction:column; overflow:hidden; }
+
+/* PC 폰 액자 */
+@media (min-width:600px) {
   html { background:#111; display:flex; align-items:center; justify-content:center; }
-  body {
-    width:390px;
-    height:844px;
-    max-height:100vh;
+  body { display:flex; align-items:center; justify-content:center; }
+  .app {
+    width:390px; height:844px; max-height:100vh;
     border-radius:44px;
     box-shadow:0 0 0 12px #222, 0 0 0 14px #333, 0 30px 80px rgba(0,0,0,0.8);
-    position:relative;
-    overflow:hidden;
+    position:relative; overflow:hidden;
   }
-  body::before {
-    content:'';
-    position:absolute;
-    top:0; left:50%;
-    transform:translateX(-50%);
-    width:120px; height:28px;
-    background:#000;
-    border-radius:0 0 18px 18px;
-    z-index:999;
+  .app::before {
+    content:''; position:absolute; top:0; left:50%; transform:translateX(-50%);
+    width:120px; height:28px; background:#000; border-radius:0 0 18px 18px; z-index:999;
   }
 }
-* { touch-action:manipulation; }
-[style*="overflow-y:scroll"] { touch-action:pan-y !important; }
 
 .hd {
-  position:fixed; top:0; left:0; right:0; height:var(--HEAD);
+  flex-shrink:0; height:var(--HEAD);
   background:rgba(7,7,15,0.97); backdrop-filter:blur(20px);
   border-bottom:1px solid var(--border);
   display:flex; align-items:center; justify-content:space-between;
@@ -86,35 +67,21 @@ body {
 .rate-val { font-family:'DM Mono',monospace; font-size:14px; color:var(--gold); }
 .rate-lbl { font-size:13px; color:var(--muted); }
 
-.main { position:fixed; top:var(--HEAD); left:0; right:0; bottom:var(--TAB); overflow:hidden; -webkit-overflow-scrolling:touch; }
+.main { flex:1; overflow:hidden; display:flex; flex-direction:column; min-height:0; }
 
-.screen { display:none; height:100%; overflow:hidden; animation:fadeUp 0.25s ease; flex-direction:column; }
-.screen.active { display:flex; flex-direction:column; }
+.screen { display:none; flex-direction:column; flex:1; min-height:0; animation:fadeUp 0.25s ease; }
+.screen.active { display:flex; }
 @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(4px)} }
 @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
 
-.fx-wrap { flex:1; overflow-y:scroll; -webkit-overflow-scrolling:touch; padding:12px; }
-
-.fx-card {
-  background:var(--card); border:1px solid var(--border);
-  border-radius:18px; padding:14px 16px; margin-bottom:8px;
-  position:relative; overflow:hidden;
-}
-.fx-card::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent); }
-.fx-row { display:flex; align-items:center; gap:16px; }
-.fx-flag { font-size:44px; flex-shrink:0; }
-.fx-info { flex:1; min-width:0; }
-.fx-name { font-size:13px; color:var(--muted); letter-spacing:1px; margin-bottom:4px; }
-.fx-amount { font-family:'Bebas Neue',sans-serif; font-size:46px; line-height:1; letter-spacing:2px; transition:all 0.2s; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.fx-amount { font-family:'Bebas Neue',sans-serif; font-size:44px; line-height:1; letter-spacing:2px; transition:all 0.2s; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .fx-amount.cny { color:var(--red); text-shadow:0 0 30px var(--red-g); }
 .fx-amount.krw { color:var(--gold); text-shadow:0 0 30px var(--gold-g); }
 
-.swap-btn { width:48px; height:48px; background:linear-gradient(135deg,var(--red),#b0102a); border:none; border-radius:50%; font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; box-shadow:0 4px 18px var(--red-g); transition:transform 0.3s; }
+.swap-btn { width:32px; height:32px; background:linear-gradient(135deg,var(--red),#b0102a); border:none; border-radius:50%; font-size:14px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 4px 18px var(--red-g); transition:transform 0.3s; }
 .swap-btn:active { transform:rotate(180deg) scale(0.9); }
-
 .show-btn { width:100%; height:54px; background:linear-gradient(135deg,var(--red),#b0102a); border:none; border-radius:16px; color:white; font-size:16px; font-weight:700; letter-spacing:1px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:12px; box-shadow:0 4px 20px var(--red-g); }
 .show-btn:active { transform:scale(0.97); }
-
 .action-row { display:flex; gap:10px; margin-bottom:12px; }
 .chinese-btn { flex:1; height:64px; background:linear-gradient(135deg,#1e1e30,#252538); border:1px solid rgba(255,36,66,0.3); border-radius:16px; color:white; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:12px; }
 .chinese-btn:active { transform:scale(0.96); }
@@ -123,11 +90,9 @@ body {
 .alipay-btn { width:72px; height:64px; flex-shrink:0; background:linear-gradient(135deg,#1677FF,#0e50c0); border-radius:16px; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(22,119,255,0.25); line-height:1.2; }
 .alipay-btn:active { transform:scale(0.95); }
 .alipay-btn span { font-size:20px; font-weight:800; color:white; display:block; }
-
 .rate-info { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
 .rate-info-txt { font-family:'DM Mono',monospace; font-size:13px; color:var(--muted); }
 .refresh-btn { background:rgba(255,184,0,0.1); border:1px solid rgba(255,184,0,0.25); border-radius:10px; padding:7px 12px; color:var(--gold); font-size:12px; cursor:pointer; }
-
 .keypad { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
 .key { background:var(--card2); border:1px solid var(--border); border-radius:13px; height:52px; font-family:'Bebas Neue',sans-serif; font-size:26px; color:var(--text); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.1s; }
 .key:active { transform:scale(0.93); background:var(--card); }
@@ -147,11 +112,9 @@ body {
 .p-zh { font-family:'Noto Sans SC',sans-serif; font-size:26px; font-weight:700; margin-bottom:4px; }
 .p-pin { font-size:13px; color:var(--gold); font-style:italic; margin-bottom:3px; }
 .p-ko { font-size:14px; color:var(--muted); }
-.p-hint { position:absolute; right:14px; bottom:12px; font-size:10px; color:rgba(255,184,0,0.4); letter-spacing:1px; }
 
 .overlay { display:none; position:fixed; inset:0; background:var(--bg); z-index:200; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:30px; animation:fadeUp 0.25s ease; }
 .overlay.active { display:flex; }
-.ov-close { position:absolute; top:20px; right:20px; width:42px; height:42px; background:var(--card); border:1px solid var(--border); border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:18px; color:var(--muted); }
 .ov-flag { font-size:70px; margin-bottom:10px; }
 .ov-label { font-size:14px; letter-spacing:3px; color:var(--muted); font-family:'DM Mono',monospace; margin-bottom:12px; }
 .ov-num { font-family:'Bebas Neue',sans-serif; font-size:130px; line-height:1; letter-spacing:4px; word-break:break-all; background:linear-gradient(135deg,var(--red),var(--gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
@@ -161,7 +124,6 @@ body {
 .ci-overlay { display:none; position:fixed; inset:0; background:var(--bg); z-index:200; flex-direction:column; animation:fadeUp 0.25s ease; }
 .ci-overlay.active { display:flex; }
 .ci-top { background:rgba(255,36,66,0.07); border-bottom:1px solid rgba(255,36,66,0.15); padding:20px; text-align:center; position:relative; flex-shrink:0; }
-.ci-close { position:absolute; top:16px; right:16px; width:40px; height:40px; background:var(--card); border:1px solid var(--border); border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:18px; color:var(--muted); }
 .ci-zh { font-family:'Noto Sans SC',sans-serif; font-size:48px; font-weight:700; }
 .ci-pin { font-family:'DM Mono',monospace; font-size:14px; color:var(--gold); font-style:italic; margin-top:2px; }
 .ci-hint-txt { font-size:13px; color:var(--muted); margin-top:4px; }
@@ -176,9 +138,8 @@ body {
 .ci-key.del { color:var(--red); }
 .ci-key.clr { font-family:'Noto Sans KR',sans-serif; font-size:14px; font-weight:700; color:var(--red); background:rgba(255,36,66,0.07); border-color:rgba(255,36,66,0.2); grid-column:span 3; height:52px; }
 
-.phr-overlay { display:none; position:fixed; inset:0; background:#000; z-index:200; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:40px; animation:fadeUp 0.25s ease; }
+.phr-overlay { display:none; position:fixed; inset:0; background:#000; z-index:200; flex-direction:column; align-items:center; justify-content:flex-start; padding:0; overflow:hidden; animation:fadeUp 0.25s ease; }
 .phr-overlay.active { display:flex; }
-.phr-close { position:absolute; top:20px; right:20px; width:42px; height:42px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12); border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:18px; color:rgba(255,255,255,0.5); }
 .phr-zh { font-family:'Noto Sans SC',sans-serif; font-size:72px; font-weight:700; color:white; margin-bottom:16px; }
 .phr-pin { font-family:'DM Mono',monospace; font-size:22px; color:var(--gold); font-style:italic; margin-bottom:10px; }
 .phr-ko { font-size:20px; color:rgba(255,255,255,0.5); }
@@ -186,45 +147,13 @@ body {
 .phr-pin.big { font-size:30px; margin-bottom:16px; }
 .phr-ko.big { font-size:28px; }
 
-.tabs { position:fixed; bottom:0; left:0; right:0; height:var(--TAB); background:rgba(7,7,15,0.97); backdrop-filter:blur(20px); border-top:1px solid var(--border); display:grid; grid-template-columns:1fr 1fr 1fr; z-index:100; padding-bottom:env(safe-area-inset-bottom,0); }
+.tabs { flex-shrink:0; height:var(--TAB); background:rgba(7,7,15,0.97); backdrop-filter:blur(20px); border-top:1px solid var(--border); display:grid; grid-template-columns:1fr 1fr 1fr; z-index:100; padding-bottom:env(safe-area-inset-bottom,0); }
 .tab { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; cursor:pointer; padding-top:6px; }
 .tab-icon { font-size:24px; filter:grayscale(1) opacity(0.35); transition:filter 0.2s; }
 .tab-lbl { font-size:11px; color:var(--muted); font-weight:500; transition:color 0.2s; }
 .tab.active .tab-icon { filter:none; }
 .tab.active .tab-lbl { color:var(--red); }
 
-.lens-btn {
-  width:58px; height:58px;
-  background:linear-gradient(135deg,#222,#333);
-  border:3px solid #444;
-  border-radius:50%;
-  cursor:pointer;
-  display:flex; align-items:center; justify-content:center;
-  margin:0 auto;
-  position:relative;
-  box-shadow:0 0 0 4px rgba(7,7,15,0.97), 0 0 0 5px #333, 0 4px 20px rgba(0,0,0,0.6);
-  transform:translateY(-8px);
-  transition:transform 0.15s;
-}
-.lens-btn:active { transform:translateY(-8px) scale(0.92); }
-.lens-inner {
-  width:36px; height:36px;
-  background:radial-gradient(circle at 35% 35%, #555, #111);
-  border-radius:50%;
-  border:2px solid #555;
-  display:flex; align-items:center; justify-content:center;
-  position:relative;
-}
-.lens-inner::after {
-  content:'';
-  position:absolute;
-  top:5px; left:6px;
-  width:8px; height:5px;
-  background:rgba(255,255,255,0.25);
-  border-radius:50%;
-  transform:rotate(-30deg);
-}
-.lens-lbl { font-size:9px; color:var(--muted); text-align:center; margin-top:2px; font-weight:500; transform:translateY(-6px); display:block; }
 .toast { position:fixed; bottom:80px; left:50%; transform:translateX(-50%) translateY(10px); background:var(--card2); border:1px solid var(--border); border-radius:12px; padding:10px 20px; font-size:13px; color:var(--muted); z-index:300; opacity:0; transition:all 0.3s; white-space:nowrap; }
 .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
 ::-webkit-scrollbar { width:3px; }
@@ -232,6 +161,7 @@ body {
 </style>
 </head>
 <body>
+<div class="app">
 
 <div class="hd">
   <div class="hd-logo">中韩 TRAVEL</div>
@@ -247,8 +177,6 @@ body {
 
   <!-- 탭1: 환율 -->
   <div class="screen active" id="s0">
-
-    <!-- 상단: 버튼들 (스크롤 가능) -->
     <div style="flex:1;overflow-y:scroll;-webkit-overflow-scrolling:touch;padding:12px 12px 0 12px">
       <div style="text-align:center;margin-bottom:8px;animation:bounce 1.5s infinite">
         <span style="font-size:11px;color:var(--muted)">아래로 스크롤 ↓</span>
@@ -257,11 +185,10 @@ body {
       <div class="action-row">
         <div class="chinese-btn" onclick="openCI()">
           <span class="zh">多少钱？</span>
-          <span class=>이거 얼마에요?</span>
+          <span class="ko">이거 얼마에요?</span>
         </div>
         <div class="alipay-btn" onclick="openAlipay()">
-          <span>알리</span>
-          <span>페이</span>
+          <span>알리</span><span>페이</span>
         </div>
       </div>
       <div style="display:flex;gap:8px;margin-bottom:10px">
@@ -279,369 +206,170 @@ body {
         <button class="refresh-btn" onclick="fetchRate()">새로고침</button>
       </div>
     </div>
-
-    <!-- 하단 고정: 환율표시 + 키패드 -->
     <div style="flex-shrink:0;padding:10px 12px 12px;border-top:1px solid var(--border);background:var(--bg)">
-      <!-- 환율 표시 -->
       <div style="background:var(--card);border-radius:16px;padding:10px 14px;margin-bottom:8px">
-        <!-- 국기+이름 행 -->
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
           <div style="display:flex;align-items:center;gap:5px">
             <span style="font-size:20px" id="from-flag">🇨🇳</span>
             <span style="font-size:11px;color:var(--muted)" id="from-name">위안 CNY</span>
           </div>
-          <button class="swap-btn" style="margin:0;width:32px;height:32px;font-size:14px;flex-shrink:0" onclick="swapCurrency()">⇅</button>
+          <button class="swap-btn" onclick="swapCurrency()">⇅</button>
           <div style="display:flex;align-items:center;gap:5px">
             <span style="font-size:11px;color:var(--muted);text-align:right" id="to-name">원 KRW</span>
             <span style="font-size:20px" id="to-flag">🇰🇷</span>
           </div>
         </div>
-        <!-- 숫자 행 (전체 너비 사용) -->
         <div style="display:flex;align-items:center;justify-content:space-between;gap:6px">
-          <div class="fx-amount cny" style="font-size:44px;flex:1;min-width:0" id="from-amt">0</div>
+          <div class="fx-amount cny" id="from-amt">0</div>
           <div style="font-size:16px;color:var(--muted);flex-shrink:0">=</div>
-          <div class="fx-amount krw" style="font-size:44px;flex:1;min-width:0;text-align:right" id="to-amt">0</div>
+          <div class="fx-amount krw" style="text-align:right" id="to-amt">0</div>
         </div>
       </div>
-      <!-- 키패드 -->
       <div class="keypad">
-        <div class="key" onclick="pk('1')">1</div>
-        <div class="key" onclick="pk('2')">2</div>
-        <div class="key" onclick="pk('3')">3</div>
-        <div class="key" onclick="pk('4')">4</div>
-        <div class="key" onclick="pk('5')">5</div>
-        <div class="key" onclick="pk('6')">6</div>
-        <div class="key" onclick="pk('7')">7</div>
-        <div class="key" onclick="pk('8')">8</div>
-        <div class="key" onclick="pk('9')">9</div>
-        <div class="key dot" onclick="pk('.')">.</div>
-        <div class="key" onclick="pk('0')">0</div>
-        <div class="key del" onclick="pkDel()">⌫</div>
+        <div class="key" onclick="pk('1')">1</div><div class="key" onclick="pk('2')">2</div><div class="key" onclick="pk('3')">3</div>
+        <div class="key" onclick="pk('4')">4</div><div class="key" onclick="pk('5')">5</div><div class="key" onclick="pk('6')">6</div>
+        <div class="key" onclick="pk('7')">7</div><div class="key" onclick="pk('8')">8</div><div class="key" onclick="pk('9')">9</div>
+        <div class="key dot" onclick="pk('.')">.</div><div class="key" onclick="pk('0')">0</div><div class="key del" onclick="pkDel()">⌫</div>
         <div class="key clear" onclick="pkClear()">전체 지우기</div>
       </div>
     </div>
-
   </div>
 
   <!-- 탭2: 필수 문장 -->
   <div class="screen" id="s1">
     <div class="phrase-wrap">
-      <!-- 앱 바로가기 -->
       <div class="phrase-section">📱 앱 바로가기</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px">
-        <div onclick="openAppSmart('alipays://','https://play.google.com/store/apps/details?id=com.eg.android.AlipayGphone','https://apps.apple.com/app/id333206289')" style="background:var(--card);border:1px solid rgba(22,119,255,0.25);border-radius:16px;padding:14px 6px;cursor:pointer;text-align:center;transition:transform 0.15s" ontouchstart="this.style.transform='scale(0.93)'" ontouchend="this.style.transform='scale(1)'">
-          <div style="font-size:28px">💙</div>
-          <div style="font-size:11px;font-weight:700;color:#1677FF;margin-top:6px;line-height:1.3">알리페이</div>
-          <div style="font-size:9px;color:var(--muted);margin-top:2px">支付宝</div>
+        <div onclick="openAppSmart('alipays://','https://play.google.com/store/apps/details?id=com.eg.android.AlipayGphone','https://apps.apple.com/app/id333206289')" style="background:var(--card);border:1px solid rgba(22,119,255,0.25);border-radius:16px;padding:14px 6px;cursor:pointer;text-align:center">
+          <div style="font-size:28px">💙</div><div style="font-size:11px;font-weight:700;color:#1677FF;margin-top:6px;line-height:1.3">알리페이</div><div style="font-size:9px;color:var(--muted);margin-top:2px">支付宝</div>
         </div>
-        <div onclick="openAppSmart('androidamap://;iosamap://','https://play.google.com/store/apps/details?id=com.autonavi.minimap','https://apps.apple.com/app/id461703208')" style="background:var(--card);border:1px solid rgba(255,99,0,0.25);border-radius:16px;padding:14px 6px;cursor:pointer;text-align:center;transition:transform 0.15s" ontouchstart="this.style.transform='scale(0.93)'" ontouchend="this.style.transform='scale(1)'">
-          <div style="font-size:28px">🗺️</div>
-          <div style="font-size:11px;font-weight:700;color:#FF6300;margin-top:6px;line-height:1.3">고덕지도</div>
-          <div style="font-size:9px;color:var(--muted);margin-top:2px">高德地图</div>
+        <div onclick="openAppSmart('androidamap://;iosamap://','https://play.google.com/store/apps/details?id=com.autonavi.minimap','https://apps.apple.com/app/id461703208')" style="background:var(--card);border:1px solid rgba(255,99,0,0.25);border-radius:16px;padding:14px 6px;cursor:pointer;text-align:center">
+          <div style="font-size:28px">🗺️</div><div style="font-size:11px;font-weight:700;color:#FF6300;margin-top:6px;line-height:1.3">고덕지도</div><div style="font-size:9px;color:var(--muted);margin-top:2px">高德地图</div>
         </div>
-        <div onclick="openAppSmart('dianping://','https://play.google.com/store/apps/details?id=com.dianping.v1','https://apps.apple.com/app/id351091731')" style="background:var(--card);border:1px solid rgba(255,36,66,0.25);border-radius:16px;padding:14px 6px;cursor:pointer;text-align:center;transition:transform 0.15s" ontouchstart="this.style.transform='scale(0.93)'" ontouchend="this.style.transform='scale(1)'">
-          <div style="font-size:28px">⭐</div>
-          <div style="font-size:11px;font-weight:700;color:var(--red);margin-top:6px;line-height:1.3">따종디엔핑</div>
-          <div style="font-size:9px;color:var(--muted);margin-top:2px">大众点评</div>
+        <div onclick="openAppSmart('dianping://','https://play.google.com/store/apps/details?id=com.dianping.v1','https://apps.apple.com/app/id351091731')" style="background:var(--card);border:1px solid rgba(255,36,66,0.25);border-radius:16px;padding:14px 6px;cursor:pointer;text-align:center">
+          <div style="font-size:28px">⭐</div><div style="font-size:11px;font-weight:700;color:var(--red);margin-top:6px;line-height:1.3">따종디엔핑</div><div style="font-size:9px;color:var(--muted);margin-top:2px">大众点评</div>
         </div>
-        <div onclick="openGoogleTranslate()" style="background:var(--card);border:1px solid rgba(66,133,244,0.25);border-radius:16px;padding:14px 6px;cursor:pointer;text-align:center;transition:transform 0.15s" ontouchstart="this.style.transform='scale(0.93)'" ontouchend="this.style.transform='scale(1)'">
-          <div style="font-size:28px">🎙️</div>
-          <div style="font-size:11px;font-weight:700;color:#4285F4;margin-top:6px;line-height:1.3">구글 번역</div>
-          <div style="font-size:9px;color:var(--muted);margin-top:2px">음성통역</div>
+        <div onclick="openGoogleTranslate()" style="background:var(--card);border:1px solid rgba(66,133,244,0.25);border-radius:16px;padding:14px 6px;cursor:pointer;text-align:center">
+          <div style="font-size:28px">🎙️</div><div style="font-size:11px;font-weight:700;color:#4285F4;margin-top:6px;line-height:1.3">구글 번역</div><div style="font-size:9px;color:var(--muted);margin-top:2px">음성통역</div>
         </div>
-        <div onclick="openGoogleLens()" style="background:var(--card);border:1px solid rgba(234,67,53,0.25);border-radius:16px;padding:14px 6px;cursor:pointer;text-align:center;transition:transform 0.15s" ontouchstart="this.style.transform='scale(0.93)'" ontouchend="this.style.transform='scale(1)'">
-          <div style="font-size:28px">📷</div>
-          <div style="font-size:11px;font-weight:700;color:#EA4335;margin-top:6px;line-height:1.3">구글 렌즈</div>
-          <div style="font-size:9px;color:var(--muted);margin-top:2px">글자·사물인식</div>
+        <div onclick="openGoogleLens()" style="background:var(--card);border:1px solid rgba(234,67,53,0.25);border-radius:16px;padding:14px 6px;cursor:pointer;text-align:center">
+          <div style="font-size:28px">📷</div><div style="font-size:11px;font-weight:700;color:#EA4335;margin-top:6px;line-height:1.3">구글 렌즈</div><div style="font-size:9px;color:var(--muted);margin-top:2px">글자·사물인식</div>
         </div>
-        <div onclick="window.open('https://papago.naver.com','_blank')" style="background:var(--card);border:1px solid rgba(3,199,90,0.25);border-radius:16px;padding:14px 6px;cursor:pointer;text-align:center;transition:transform 0.15s" ontouchstart="this.style.transform='scale(0.93)'" ontouchend="this.style.transform='scale(1)'">
-          <div style="font-size:28px">🌐</div>
-          <div style="font-size:11px;font-weight:700;color:#03C75A;margin-top:6px;line-height:1.3">파파고</div>
-          <div style="font-size:9px;color:var(--muted);margin-top:2px">한글→한자</div>
+        <div onclick="window.open('https://papago.naver.com','_blank')" style="background:var(--card);border:1px solid rgba(3,199,90,0.25);border-radius:16px;padding:14px 6px;cursor:pointer;text-align:center">
+          <div style="font-size:28px">🌐</div><div style="font-size:11px;font-weight:700;color:#03C75A;margin-top:6px;line-height:1.3">파파고</div><div style="font-size:9px;color:var(--muted);margin-top:2px">한글→한자</div>
         </div>
       </div>
 
       <div class="phrase-section">🙏 인사</div>
       <div class="phrase-cat" id="cat-greet">
-      <div class="phrase-card" onclick="showPhrase('你好','Nǐ hǎo','안녕하세요')">
-        <div class="p-zh">你好</div><div class="p-pin">Nǐ hǎo</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 니 하오</div><div class="p-ko">안녕하세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
-      <div class="phrase-card" onclick="showPhrase('谢谢','Xièxiè','감사합니다')">
-        <div class="p-zh">谢谢</div><div class="p-pin">Xièxiè</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 씨에씨에</div><div class="p-ko">감사합니다</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
-      <div class="phrase-card" onclick="showPhrase('对不起','Duìbuqǐ','죄송합니다')">
-        <div class="p-zh">对不起</div><div class="p-pin">Duìbuqǐ</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 뚜이부치</div><div class="p-ko">죄송합니다</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
+        <div class="phrase-card" onclick="showPhrase('你好','Nǐ hǎo','안녕하세요')"><div class="p-zh">你好</div><div class="p-pin">Nǐ hǎo</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 니 하오</div><div class="p-ko">안녕하세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('你好')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('谢谢','Xièxiè','감사합니다')"><div class="p-zh">谢谢</div><div class="p-pin">Xièxiè</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 씨에씨에</div><div class="p-ko">감사합니다</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('谢谢')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('对不起','Duìbuqǐ','죄송합니다')"><div class="p-zh">对不起</div><div class="p-pin">Duìbuqǐ</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 뚜이부치</div><div class="p-ko">죄송합니다</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('对不起')">🔊</div></div>
       </div>
 
       <div class="phrase-section">🛍️ 쇼핑</div>
       <div class="phrase-cat" id="cat-shop">
-      <div class="phrase-card" onclick="showPhrase('多少钱？','Duōshao qián?','얼마예요?')">
-        <div class="p-zh">多少钱？</div><div class="p-pin">Duōshao qián?</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 뚜어샤오 치엔?</div><div class="p-ko">얼마예요?</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
-      <div class="phrase-card" onclick="showPhrase('太贵了！','Tài guì le!','너무 비싸요!')">
-        <div class="p-zh">太贵了！</div><div class="p-pin">Tài guì le!</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 타이 꾸에이 러!</div><div class="p-ko">너무 비싸요!</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
-      <div class="phrase-card" onclick="showPhrase('便宜一点','Piányí yīdiǎn','좀 깎아주세요')">
-        <div class="p-zh">便宜一点</div><div class="p-pin">Piányí yīdiǎn</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 피엔이 이디엔</div><div class="p-ko">좀 깎아주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
-      <div class="phrase-card" onclick="showPhrase('我要这个','Wǒ yào zhège','이걸 살게요')">
-        <div class="p-zh">我要这个</div><div class="p-pin">Wǒ yào zhège</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 야오 쩌거</div><div class="p-ko">이걸 살게요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
-      <div class="phrase-card" onclick="showPhrase('不要','Bú yào','필요 없어요')">
-        <div class="p-zh">不要</div><div class="p-pin">Bú yào</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 뿌 야오</div><div class="p-ko">필요 없어요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
+        <div class="phrase-card" onclick="showPhrase('多少钱？','Duōshao qián?','얼마예요?')"><div class="p-zh">多少钱？</div><div class="p-pin">Duōshao qián?</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 뚜어샤오 치엔?</div><div class="p-ko">얼마예요?</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('多少钱？')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('太贵了！','Tài guì le!','너무 비싸요!')"><div class="p-zh">太贵了！</div><div class="p-pin">Tài guì le!</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 타이 꾸에이 러!</div><div class="p-ko">너무 비싸요!</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('太贵了！')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('便宜一点','Piányí yīdiǎn','좀 깎아주세요')"><div class="p-zh">便宜一点</div><div class="p-pin">Piányí yīdiǎn</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 피엔이 이디엔</div><div class="p-ko">좀 깎아주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('便宜一点')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('我要这个','Wǒ yào zhège','이걸 살게요')"><div class="p-zh">我要这个</div><div class="p-pin">Wǒ yào zhège</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 야오 쩌거</div><div class="p-ko">이걸 살게요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('我要这个')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('不要','Bú yào','필요 없어요')"><div class="p-zh">不要</div><div class="p-pin">Bú yào</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 뿌 야오</div><div class="p-ko">필요 없어요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('不要')">🔊</div></div>
       </div>
 
-      </div>
       <div class="phrase-section">🍜 식당</div>
       <div class="phrase-cat" id="cat-food">
-      <div class="phrase-card" onclick="showPhrase('菜单','Càidān','메뉴 주세요')">
-        <div class="p-zh">菜单</div><div class="p-pin">Càidān</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 차이단</div><div class="p-ko">메뉴 주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
-      <div class="phrase-card" onclick="showPhrase('好吃！','Hào chī!','맛있어요!')">
-        <div class="p-zh">好吃！</div><div class="p-pin">Hào chī!</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 하오 츠!</div><div class="p-ko">맛있어요!</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
-      <div class="phrase-card" onclick="showPhrase('买单','Mǎi dān','계산해 주세요')">
-        <div class="p-zh">买单</div><div class="p-pin">Mǎi dān</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 마이 단</div><div class="p-ko">계산해 주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
-      <div class="phrase-card" onclick="showPhrase('辣的','Là de','매운 거예요?')">
-        <div class="p-zh">辣的</div><div class="p-pin">Là de</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 라 더</div><div class="p-ko">매운 거예요?</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
+        <div class="phrase-card" onclick="showPhrase('菜单','Càidān','메뉴 주세요')"><div class="p-zh">菜单</div><div class="p-pin">Càidān</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 차이단</div><div class="p-ko">메뉴 주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('菜单')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('好吃！','Hào chī!','맛있어요!')"><div class="p-zh">好吃！</div><div class="p-pin">Hào chī!</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 하오 츠!</div><div class="p-ko">맛있어요!</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('好吃！')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('买单','Mǎi dān','계산해 주세요')"><div class="p-zh">买单</div><div class="p-pin">Mǎi dān</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 마이 단</div><div class="p-ko">계산해 주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('买单')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('辣的','Là de','매운 거예요?')"><div class="p-zh">辣的</div><div class="p-pin">Là de</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 라 더</div><div class="p-ko">매운 거예요?</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('辣的')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('这里最受欢迎的是什么？','Zhèlǐ zuì shòu huānyíng de shì shénme?','여기서 많이 찾는 거 추천해주세요')"><div class="p-zh">这里最受欢迎的是什么？</div><div class="p-pin">Zhèlǐ zuì shòu huānyíng...</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 쩌리 쭈이 쇼우 환잉...</div><div class="p-ko">여기서 많이 찾는 거 추천해주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('这里最受欢迎的是什么？')">🔊</div></div>
       </div>
 
-      <div class="phrase-card" onclick="showPhrase('这里最受欢迎的是什么？','Zhèlǐ zuì shòu huānyíng de shì shénme?','여기서 많이 찾는 거 추천해주세요')">
-        <div class="p-zh">这里最受欢迎的是什么？</div><div class="p-pin">Zhèlǐ zuì shòu huānyíng de shì shénme?</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 쩌리 쭈이 쇼우 환잉 더 스 션머?</div><div class="p-ko">여기서 많이 찾는 거 추천해주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
-      </div>
-
-      <div class="phrase-section">🚕 교통 · 길찾기</div>
+      <div class="phrase-section">🚕 교통·길찾기</div>
       <div class="phrase-cat" id="cat-trans">
-      <div class="phrase-card" onclick="showPhrase('去这里','Qù zhèlǐ','여기로 가주세요')">
-        <div class="p-zh">去这里</div><div class="p-pin">Qù zhèlǐ</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 취 쩌리</div><div class="p-ko">여기로 가주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
-      <div class="phrase-card" onclick="showPhrase('谢谢','Xièxiè','감사합니다')">
-        <div class="p-zh">谢谢</div><div class="p-pin">Xièxiè</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 씨에씨에</div><div class="p-ko">감사합니다</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
-      <div class="phrase-card" onclick="showPhrase('厕所在哪里？','Cèsuǒ zài nǎlǐ?','화장실이 어디예요?')">
-        <div class="p-zh">厕所在哪里？</div><div class="p-pin">Cèsuǒ zài nǎlǐ?</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 처쑤어 짜이 나리?</div><div class="p-ko">화장실이 어디예요?</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
-      <div class="phrase-card" onclick="showPhrase('听不懂','Tīng bù dǒng','못 알아듣겠어요')">
-        <div class="p-zh">听不懂</div><div class="p-pin">Tīng bù dǒng</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 팅 뿌 동</div><div class="p-ko">못 알아듣겠어요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
-      <div class="phrase-card" onclick="showPhrase('请帮我叫出租车','Qǐng bāng wǒ jiào chūzū chē','택시 불러주세요')">
-        <div class="p-zh">请帮我叫出租车</div><div class="p-pin">Qǐng bāng wǒ jiào chūzū chē</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 칭 방 워 지아오 추주 처</div><div class="p-ko">택시 불러주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
-      <div class="phrase-card" onclick="showPhrase('怎么走？','Zěnme zǒu?','어떻게 가요?')">
-        <div class="p-zh">怎么走？</div><div class="p-pin">Zěnme zǒu?</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 전머 저우?</div><div class="p-ko">어떻게 가요?</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
+        <div class="phrase-card" onclick="showPhrase('去这里','Qù zhèlǐ','여기로 가주세요')"><div class="p-zh">去这里</div><div class="p-pin">Qù zhèlǐ</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 취 쩌리</div><div class="p-ko">여기로 가주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('去这里')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('听不懂','Tīng bù dǒng','못 알아듣겠어요')"><div class="p-zh">听不懂</div><div class="p-pin">Tīng bù dǒng</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 팅 뿌 동</div><div class="p-ko">못 알아듣겠어요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('听不懂')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('请帮我叫出租车','Qǐng bāng wǒ jiào chūzū chē','택시 불러주세요')"><div class="p-zh">请帮我叫出租车</div><div class="p-pin">Qǐng bāng wǒ jiào chūzū chē</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 칭 방 워 지아오 추주 처</div><div class="p-ko">택시 불러주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('请帮我叫出租车')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('怎么走？','Zěnme zǒu?','어떻게 가요?')"><div class="p-zh">怎么走？</div><div class="p-pin">Zěnme zǒu?</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 전머 저우?</div><div class="p-ko">어떻게 가요?</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('怎么走？')">🔊</div></div>
       </div>
 
-      <!-- 긴급 전화 카테고리 -->
       <div class="phrase-section" style="color:#FF2442;background:rgba(255,36,66,0.12)">🚨 긴급 전화번호</div>
       <div class="phrase-cat" id="cat-emergency">
-        <!-- 중국 긴급번호 -->
         <div style="font-size:11px;color:var(--muted);letter-spacing:1px;margin:8px 0 6px;padding:0 4px">🇨🇳 중국 긴급번호</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
-          <a href="tel:110" style="text-decoration:none">
-            <div style="background:rgba(255,36,66,0.12);border:1px solid rgba(255,36,66,0.4);border-radius:14px;padding:14px 10px;text-align:center">
-              <div style="font-size:28px">🚔</div>
-              <div style="font-size:22px;font-family:'Bebas Neue',sans-serif;color:var(--red);letter-spacing:2px;margin:4px 0">110</div>
-              <div style="font-size:12px;font-weight:700;color:var(--text)">경찰</div>
-              <div style="font-size:10px;color:var(--muted);margin-top:2px">탭하면 전화연결</div>
-            </div>
-          </a>
-          <a href="tel:120" style="text-decoration:none">
-            <div style="background:rgba(255,36,66,0.12);border:1px solid rgba(255,36,66,0.4);border-radius:14px;padding:14px 10px;text-align:center">
-              <div style="font-size:28px">🚑</div>
-              <div style="font-size:22px;font-family:'Bebas Neue',sans-serif;color:var(--red);letter-spacing:2px;margin:4px 0">120</div>
-              <div style="font-size:12px;font-weight:700;color:var(--text)">구급차</div>
-              <div style="font-size:10px;color:var(--muted);margin-top:2px">탭하면 전화연결</div>
-            </div>
-          </a>
-          <a href="tel:119" style="text-decoration:none">
-            <div style="background:rgba(255,36,66,0.12);border:1px solid rgba(255,36,66,0.4);border-radius:14px;padding:14px 10px;text-align:center">
-              <div style="font-size:28px">🚒</div>
-              <div style="font-size:22px;font-family:'Bebas Neue',sans-serif;color:var(--red);letter-spacing:2px;margin:4px 0">119</div>
-              <div style="font-size:12px;font-weight:700;color:var(--text)">소방서</div>
-              <div style="font-size:10px;color:var(--muted);margin-top:2px">탭하면 전화연결</div>
-            </div>
-          </a>
-          <a href="tel:122" style="text-decoration:none">
-            <div style="background:rgba(255,36,66,0.12);border:1px solid rgba(255,36,66,0.4);border-radius:14px;padding:14px 10px;text-align:center">
-              <div style="font-size:28px">🚗</div>
-              <div style="font-size:22px;font-family:'Bebas Neue',sans-serif;color:var(--red);letter-spacing:2px;margin:4px 0">122</div>
-              <div style="font-size:12px;font-weight:700;color:var(--text)">교통사고</div>
-              <div style="font-size:10px;color:var(--muted);margin-top:2px">탭하면 전화연결</div>
-            </div>
-          </a>
+          <a href="tel:110" style="text-decoration:none"><div style="background:rgba(255,36,66,0.12);border:1px solid rgba(255,36,66,0.4);border-radius:14px;padding:14px 10px;text-align:center"><div style="font-size:28px">🚔</div><div style="font-size:22px;font-family:'Bebas Neue',sans-serif;color:var(--red);letter-spacing:2px;margin:4px 0">110</div><div style="font-size:12px;font-weight:700;color:var(--text)">경찰</div><div style="font-size:10px;color:var(--muted);margin-top:2px">탭하면 전화연결</div></div></a>
+          <a href="tel:120" style="text-decoration:none"><div style="background:rgba(255,36,66,0.12);border:1px solid rgba(255,36,66,0.4);border-radius:14px;padding:14px 10px;text-align:center"><div style="font-size:28px">🚑</div><div style="font-size:22px;font-family:'Bebas Neue',sans-serif;color:var(--red);letter-spacing:2px;margin:4px 0">120</div><div style="font-size:12px;font-weight:700;color:var(--text)">구급차</div><div style="font-size:10px;color:var(--muted);margin-top:2px">탭하면 전화연결</div></div></a>
+          <a href="tel:119" style="text-decoration:none"><div style="background:rgba(255,36,66,0.12);border:1px solid rgba(255,36,66,0.4);border-radius:14px;padding:14px 10px;text-align:center"><div style="font-size:28px">🚒</div><div style="font-size:22px;font-family:'Bebas Neue',sans-serif;color:var(--red);letter-spacing:2px;margin:4px 0">119</div><div style="font-size:12px;font-weight:700;color:var(--text)">소방서</div><div style="font-size:10px;color:var(--muted);margin-top:2px">탭하면 전화연결</div></div></a>
+          <a href="tel:122" style="text-decoration:none"><div style="background:rgba(255,36,66,0.12);border:1px solid rgba(255,36,66,0.4);border-radius:14px;padding:14px 10px;text-align:center"><div style="font-size:28px">🚗</div><div style="font-size:22px;font-family:'Bebas Neue',sans-serif;color:var(--red);letter-spacing:2px;margin:4px 0">122</div><div style="font-size:12px;font-weight:700;color:var(--text)">교통사고</div><div style="font-size:10px;color:var(--muted);margin-top:2px">탭하면 전화연결</div></div></a>
         </div>
-        <!-- 한국 대사관 -->
         <div style="font-size:11px;color:var(--muted);letter-spacing:1px;margin:8px 0 6px;padding:0 4px">🇰🇷 한국 대사관·영사관</div>
         <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px">
-          <a href="tel:+861085310700" style="text-decoration:none">
-            <div style="background:rgba(0,71,171,0.1);border:1px solid rgba(0,71,171,0.35);border-radius:14px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
-              <div>
-                <div style="font-size:13px;font-weight:700;color:#4A90D9">🇰🇷 주중 한국대사관</div>
-                <div style="font-size:11px;color:var(--muted);margin-top:2px">베이징 · 긴급 도움 요청</div>
-              </div>
-              <div style="text-align:right">
-                <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--gold)">+86-10-8531-0700</div>
-                <div style="font-size:10px;color:var(--muted);margin-top:2px">탭하면 전화연결</div>
-              </div>
-            </div>
-          </a>
-          <a href="tel:+862162955000" style="text-decoration:none">
-            <div style="background:rgba(0,71,171,0.1);border:1px solid rgba(0,71,171,0.35);border-radius:14px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
-              <div>
-                <div style="font-size:13px;font-weight:700;color:#4A90D9">🇰🇷 상하이 총영사관</div>
-                <div style="font-size:11px;color:var(--muted);margin-top:2px">상하이·장쑤·저장</div>
-              </div>
-              <div style="text-align:right">
-                <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--gold)">+86-21-6295-5000</div>
-                <div style="font-size:10px;color:var(--muted);margin-top:2px">탭하면 전화연결</div>
-              </div>
-            </div>
-          </a>
-          <a href="tel:+862029192000" style="text-decoration:none">
-            <div style="background:rgba(0,71,171,0.1);border:1px solid rgba(0,71,171,0.35);border-radius:14px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
-              <div>
-                <div style="font-size:13px;font-weight:700;color:#4A90D9">🇰🇷 광저우 총영사관</div>
-                <div style="font-size:11px;color:var(--muted);margin-top:2px">광둥·푸젠·하이난</div>
-              </div>
-              <div style="text-align:right">
-                <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--gold)">+86-20-2919-2000</div>
-                <div style="font-size:10px;color:var(--muted);margin-top:2px">탭하면 전화연결</div>
-              </div>
-            </div>
-          </a>
-          <a href="tel:+8223210404" style="text-decoration:none">
-            <div style="background:rgba(255,184,0,0.08);border:1px solid rgba(255,184,0,0.3);border-radius:14px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
-              <div>
-                <div style="font-size:13px;font-weight:700;color:var(--gold)">📞 24시간 영사콜센터</div>
-                <div style="font-size:11px;color:var(--muted);margin-top:2px">한국 외교부 · 24시간</div>
-              </div>
-              <div style="text-align:right">
-                <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--gold)">+82-2-3210-0404</div>
-                <div style="font-size:10px;color:var(--muted);margin-top:2px">탭하면 전화연결</div>
-              </div>
-            </div>
-          </a>
+          <a href="tel:+861085310700" style="text-decoration:none"><div style="background:rgba(0,71,171,0.1);border:1px solid rgba(0,71,171,0.35);border-radius:14px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:13px;font-weight:700;color:#4A90D9">🇰🇷 주중 한국대사관</div><div style="font-size:11px;color:var(--muted);margin-top:2px">베이징</div></div><div style="text-align:right"><div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--gold)">+86-10-8531-0700</div><div style="font-size:10px;color:var(--muted);margin-top:2px">탭하면 전화연결</div></div></div></a>
+          <a href="tel:+862162955000" style="text-decoration:none"><div style="background:rgba(0,71,171,0.1);border:1px solid rgba(0,71,171,0.35);border-radius:14px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:13px;font-weight:700;color:#4A90D9">🇰🇷 상하이 총영사관</div><div style="font-size:11px;color:var(--muted);margin-top:2px">상하이·장쑤·저장</div></div><div style="text-align:right"><div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--gold)">+86-21-6295-5000</div><div style="font-size:10px;color:var(--muted);margin-top:2px">탭하면 전화연결</div></div></div></a>
+          <a href="tel:+862029192000" style="text-decoration:none"><div style="background:rgba(0,71,171,0.1);border:1px solid rgba(0,71,171,0.35);border-radius:14px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:13px;font-weight:700;color:#4A90D9">🇰🇷 광저우 총영사관</div><div style="font-size:11px;color:var(--muted);margin-top:2px">광둥·푸젠·하이난</div></div><div style="text-align:right"><div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--gold)">+86-20-2919-2000</div><div style="font-size:10px;color:var(--muted);margin-top:2px">탭하면 전화연결</div></div></div></a>
+          <a href="tel:+8223210404" style="text-decoration:none"><div style="background:rgba(255,184,0,0.08);border:1px solid rgba(255,184,0,0.3);border-radius:14px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:13px;font-weight:700;color:var(--gold)">📞 24시간 영사콜센터</div><div style="font-size:11px;color:var(--muted);margin-top:2px">한국 외교부 · 24시간</div></div><div style="text-align:right"><div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--gold)">+82-2-3210-0404</div><div style="font-size:10px;color:var(--muted);margin-top:2px">탭하면 전화연결</div></div></div></a>
         </div>
       </div>
 
-      <!-- 음식 알레르기/금기 -->
       <div class="phrase-section">🥜 음식 알레르기·금기</div>
       <div class="phrase-cat" id="cat-allergy">
-      <div class="phrase-card" onclick="showPhrase('我不能吃猪肉','Wǒ bù néng chī zhūròu','돼지고기 못 먹어요')">
-        <div class="p-zh">我不能吃猪肉</div><div class="p-pin">Wǒ bù néng chī zhūròu</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 뿌 넝 츠 주로우</div><div class="p-ko">돼지고기 못 먹어요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
-      <div class="phrase-card" onclick="showPhrase('我对坚果过敏','Wǒ duì jiānguǒ guòmǐn','견과류 알레르기 있어요')">
-        <div class="p-zh">我对坚果过敏</div><div class="p-pin">Wǒ duì jiānguǒ guòmǐn</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 뚜이 지엔궈 궈민</div><div class="p-ko">견과류 알레르기 있어요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
-      <div class="phrase-card" onclick="showPhrase('我对海鲜过敏','Wǒ duì hǎixiān guòmǐn','해산물 알레르기 있어요')">
-        <div class="p-zh">我对海鲜过敏</div><div class="p-pin">Wǒ duì hǎixiān guòmǐn</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 뚜이 하이시엔 궈민</div><div class="p-ko">해산물 알레르기 있어요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
-      <div class="phrase-card" onclick="showPhrase('不要放辣椒','Bú yào fàng làjiāo','고추 넣지 마세요')">
-        <div class="p-zh">不要放辣椒</div><div class="p-pin">Bú yào fàng làjiāo</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 뿌야오 팡 라지아오</div><div class="p-ko">고추 넣지 마세요 (안 매운 것)</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
-      <div class="phrase-card" onclick="showPhrase('我是素食者','Wǒ shì sùshí zhě','채식주의자예요')">
-        <div class="p-zh">我是素食者</div><div class="p-pin">Wǒ shì sùshí zhě</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 스 쑤스 저</div><div class="p-ko">채식주의자예요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
+        <div class="phrase-card" onclick="showPhrase('我不能吃猪肉','Wǒ bù néng chī zhūròu','돼지고기 못 먹어요')"><div class="p-zh">我不能吃猪肉</div><div class="p-pin">Wǒ bù néng chī zhūròu</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 뿌 넝 츠 주로우</div><div class="p-ko">돼지고기 못 먹어요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('我不能吃猪肉')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('我对坚果过敏','Wǒ duì jiānguǒ guòmǐn','견과류 알레르기 있어요')"><div class="p-zh">我对坚果过敏</div><div class="p-pin">Wǒ duì jiānguǒ guòmǐn</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 뚜이 지엔궈 궈민</div><div class="p-ko">견과류 알레르기 있어요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('我对坚果过敏')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('不要放辣椒','Bú yào fàng làjiāo','고추 넣지 마세요')"><div class="p-zh">不要放辣椒</div><div class="p-pin">Bú yào fàng làjiāo</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 뿌야오 팡 라지아오</div><div class="p-ko">고추 넣지 마세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('不要放辣椒')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('我是素食者','Wǒ shì sùshí zhě','채식주의자예요')"><div class="p-zh">我是素食者</div><div class="p-pin">Wǒ shì sùshí zhě</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 스 쑤스 저</div><div class="p-ko">채식주의자예요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('我是素食者')">🔊</div></div>
       </div>
 
-      <!-- 호텔 -->
       <div class="phrase-section">🏨 호텔</div>
       <div class="phrase-cat" id="cat-hotel">
-      <div class="phrase-card" onclick="showPhrase('我来办理入住','Wǒ lái bànlǐ rùzhù','체크인 하러 왔어요')">
-        <div class="p-zh">我来办理入住</div><div class="p-pin">Wǒ lái bànlǐ rùzhù</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 라이 반리 루주</div><div class="p-ko">체크인 하러 왔어요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
-      <div class="phrase-card" onclick="showPhrase('WiFi密码是多少？','WiFi mìmǎ shì duōshao?','와이파이 비밀번호가 뭐예요?')">
-        <div class="p-zh">WiFi密码是多少？</div><div class="p-pin">WiFi mìmǎ shì duōshao?</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 와이파이 미마 스 뚜어샤오?</div><div class="p-ko">와이파이 비밀번호가 뭐예요?</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
-      <div class="phrase-card" onclick="showPhrase('请多给我一条毛巾','Qǐng duō gěi wǒ yī tiáo máojīn','수건 더 주세요')">
-        <div class="p-zh">请多给我一条毛巾</div><div class="p-pin">Qǐng duō gěi wǒ yī tiáo máojīn</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 칭 뚜어 게이 워 이 티아오 마오진</div><div class="p-ko">수건 더 주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
-      <div class="phrase-card" onclick="showPhrase('空调坏了','Kōngtiáo huài le','에어컨이 고장났어요')">
-        <div class="p-zh">空调坏了</div><div class="p-pin">Kōngtiáo huài le</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 쿵티아오 화이 러</div><div class="p-ko">에어컨이 고장났어요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
-      <div class="phrase-card" onclick="showPhrase('我要退房','Wǒ yào tuìfáng','체크아웃 할게요')">
-        <div class="p-zh">我要退房</div><div class="p-pin">Wǒ yào tuìfáng</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 야오 투이팡</div><div class="p-ko">체크아웃 할게요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
+        <div class="phrase-card" onclick="showPhrase('我来办理入住','Wǒ lái bànlǐ rùzhù','체크인 하러 왔어요')"><div class="p-zh">我来办理入住</div><div class="p-pin">Wǒ lái bànlǐ rùzhù</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 라이 반리 루주</div><div class="p-ko">체크인 하러 왔어요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('我来办理入住')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('WiFi密码是多少？','WiFi mìmǎ shì duōshao?','와이파이 비밀번호가 뭐예요?')"><div class="p-zh">WiFi密码是多少？</div><div class="p-pin">WiFi mìmǎ shì duōshao?</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 와이파이 미마 스 뚜어샤오?</div><div class="p-ko">와이파이 비밀번호가 뭐예요?</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('WiFi密码是多少？')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('空调坏了','Kōngtiáo huài le','에어컨이 고장났어요')"><div class="p-zh">空调坏了</div><div class="p-pin">Kōngtiáo huài le</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 쿵티아오 화이 러</div><div class="p-ko">에어컨이 고장났어요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('空调坏了')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('我要退房','Wǒ yào tuìfáng','체크아웃 할게요')"><div class="p-zh">我要退房</div><div class="p-pin">Wǒ yào tuìfáng</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 야오 투이팡</div><div class="p-ko">체크아웃 할게요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('我要退房')">🔊</div></div>
       </div>
 
-      <!-- 약국/병원 -->
       <div class="phrase-section">💊 약국·병원</div>
       <div class="phrase-cat" id="cat-pharmacy">
-      <div class="phrase-card" onclick="showPhrase('我肚子疼','Wǒ dùzi téng','배가 아파요')">
-        <div class="p-zh">我肚子疼</div><div class="p-pin">Wǒ dùzi téng</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 두쯔 텅</div><div class="p-ko">배가 아파요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
+        <div class="phrase-card" onclick="showPhrase('我肚子疼','Wǒ dùzi téng','배가 아파요')"><div class="p-zh">我肚子疼</div><div class="p-pin">Wǒ dùzi téng</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 두쯔 텅</div><div class="p-ko">배가 아파요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('我肚子疼')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('我发烧了','Wǒ fāshāo le','열이 나요')"><div class="p-zh">我发烧了</div><div class="p-pin">Wǒ fāshāo le</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 파샤오 러</div><div class="p-ko">열이 나요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('我发烧了')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('请给我退烧药','Qǐng gěi wǒ tuìshāoyào','해열제 주세요')"><div class="p-zh">请给我退烧药</div><div class="p-pin">Qǐng gěi wǒ tuìshāoyào</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 칭 게이 워 투이샤오야오</div><div class="p-ko">해열제 주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('请给我退烧药')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('最近的医院在哪里？','Zuìjìn de yīyuàn zài nǎlǐ?','가장 가까운 병원이 어디예요?')"><div class="p-zh">最近的医院在哪里？</div><div class="p-pin">Zuìjìn de yīyuàn zài nǎlǐ?</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 쭈이진 더 이위엔 짜이 나리?</div><div class="p-ko">가장 가까운 병원이 어디예요?</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese('最近的医院在哪里？')">🔊</div></div>
       </div>
-      <div class="phrase-card" onclick="showPhrase('我发烧了','Wǒ fāshāo le','열이 나요')">
-        <div class="p-zh">我发烧了</div><div class="p-pin">Wǒ fāshāo le</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 파샤오 러</div><div class="p-ko">열이 나요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
-      <div class="phrase-card" onclick="showPhrase('我头疼','Wǒ tóuténg','머리가 아파요')">
-        <div class="p-zh">我头疼</div><div class="p-pin">Wǒ tóuténg</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 워 터우텅</div><div class="p-ko">머리가 아파요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
-      <div class="phrase-card" onclick="showPhrase('请给我退烧药','Qǐng gěi wǒ tuìshāoyào','해열제 주세요')">
-        <div class="p-zh">请给我退烧药</div><div class="p-pin">Qǐng gěi wǒ tuìshāoyào</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 칭 게이 워 투이샤오야오</div><div class="p-ko">해열제 주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
-      <div class="phrase-card" onclick="showPhrase('请给我消化药','Qǐng gěi wǒ xiāohuàyào','소화제 주세요')">
-        <div class="p-zh">请给我消化药</div><div class="p-pin">Qǐng gěi wǒ xiāohuàyào</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 칭 게이 워 시아오화야오</div><div class="p-ko">소화제 주세요</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
-      <div class="phrase-card" onclick="showPhrase('最近的医院在哪里？','Zuìjìn de yīyuàn zài nǎlǐ?','가장 가까운 병원이 어디예요?')">
-        <div class="p-zh">最近的医院在哪里？</div><div class="p-pin">Zuìjìn de yīyuàn zài nǎlǐ?</div><div style="font-size:13px;color:rgba(255,184,0,0.6);margin-bottom:3px">발음: 쭈이진 더 이위엔 짜이 나리?</div><div class="p-ko">가장 가까운 병원이 어디예요?</div><div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px" onclick="event.stopPropagation();speakChinese(this.closest('.phrase-card').querySelector('.p-zh').textContent)">🔊</div>
-      </div>
-      </div>
-
       <div style="height:16px"></div>
     </div>
-  
-  <!-- 탭3: 여행 전 체크리스트 -->
+  </div>
+
+  <!-- 탭3: 체크리스트 -->
   <div class="screen" id="s2">
     <div class="phrase-wrap" style="padding:12px">
-
-      <!-- 진행률 바 -->
       <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
           <div style="font-size:14px;font-weight:700;color:var(--text)">출국 전 준비 현황</div>
-          <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--gold)" id="cl-progress-txt">0 / 0</div>
+          <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--gold)" id="cl-progress-txt">0 / 30</div>
         </div>
         <div style="background:var(--card2);border-radius:8px;height:8px;overflow:hidden">
           <div id="cl-progress-bar" style="height:100%;width:0%;background:linear-gradient(90deg,var(--red),var(--gold));border-radius:8px;transition:width 0.4s ease"></div>
         </div>
         <div style="font-size:11px;color:var(--muted);margin-top:8px;text-align:center" id="cl-progress-msg">항목을 체크해가며 준비하세요!</div>
       </div>
-
-      <!-- 초기화 버튼 -->
       <div onclick="resetChecklist()" style="width:100%;height:38px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:14px">
-        <span style="font-size:14px">🔄</span>
-        <span style="font-size:12px;color:var(--muted)">전체 초기화</span>
+        <span style="font-size:14px">🔄</span><span style="font-size:12px;color:var(--muted)">전체 초기화</span>
       </div>
-
-      <!-- 카테고리들 -->
       <div id="checklist-wrap"></div>
-
       <div style="height:16px"></div>
     </div>
   </div>
 
+</div><!-- /.main -->
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab(0)"><span class="tab-icon">💱</span><span class="tab-lbl">환율</span></div>
+  <div class="tab" onclick="switchTab(1)"><span class="tab-icon">💬</span><span class="tab-lbl">필수문장</span></div>
+  <div class="tab" onclick="switchTab(2)"><span class="tab-icon">✅</span><span class="tab-lbl">체크리스트</span></div>
 </div>
 
-<!-- TABS -->
-<div class="tabs" style="grid-template-columns:1fr 1fr 1fr">
-  <div class="tab active" onclick="switchTab(0)">
-    <span class="tab-icon">💱</span>
-    <span class="tab-lbl">환율</span>
-  </div>
-  <div class="tab" onclick="switchTab(1)">
-    <span class="tab-icon">💬</span>
-    <span class="tab-lbl">필수문장</span>
-  </div>
-  <div class="tab" onclick="switchTab(2)">
-    <span class="tab-icon">✅</span>
-    <span class="tab-lbl">체크리스트</span>
-  </div>
-</div>
+</div><!-- /.app -->
 
-<!-- 크게 보여주기 오버레이 -->
+<!-- 오버레이들 -->
 <div class="overlay" id="show-ov">
   <div onclick="closeOv('show-ov')" style="position:absolute;top:16px;left:16px;height:44px;padding:0 20px;background:var(--card2);border:1px solid var(--border);border-radius:22px;cursor:pointer;display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:var(--text)">← 뒤로</div>
   <div class="ov-flag" id="ov-flag">🇨🇳</div>
@@ -651,7 +379,6 @@ body {
   <div class="ov-sub" id="ov-sub"></div>
 </div>
 
-<!-- 숫자 크게 보여주기 오버레이 -->
 <div class="ci-overlay" id="num-ov">
   <div class="ci-top" style="background:rgba(255,184,0,0.07);border-bottom:1px solid rgba(255,184,0,0.15)">
     <div onclick="closeOv('num-ov')" style="position:absolute;top:12px;left:12px;height:40px;padding:0 18px;background:var(--card2);border:1px solid var(--border);border-radius:20px;cursor:pointer;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--text)">← 뒤로</div>
@@ -659,29 +386,21 @@ body {
     <div class="ci-hint-txt">숫자를 입력하면 크게 표시돼요</div>
   </div>
   <div class="ci-display">
-    <div id="num-display" style="font-family:'Bebas Neue',sans-serif;font-size:120px;line-height:1;color:var(--gold);text-shadow:0 0 50px var(--gold-g);letter-spacing:8px;word-break:break-all;min-height:120px;text-align:center">＿</div>
+    <div id="num-display" style="font-family:'Bebas Neue',sans-serif;font-size:120px;line-height:1;color:var(--gold);letter-spacing:8px;word-break:break-all;min-height:120px;text-align:center">＿</div>
     <div style="font-size:14px;color:var(--muted);margin-top:12px" id="num-hint">입력하세요</div>
   </div>
   <div class="ci-pad">
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
-      <div class="ci-key" onclick="numPk('1')">1</div>
-      <div class="ci-key" onclick="numPk('2')">2</div>
-      <div class="ci-key" onclick="numPk('3')">3</div>
-      <div class="ci-key" onclick="numPk('4')">4</div>
-      <div class="ci-key" onclick="numPk('5')">5</div>
-      <div class="ci-key" onclick="numPk('6')">6</div>
-      <div class="ci-key" onclick="numPk('7')">7</div>
-      <div class="ci-key" onclick="numPk('8')">8</div>
-      <div class="ci-key" onclick="numPk('9')">9</div>
+      <div class="ci-key" onclick="numPk('1')">1</div><div class="ci-key" onclick="numPk('2')">2</div><div class="ci-key" onclick="numPk('3')">3</div>
+      <div class="ci-key" onclick="numPk('4')">4</div><div class="ci-key" onclick="numPk('5')">5</div><div class="ci-key" onclick="numPk('6')">6</div>
+      <div class="ci-key" onclick="numPk('7')">7</div><div class="ci-key" onclick="numPk('8')">8</div><div class="ci-key" onclick="numPk('9')">9</div>
       <div class="ci-key" onclick="numPk('-')" style="color:var(--muted);font-size:22px">—</div>
-      <div class="ci-key" onclick="numPk('0')">0</div>
-      <div class="ci-key del" onclick="numDel()">⌫</div>
+      <div class="ci-key" onclick="numPk('0')">0</div><div class="ci-key del" onclick="numDel()">⌫</div>
       <div class="ci-key clr" onclick="numClr()">전체 지우기</div>
     </div>
   </div>
 </div>
 
-<!-- 중국인 직접입력 오버레이 -->
 <div class="ci-overlay" id="ci-ov">
   <div class="ci-top">
     <div onclick="closeOv('ci-ov')" style="position:absolute;top:12px;left:12px;height:40px;padding:0 18px;background:var(--card2);border:1px solid var(--border);border-radius:20px;cursor:pointer;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--text)">← 뒤로</div>
@@ -696,149 +415,85 @@ body {
   </div>
   <div class="ci-pad">
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
-      <div class="ci-key" onclick="ciPk('1')">1</div>
-      <div class="ci-key" onclick="ciPk('2')">2</div>
-      <div class="ci-key" onclick="ciPk('3')">3</div>
-      <div class="ci-key" onclick="ciPk('4')">4</div>
-      <div class="ci-key" onclick="ciPk('5')">5</div>
-      <div class="ci-key" onclick="ciPk('6')">6</div>
-      <div class="ci-key" onclick="ciPk('7')">7</div>
-      <div class="ci-key" onclick="ciPk('8')">8</div>
-      <div class="ci-key" onclick="ciPk('9')">9</div>
-      <div class="ci-key dot" onclick="ciPk('.')">.</div>
-      <div class="ci-key" onclick="ciPk('0')">0</div>
-      <div class="ci-key del" onclick="ciDel()">⌫</div>
+      <div class="ci-key" onclick="ciPk('1')">1</div><div class="ci-key" onclick="ciPk('2')">2</div><div class="ci-key" onclick="ciPk('3')">3</div>
+      <div class="ci-key" onclick="ciPk('4')">4</div><div class="ci-key" onclick="ciPk('5')">5</div><div class="ci-key" onclick="ciPk('6')">6</div>
+      <div class="ci-key" onclick="ciPk('7')">7</div><div class="ci-key" onclick="ciPk('8')">8</div><div class="ci-key" onclick="ciPk('9')">9</div>
+      <div class="ci-key dot" onclick="ciPk('.')">.</div><div class="ci-key" onclick="ciPk('0')">0</div><div class="ci-key del" onclick="ciDel()">⌫</div>
       <div class="ci-key clr" onclick="ciClr()">전체 지우기</div>
     </div>
   </div>
 </div>
 
-<!-- 문장 크게보기 오버레이 -->
-<div class="phr-overlay" id="phr-ov" style="justify-content:flex-start;padding:0;overflow:hidden">
-  <!-- 상단 고정 뒤로가기 -->
-  <div style="flex-shrink:0;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.08)">
+<div class="phr-overlay" id="phr-ov">
+  <div style="flex-shrink:0;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.08);width:100%">
     <div onclick="closeOv('phr-ov')" style="display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 18px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:20px;cursor:pointer;font-size:15px;font-weight:700;color:white">← 뒤로</div>
   </div>
-  <!-- 스크롤 영역 -->
-  <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:24px 16px 32px;width:100%">
-  <div style="width:100%;text-align:center;margin-bottom:16px">
+  <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:24px 16px 32px;width:100%;text-align:center">
     <div class="phr-zh" id="phr-zh"></div>
     <div class="phr-pin" id="phr-pin"></div>
     <div id="phr-pron" style="font-family:'DM Mono',monospace;font-size:18px;color:rgba(255,184,0,0.7);margin-bottom:10px"></div>
     <div class="phr-ko" id="phr-ko"></div>
-    <!-- 스피커 버튼 -->
-    <div onclick="speakChinese(document.getElementById('phr-zh').textContent)" style="display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:12px 28px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:30px;cursor:pointer;font-size:16px;font-weight:700;color:white" ontouchstart="this.style.transform='scale(0.95)'" ontouchend="this.style.transform='scale(1)'">
-      🔊 발음 듣기
+    <div onclick="speakChinese(document.getElementById('phr-zh').textContent)" style="display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:12px 28px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:30px;cursor:pointer;font-size:16px;font-weight:700;color:white">🔊 발음 듣기</div>
+    <div id="phr-price-box" style="display:none;margin-top:16px">
+      <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:16px">
+        <div style="font-size:12px;color:rgba(255,255,255,0.4);letter-spacing:1px;margin-bottom:10px;text-align:center" id="phr-price-label">금액 입력</div>
+        <div style="text-align:center;margin-bottom:12px">
+          <span id="phr-price-num" style="font-family:'Bebas Neue',sans-serif;font-size:80px;line-height:1;color:var(--red)">0</span>
+          <span style="font-family:'Noto Sans SC',sans-serif;font-size:28px;color:var(--gold);margin-left:6px">元</span>
+        </div>
+        <div id="phr-price-krw" style="text-align:center;font-family:'DM Mono',monospace;font-size:16px;color:rgba(255,255,255,0.35);margin-bottom:14px">= ₩ 0</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
+          <div onclick="phrPk('1')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">1</div>
+          <div onclick="phrPk('2')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">2</div>
+          <div onclick="phrPk('3')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">3</div>
+          <div onclick="phrPk('4')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">4</div>
+          <div onclick="phrPk('5')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">5</div>
+          <div onclick="phrPk('6')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">6</div>
+          <div onclick="phrPk('7')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">7</div>
+          <div onclick="phrPk('8')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">8</div>
+          <div onclick="phrPk('9')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">9</div>
+          <div onclick="phrPk('.')" style="background:rgba(255,184,0,0.1);border-radius:10px;height:46px;font-size:24px;color:var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer">.</div>
+          <div onclick="phrPk('0')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">0</div>
+          <div onclick="phrDel()" style="background:rgba(255,36,66,0.1);border-radius:10px;height:46px;font-size:20px;color:var(--red);display:flex;align-items:center;justify-content:center;cursor:pointer">⌫</div>
+        </div>
+      </div>
     </div>
   </div>
-  </div><!-- text center end -->
-  <!-- 가격 흥정 입력창 (가격 관련 문장에서만 표시) -->
-  <div id="phr-price-box" style="display:none;width:100%;padding:0 16px">
-    <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:16px">
-      <div style="font-size:12px;color:rgba(255,255,255,0.4);letter-spacing:1px;margin-bottom:10px;text-align:center" id="phr-price-label">금액 입력</div>
-      <!-- 크게 표시 -->
-      <div style="text-align:center;margin-bottom:12px">
-        <span id="phr-price-num" style="font-family:'Bebas Neue',sans-serif;font-size:80px;line-height:1;color:var(--red)">0</span>
-        <span style="font-family:'Noto Sans SC',sans-serif;font-size:28px;color:var(--gold);margin-left:6px">元</span>
-      </div>
-      <div id="phr-price-krw" style="text-align:center;font-family:'DM Mono',monospace;font-size:16px;color:rgba(255,255,255,0.35);margin-bottom:14px">= ₩ 0</div>
-      <!-- 키패드 -->
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
-        <div onclick="phrPk('1')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">1</div>
-        <div onclick="phrPk('2')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">2</div>
-        <div onclick="phrPk('3')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">3</div>
-        <div onclick="phrPk('4')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">4</div>
-        <div onclick="phrPk('5')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">5</div>
-        <div onclick="phrPk('6')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">6</div>
-        <div onclick="phrPk('7')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">7</div>
-        <div onclick="phrPk('8')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">8</div>
-        <div onclick="phrPk('9')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">9</div>
-        <div onclick="phrPk('.')" style="background:rgba(255,184,0,0.1);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer">.</div>
-        <div onclick="phrPk('0')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">0</div>
-        <div onclick="phrDel()" style="background:rgba(255,36,66,0.1);border-radius:10px;height:46px;font-size:20px;color:var(--red);display:flex;align-items:center;justify-content:center;cursor:pointer">⌫</div>
-      </div>
-    </div>
-  </div><!-- price box end -->
-  </div><!-- scroll area end -->
 </div>
 
-<!-- 전면광고 오버레이 -->
-<div id="interstitial-ov" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:500;flex-direction:column;align-items:center;justify-content:center;animation:fadeUp 0.3s ease">
+<div id="interstitial-ov" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:500;flex-direction:column;align-items:center;justify-content:center">
   <div style="width:100%;max-width:400px;padding:20px">
-    <!-- 상단 카운트다운 -->
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
       <div style="font-size:13px;color:var(--muted)">잠시 후 설치 안내로 이동합니다</div>
       <div id="ad-countdown" style="background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-family:'DM Mono',monospace;font-size:13px;color:var(--gold)">5초</div>
     </div>
-
-    <!-- 광고 영역 -->
     <div style="background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center">
-      <!-- 여기에 애드센스 전면광고 코드 삽입 -->
-      <!-- <ins class="adsbygoogle" style="display:block" data-ad-format="auto" data-full-width-responsive="true" data-ad-client="ca-pub-XXXXXXXX" data-ad-slot="XXXXXXXX"></ins> -->
-      <div style="text-align:center;color:var(--muted);padding:40px 20px">
-        <div style="font-size:40px;margin-bottom:12px">📢</div>
-        <div style="font-size:12px;letter-spacing:1px">광고 영역</div>
-        <div style="font-size:11px;margin-top:6px;opacity:0.6">애드센스 코드를 여기에 삽입하세요</div>
-      </div>
+      <div style="text-align:center;color:var(--muted);padding:40px 20px"><div style="font-size:40px;margin-bottom:12px">📢</div><div style="font-size:12px;letter-spacing:1px">광고 영역</div></div>
     </div>
-
-    <!-- 건너뛰기 버튼 (카운트다운 후 활성화) -->
-    <div id="ad-skip-btn" onclick="showInstallGuide()" style="width:100%;height:52px;background:var(--card2);border:1px solid var(--border);border-radius:16px;color:var(--muted);font-size:14px;font-weight:700;cursor:not-allowed;display:flex;align-items:center;justify-content:center;margin-top:12px;transition:all 0.3s">
-      설치 안내 보기 (5초)
-    </div>
+    <div id="ad-skip-btn" onclick="showInstallGuide()" style="width:100%;height:52px;background:var(--card2);border:1px solid var(--border);border-radius:16px;color:var(--muted);font-size:14px;font-weight:700;cursor:not-allowed;display:flex;align-items:center;justify-content:center;margin-top:12px">설치 안내 보기 (5초)</div>
   </div>
 </div>
 
-<!-- 설치 안내 오버레이 (공통) -->
-<div id="install-guide-ov" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.97);z-index:500;flex-direction:column;align-items:center;justify-content:center;padding:24px;animation:fadeUp 0.3s ease">
+<div id="install-guide-ov" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.97);z-index:500;flex-direction:column;align-items:center;justify-content:center;padding:24px">
   <div style="width:100%;max-width:360px">
-    <div style="text-align:center;margin-bottom:24px">
-      <div style="font-size:48px;margin-bottom:10px">📲</div>
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;color:var(--gold)">홈화면에 추가하기</div>
-      <div style="font-size:13px;color:var(--muted);margin-top:6px">앱처럼 바로 실행할 수 있어요</div>
-    </div>
-
-    <!-- 안드로이드 안내 (기본 표시) -->
-    <div id="guide-android" style="background:var(--card);border:1px solid rgba(255,184,0,0.2);border-radius:18px;padding:20px;margin-bottom:12px">
+    <div style="text-align:center;margin-bottom:24px"><div style="font-size:48px;margin-bottom:10px">📲</div><div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;color:var(--gold)">홈화면에 추가하기</div></div>
+    <div style="background:var(--card);border:1px solid rgba(255,184,0,0.2);border-radius:18px;padding:20px;margin-bottom:12px">
       <div style="font-size:14px;font-weight:700;color:var(--gold);margin-bottom:14px">🤖 안드로이드</div>
       <div style="display:flex;flex-direction:column;gap:10px">
-        <div style="display:flex;align-items:center;gap:12px">
-          <div style="width:28px;height:28px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">1</div>
-          <div style="font-size:14px;color:var(--text)">크롬 브라우저로 열기</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:12px">
-          <div style="width:28px;height:28px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">2</div>
-          <div style="font-size:14px;color:var(--text)">우측 상단 <span style="color:var(--gold)">⋮</span> 메뉴 탭</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:12px">
-          <div style="width:28px;height:28px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">3</div>
-          <div style="font-size:14px;color:var(--text)"><span style="color:var(--gold)">"홈 화면에 추가"</span> 선택</div>
-        </div>
+        <div style="display:flex;align-items:center;gap:12px"><div style="width:28px;height:28px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">1</div><div style="font-size:14px;color:var(--text)">크롬 브라우저로 열기</div></div>
+        <div style="display:flex;align-items:center;gap:12px"><div style="width:28px;height:28px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">2</div><div style="font-size:14px;color:var(--text)">우측 상단 <span style="color:var(--gold)">⋮</span> 메뉴 탭</div></div>
+        <div style="display:flex;align-items:center;gap:12px"><div style="width:28px;height:28px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">3</div><div style="font-size:14px;color:var(--text)"><span style="color:var(--gold)">"홈 화면에 추가"</span> 선택</div></div>
       </div>
     </div>
-
-    <!-- iOS 안내 -->
-    <div id="guide-ios" style="background:var(--card);border:1px solid rgba(255,184,0,0.2);border-radius:18px;padding:20px;margin-bottom:20px">
+    <div style="background:var(--card);border:1px solid rgba(255,184,0,0.2);border-radius:18px;padding:20px;margin-bottom:20px">
       <div style="font-size:14px;font-weight:700;color:var(--gold);margin-bottom:14px">🍎 아이폰</div>
       <div style="display:flex;flex-direction:column;gap:10px">
-        <div style="display:flex;align-items:center;gap:12px">
-          <div style="width:28px;height:28px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">1</div>
-          <div style="font-size:14px;color:var(--text)">사파리로 열기</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:12px">
-          <div style="width:28px;height:28px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">2</div>
-          <div style="font-size:14px;color:var(--text)">하단 <span style="color:var(--gold)">공유 버튼 □↑</span> 탭</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:12px">
-          <div style="width:28px;height:28px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">3</div>
-          <div style="font-size:14px;color:var(--text)"><span style="color:var(--gold)">"홈 화면에 추가"</span> 선택</div>
-        </div>
+        <div style="display:flex;align-items:center;gap:12px"><div style="width:28px;height:28px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">1</div><div style="font-size:14px;color:var(--text)">사파리로 열기</div></div>
+        <div style="display:flex;align-items:center;gap:12px"><div style="width:28px;height:28px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">2</div><div style="font-size:14px;color:var(--text)">하단 <span style="color:var(--gold)">공유 □↑</span> 탭</div></div>
+        <div style="display:flex;align-items:center;gap:12px"><div style="width:28px;height:28px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">3</div><div style="font-size:14px;color:var(--text)"><span style="color:var(--gold)">"홈 화면에 추가"</span> 선택</div></div>
       </div>
     </div>
-
-    <div onclick="closeInstallGuide()" style="width:100%;height:52px;background:linear-gradient(135deg,var(--red),#b0102a);border-radius:16px;color:white;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px var(--red-g)" ontouchstart="this.style.transform='scale(0.97)'" ontouchend="this.style.transform='scale(1)'">
-      확인
-    </div>
+    <div onclick="closeInstallGuide()" style="width:100%;height:52px;background:linear-gradient(135deg,var(--red),#b0102a);border-radius:16px;color:white;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center">확인</div>
   </div>
 </div>
 
@@ -851,36 +506,29 @@ async function fetchRate() {
   try {
     const res = await fetch('https://open.er-api.com/v6/latest/CNY');
     const data = await res.json();
-    if (data?.rates?.KRW) {
+    if (data && data.rates && data.rates.KRW) {
       rate = data.rates.KRW;
       const t = new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'});
       document.getElementById('hd-rate').textContent = rate.toFixed(1);
-      document.getElementById('rate-detail').textContent = `¥1 = ₩${rate.toFixed(2)} · ${t} 업데이트`;
+      document.getElementById('rate-detail').textContent = '¥1 = ₩'+rate.toFixed(2)+' · '+t+' 업데이트';
       try { localStorage.setItem('cr',rate); localStorage.setItem('ct',t); } catch(e){}
       updateFX(); showToast('환율 업데이트 완료 ✓');
     }
   } catch(e) {
     try {
       const cr = localStorage.getItem('cr'), ct = localStorage.getItem('ct');
-      if (cr) {
-        rate = parseFloat(cr);
-        document.getElementById('hd-rate').textContent = rate.toFixed(1);
-        document.getElementById('rate-detail').textContent = `¥1 = ₩${rate.toFixed(2)} · ${ct} 저장값`;
-        showToast('오프라인 — 저장된 환율 사용 중');
-      } else {
-        document.getElementById('rate-detail').textContent = `¥1 = ₩${rate} · 기본값`;
-        document.getElementById('hd-rate').textContent = rate.toFixed(1);
-      }
+      if (cr) { rate = parseFloat(cr); document.getElementById('hd-rate').textContent = rate.toFixed(1); document.getElementById('rate-detail').textContent = '¥1 = ₩'+rate.toFixed(2)+' · '+ct+' 저장값'; }
+      else { document.getElementById('rate-detail').textContent = '¥1 = ₩'+rate+' · 기본값'; document.getElementById('hd-rate').textContent = rate.toFixed(1); }
     } catch(e2){}
     updateFX();
   }
 }
 
 function switchTab(i) {
-  document.querySelectorAll('.screen').forEach((s,j) => s.classList.toggle('active', i===j));
-  document.querySelectorAll('.tab').forEach((t,j) => t.classList.toggle('active', i===j));
+  document.querySelectorAll('.screen').forEach(function(s,j){ s.classList.toggle('active', i===j); });
+  document.querySelectorAll('.tab').forEach(function(t,j){ t.classList.toggle('active', i===j); });
   if(i===2) buildChecklist();
-  push();
+  try { history.pushState({app:true}, ''); } catch(e){}
 }
 
 function pk(k) {
@@ -898,7 +546,6 @@ function updateFX() {
   const toEl = document.getElementById('to-amt');
   fromEl.textContent = fromTxt;
   toEl.textContent = toTxt;
-  // 숫자 길이에 따라 폰트 자동 축소
   const maxLen = Math.max(fromTxt.length, toTxt.length);
   const size = maxLen <= 5 ? '44px' : maxLen <= 7 ? '36px' : maxLen <= 9 ? '28px' : '22px';
   fromEl.style.fontSize = size;
@@ -916,11 +563,10 @@ function swapCurrency() {
 }
 function fmt(n) {
   if(!n) return '0';
-  if(n < 10) return parseFloat(n.toFixed(2)).toString(); // 소수점 표시
+  if(n < 10) return parseFloat(n.toFixed(2)).toString();
   if(n < 100) return parseFloat(n.toFixed(1)).toString();
   return Math.round(n).toLocaleString('ko-KR');
 }
-
 function openShowMode() {
   const v = parseFloat(cur)||0;
   document.getElementById('ov-flag').textContent = fromCNY?'🇨🇳':'🇰🇷';
@@ -928,13 +574,13 @@ function openShowMode() {
   document.getElementById('ov-num').textContent = fmt(v);
   document.getElementById('ov-unit').textContent = fromCNY?'元':'원';
   document.getElementById('ov-sub').textContent = fromCNY ? '= ₩'+Math.round(v*rate).toLocaleString('ko-KR') : '= ¥'+Math.round(v/rate).toLocaleString('ko-KR');
-  document.getElementById('show-ov').classList.add('active'); push();
+  document.getElementById('show-ov').classList.add('active');
+  try { history.pushState({app:true}, ''); } catch(e){}
 }
-
-function openCI() { ciIn='0'; document.getElementById('ci-num').textContent='0'; document.getElementById('ci-krw').textContent='= ₩ 0'; document.getElementById('ci-ov').classList.add('active'); push(); }
+function openCI() { ciIn='0'; document.getElementById('ci-num').textContent='0'; document.getElementById('ci-krw').textContent='= ₩ 0'; document.getElementById('ci-ov').classList.add('active'); try{history.pushState({app:true},'');}catch(e){} }
 function ciPk(k) {
   if (k==='.') { if (ciIn.includes('.')) return; ciIn+='.'; }
-  else { if (ciIn.includes('.') && ciIn.split('.')[1].length>=2) return; if (ciIn==='0') ciIn=k; else if (ciIn.length<8) ciIn+=k; }
+  else { if (ciIn.includes('.')&&ciIn.split('.')[1].length>=2) return; if (ciIn==='0') ciIn=k; else if (ciIn.length<8) ciIn+=k; }
   const v = parseFloat(ciIn)||0;
   document.getElementById('ci-num').textContent = ciIn.endsWith('.')?ciIn:(ciIn.includes('.')?ciIn:v.toLocaleString('ko-KR'));
   document.getElementById('ci-krw').textContent = '= ₩ '+Math.round(v*rate).toLocaleString('ko-KR');
@@ -942,402 +588,195 @@ function ciPk(k) {
 function ciDel() { ciIn = ciIn.length>1?ciIn.slice(0,-1):'0'; ciPk(''); }
 function ciClr() { ciIn='0'; document.getElementById('ci-num').textContent='0'; document.getElementById('ci-krw').textContent='= ₩ 0'; }
 
-// ===== 숫자 보여주기 =====
 let numIn = '';
-function openNumShow() {
-  numIn = '';
-  document.getElementById('num-display').textContent = '＿';
-  document.getElementById('num-hint').textContent = '입력하세요';
-  document.getElementById('num-ov').classList.add('active'); push();
-}
-function numPk(k) {
-  if (numIn.length >= 20) return;
-  numIn += k;
-  numUpdate();
-}
-function numDel() {
-  numIn = numIn.slice(0, -1);
-  numUpdate();
-}
-function numClr() {
-  numIn = '';
-  numUpdate();
-}
+function openNumShow() { numIn=''; document.getElementById('num-display').textContent='＿'; document.getElementById('num-hint').textContent='입력하세요'; document.getElementById('num-ov').classList.add('active'); try{history.pushState({app:true},'');}catch(e){} }
+function numPk(k) { if(numIn.length>=20) return; numIn+=k; numUpdate(); }
+function numDel() { numIn=numIn.slice(0,-1); numUpdate(); }
+function numClr() { numIn=''; numUpdate(); }
 function numUpdate() {
-  const el = document.getElementById('num-display');
-  const hint = document.getElementById('num-hint');
-  if (!numIn) {
-    el.textContent = '＿';
-    hint.textContent = '입력하세요';
-    el.style.fontSize = '120px';
-  } else {
-    el.textContent = numIn;
-    hint.textContent = '';
-    // 길이에 따라 폰트 크기 조절
-    const len = numIn.length;
-    el.style.fontSize = len <= 4 ? '160px' : len <= 8 ? '120px' : len <= 12 ? '88px' : '64px';
-  }
+  const el=document.getElementById('num-display'), hint=document.getElementById('num-hint');
+  if(!numIn){el.textContent='＿';hint.textContent='입력하세요';el.style.fontSize='120px';}
+  else{el.textContent=numIn;hint.textContent='';const l=numIn.length;el.style.fontSize=l<=4?'160px':l<=8?'120px':l<=12?'88px':'64px';}
 }
 
-// ===== 홈화면 추가 =====
 let deferredPrompt = null;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  // ?install=1 파라미터로 열렸으면 자동으로 설치 팝업 띄우기
-  if(location.search.includes('install=1')) {
-    setTimeout(()=>{
-      e.prompt();
-      e.userChoice.then(()=>{ deferredPrompt = null; });
-    }, 800);
-  }
+window.addEventListener('beforeinstallprompt', function(e) {
+  e.preventDefault(); deferredPrompt = e;
+  if(location.search.includes('install=1')) { setTimeout(function(){e.prompt();e.userChoice.then(function(){deferredPrompt=null;});},800); }
 });
-
-function isSamsungBrowser() {
-  return /SamsungBrowser/i.test(navigator.userAgent);
-}
-
 function addToHome() {
-  // 전면광고 먼저 표시
-  const ov = document.getElementById('interstitial-ov');
-  ov.style.display = 'flex'; push();
-  let sec = 5;
-  const btn = document.getElementById('ad-skip-btn');
-  const countdown = document.getElementById('ad-countdown');
-  const timer = setInterval(() => {
-    sec--;
-    countdown.textContent = sec + '초';
-    btn.textContent = sec > 0 ? `설치 안내 보기 (${sec}초)` : '설치 안내 보기 →';
-    if (sec <= 0) {
-      clearInterval(timer);
-      btn.style.cursor = 'pointer';
-      btn.style.background = 'linear-gradient(135deg,var(--gold),#cc9200)';
-      btn.style.color = '#000';
-      btn.style.borderColor = 'var(--gold)';
-    }
-  }, 1000);
+  const ov=document.getElementById('interstitial-ov'); ov.style.display='flex';
+  try{history.pushState({app:true},'');}catch(e){}
+  let sec=5;
+  const btn=document.getElementById('ad-skip-btn'), cd=document.getElementById('ad-countdown');
+  const timer=setInterval(function(){
+    sec--; cd.textContent=sec+'초';
+    btn.textContent=sec>0?'설치 안내 보기 ('+sec+'초)':'설치 안내 보기 →';
+    if(sec<=0){clearInterval(timer);btn.style.cursor='pointer';btn.style.background='linear-gradient(135deg,var(--gold),#cc9200)';btn.style.color='#000';btn.style.borderColor='var(--gold)';}
+  },1000);
 }
-
 function showInstallGuide() {
-  const btn = document.getElementById('ad-skip-btn');
-  if (btn.style.cursor === 'not-allowed') return;
-  document.getElementById('interstitial-ov').style.display = 'none';
-
-  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-  // 삼성 인터넷이면 크롬으로 강제 이동 + 자동 설치
-  if(isSamsungBrowser()) {
-    const url = 'syk1792.github.io/china-travel-app/?install=1';
-    location.href = 'intent://' + url + '#Intent;scheme=https;package=com.android.chrome;end';
-    return;
-  }
-
-  // 크롬 안드로이드 → beforeinstallprompt 자동 팝업
-  if(deferredPrompt) {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(()=>{ deferredPrompt = null; });
-    return;
-  }
-
-  // iOS → 사파리 안내
-  if(isIOS) {
-    document.getElementById('install-guide-ov').style.display = 'flex';
-    return;
-  }
-
-  // 기타 → 안내
-  document.getElementById('install-guide-ov').style.display = 'flex';
+  const btn=document.getElementById('ad-skip-btn');
+  if(btn.style.cursor==='not-allowed') return;
+  document.getElementById('interstitial-ov').style.display='none';
+  const isIOS=/iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if(/SamsungBrowser/i.test(navigator.userAgent)){location.href='intent://syk1792.github.io/china-travel-app/?install=1#Intent;scheme=https;package=com.android.chrome;end';return;}
+  if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(function(){deferredPrompt=null;});return;}
+  document.getElementById('install-guide-ov').style.display='flex';
 }
+function closeInstallGuide() { document.getElementById('install-guide-ov').style.display='none'; }
 
-function closeInstallGuide() {
-  document.getElementById('install-guide-ov').style.display = 'none';
-}
-
-// ===== 중국어 TTS =====
 function speakChinese(text) {
-  if(!window.speechSynthesis) { showToast('이 브라우저는 음성을 지원하지 않아요'); return; }
-  window.speechSynthesis.cancel();
-  const utter = new SpeechSynthesisUtterance(text);
-  utter.lang = 'zh-CN';
-  utter.rate = 0.85;
-  utter.pitch = 1;
-  // 중국어 음성 찾기
-  const voices = window.speechSynthesis.getVoices();
-  const zhVoice = voices.find(v => v.lang.startsWith('zh'));
-  if(zhVoice) utter.voice = zhVoice;
-  window.speechSynthesis.speak(utter);
+  try {
+    if(!window.speechSynthesis){showToast('이 브라우저는 음성을 지원하지 않아요');return;}
+    window.speechSynthesis.cancel();
+    const utter=new SpeechSynthesisUtterance(text);
+    utter.lang='zh-CN'; utter.rate=0.85; utter.pitch=1;
+    const voices=window.speechSynthesis.getVoices();
+    const zhVoice=voices.find(function(v){return v.lang.startsWith('zh');});
+    if(zhVoice) utter.voice=zhVoice;
+    window.speechSynthesis.speak(utter);
+  } catch(e){}
 }
-// 음성 목록 미리 로드
-window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
-
-function openApp(scheme) {
-  const isAndroid = /Android/i.test(navigator.userAgent);
-  if(scheme.includes(';')) {
-    const [ios, android] = scheme.split(';');
-    window.location.href = isAndroid ? android : ios;
-  } else {
-    window.location.href = scheme;
-  }
-  setTimeout(()=>{ showToast('앱이 설치되지 않았어요 📱'); }, 1200);
-}
+try { window.speechSynthesis.onvoiceschanged = function(){ window.speechSynthesis.getVoices(); }; } catch(e){}
 
 function openAppSmart(scheme, androidStore, iosStore) {
-  const isAndroid = /Android/i.test(navigator.userAgent);
-  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-  let appScheme = scheme;
-  if(scheme.includes(';')) {
-    const [a, b] = scheme.split(';');
-    appScheme = isAndroid ? a : b;
-  }
-  const start = Date.now();
-  window.location.href = appScheme;
-  setTimeout(() => {
-    if(Date.now() - start < 2000) {
-      // 앱 없음 → 스토어로
-      if(isAndroid && androidStore) window.location.href = androidStore;
-      else if(isIOS && iosStore) window.location.href = iosStore;
-      else showToast('앱을 먼저 설치해주세요 📱');
-    }
-  }, 1500);
+  const isAndroid=/Android/i.test(navigator.userAgent), isIOS=/iPhone|iPad|iPod/i.test(navigator.userAgent);
+  let appScheme=scheme;
+  if(scheme.includes(';')){const[a,b]=scheme.split(';');appScheme=isAndroid?a:b;}
+  const start=Date.now(); window.location.href=appScheme;
+  setTimeout(function(){if(Date.now()-start<2000){if(isAndroid&&androidStore)window.location.href=androidStore;else if(isIOS&&iosStore)window.location.href=iosStore;else showToast('앱을 먼저 설치해주세요 📱');}},1500);
 }
-
 function openGoogleLens() {
-  const isAndroid = /Android/i.test(navigator.userAgent);
-  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-  const start = Date.now();
-  // 구글 렌즈 딥링크
-  window.location.href = isAndroid ? 'googlelens://' : 'googlelens://';
-  setTimeout(() => {
-    if(Date.now() - start < 2000) {
-      if(isAndroid) window.location.href = 'https://play.google.com/store/apps/details?id=com.google.ar.lens';
-      else if(isIOS) window.location.href = 'https://apps.apple.com/app/id284815942'; // 구글 앱 (렌즈 포함)
-      else showToast('구글 렌즈 앱을 설치해주세요 📱');
-    }
-  }, 1500);
+  const isAndroid=/Android/i.test(navigator.userAgent), isIOS=/iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const start=Date.now();
+  if(isAndroid) window.location.href='intent://lens.google.com#Intent;scheme=https;package=com.google.ar.lens;end';
+  else if(isIOS) window.location.href='googlelens://';
+  else { window.open('https://lens.google.com','_blank'); return; }
+  setTimeout(function(){if(Date.now()-start<2000){if(isAndroid)window.location.href='https://play.google.com/store/apps/details?id=com.google.ar.lens';else if(isIOS)window.location.href='https://apps.apple.com/app/id284815942';}},1500);
 }
-
-function openGoogleLens() {
-  const isAndroid = /Android/i.test(navigator.userAgent);
-  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-  const start = Date.now();
-  // 구글 렌즈 딥링크
-  window.location.href = 'googlelens://';
-  setTimeout(() => {
-    if(Date.now() - start < 2000) {
-      if(isAndroid) {
-        // 안드로이드: 구글 앱의 렌즈 기능으로
-        window.location.href = 'intent://lens.google.com/v3/scan#Intent;scheme=https;package=com.google.android.googlequicksearchbox;end';
-      } else if(isIOS) {
-        window.location.href = 'https://lens.google.com';
-      } else {
-        window.open('https://lens.google.com', '_blank');
-      }
-    }
-  }, 1200);
-}
-
-function openGoogleLens() {
-  const isAndroid = /Android/i.test(navigator.userAgent);
-  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-  const start = Date.now();
-  window.location.href = 'google://lens';
-  setTimeout(() => {
-    if(Date.now() - start < 2000) {
-      if(isAndroid) window.location.href = 'https://play.google.com/store/apps/details?id=com.google.ar.lens';
-      else if(isIOS) window.location.href = 'https://apps.apple.com/app/id284815942';
-    }
-  }, 1500);
-}
-
-function openPapagoCamera() {
-  const isAndroid = /Android/i.test(navigator.userAgent);
-  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-  const start = Date.now();
-  window.location.href = 'papago://camera';
-  setTimeout(() => {
-    if(Date.now() - start < 2000) {
-      if(isAndroid) window.location.href = 'https://play.google.com/store/apps/details?id=com.naver.labs.translator';
-      else if(isIOS) window.location.href = 'https://apps.apple.com/app/id1225370913';
-    }
-  }, 1500);
-}
-
 function openGoogleTranslate() {
-  const isAndroid = /Android/i.test(navigator.userAgent);
-  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-  const start = Date.now();
-  window.location.href = 'googletranslate://';
-  setTimeout(() => {
-    if(Date.now() - start < 2000) {
-      if(isAndroid) window.location.href = 'https://play.google.com/store/apps/details?id=com.google.android.apps.translate';
-      else if(isIOS) window.location.href = 'https://apps.apple.com/app/id414706506';
-    }
-  }, 1500);
-}
-
-function openGoogleLens() {
-  const isAndroid = /Android/i.test(navigator.userAgent);
-  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-  const start = Date.now();
-  // 구글 렌즈 앱 시도
-  if(isAndroid) {
-    window.location.href = 'intent://lens.google.com#Intent;scheme=https;package=com.google.ar.lens;end';
-  } else if(isIOS) {
-    window.location.href = 'googlelens://';
-  } else {
-    window.open('https://lens.google.com','_blank');
-    return;
-  }
-  setTimeout(() => {
-    if(Date.now() - start < 2000) {
-      // 렌즈 없으면 구글 앱(렌즈 포함)으로
-      if(isAndroid) window.location.href = 'https://play.google.com/store/apps/details?id=com.google.ar.lens';
-      else if(isIOS) window.location.href = 'https://apps.apple.com/app/id284815942';
-    }
-  }, 1500);
+  const isAndroid=/Android/i.test(navigator.userAgent), isIOS=/iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const start=Date.now(); window.location.href='googletranslate://';
+  setTimeout(function(){if(Date.now()-start<2000){if(isAndroid)window.location.href='https://play.google.com/store/apps/details?id=com.google.android.apps.translate';else if(isIOS)window.location.href='https://apps.apple.com/app/id414706506';}},1500);
 }
 function openAlipay() {
-  const s = Date.now(); window.location.href='alipays://';
-  setTimeout(()=>{ if(Date.now()-s<1500) showToast('알리페이 앱을 먼저 설치해주세요 📱'); },800);
+  const s=Date.now(); window.location.href='alipays://';
+  setTimeout(function(){if(Date.now()-s<1500)showToast('알리페이 앱을 먼저 설치해주세요 📱');},800);
 }
-let phrPriceIn = '0';
-const PRICE_PHRASES = ['多少钱？','太贵了！','便宜一点','我要这个'];
-const PRON_MAP = {"多少钱？": "뚜어샤오 치엔?", "太贵了！": "타이 꾸에이 러!", "便宜一点": "피엔이 이디엔", "我要这个": "워 야오 쩌거", "不要": "뿌 야오", "菜单": "차이단", "好吃！": "하오 츠!", "买单": "마이 단", "辣的": "라 더", "去这里": "취 쩌리", "谢谢": "씨에씨에", "厕所在哪里？": "처쑤어 짜이 나리?", "听不懂": "팅 뿌 동", "你好": "니 하오", "对不起": "뚜이부치", "这里最受欢迎的是什么？": "쩌리 쭈이 쇼우 환잉 더 스 션머?", "请帮我叫出租车": "칭 방 워 지아오 추주 처", "怎么走？": "전머 저우?", "我不能吃猪肉": "워 뿌 넝 츠 주로우", "我对坚果过敏": "워 뚜이 지엔궈 궈민", "我对海鲜过敏": "워 뚜이 하이시엔 궈민", "不要放辣椒": "뿌야오 팡 라지아오", "我是素食者": "워 스 쑤스 저", "我来办理入住": "워 라이 반리 루주", "WiFi密码是多少？": "와이파이 미마 스 뚜어샤오?", "请多给我一条毛巾": "칭 뚜어 게이 워 이 티아오 마오진", "空调坏了": "쿵티아오 화이 러", "我要退房": "워 야오 투이팡", "我肚子疼": "워 두쯔 텅", "我发烧了": "워 파샤오 러", "我头疼": "워 터우텅", "请给我退烧药": "칭 게이 워 투이샤오야오", "请给我消化药": "칭 게이 워 시아오화야오", "最近的医院在哪里？": "쭈이진 더 이위엔 짜이 나리?", "这里最受欢迎的是什么？": "쩌리 쭈이 쇼우 환잉 더 스 션머?", "请帮我叫出租车": "칭 방 워 지아오 추주 처"};
+
+let phrPriceIn='0';
+const PRICE_PHRASES=['多少钱？','太贵了！','便宜一点','我要这个'];
+const PRON_MAP={"多少钱？":"뚜어샤오 치엔?","太贵了！":"타이 꾸에이 러!","便宜一点":"피엔이 이디엔","我要这个":"워 야오 쩌거","不要":"뿌 야오","菜单":"차이단","好吃！":"하오 츠!","买单":"마이 단","辣的":"라 더","去这里":"취 쩌리","谢谢":"씨에씨에","听不懂":"팅 뿌 동","你好":"니 하오","对不起":"뚜이부치","请帮我叫出租车":"칭 방 워 지아오 추주 처","怎么走？":"전머 저우?","我不能吃猪肉":"워 뿌 넝 츠 주로우","我对坚果过敏":"워 뚜이 지엔궈 궈민","不要放辣椒":"뿌야오 팡 라지아오","我是素食者":"워 스 쑤스 저","我来办理入住":"워 라이 반리 루주","WiFi密码是多少？":"와이파이 미마 스 뚜어샤오?","空调坏了":"쿵티아오 화이 러","我要退房":"워 야오 투이팡","我肚子疼":"워 두쯔 텅","我发烧了":"워 파샤오 러","请给我退烧药":"칭 게이 워 투이샤오야오","最近的医院在哪里？":"쭈이진 더 이위엔 짜이 나리?"};
 function showPhrase(zh,pin,ko) {
   document.getElementById('phr-zh').textContent=zh;
   document.getElementById('phr-pin').textContent=pin;
   document.getElementById('phr-ko').textContent=ko;
-  const pronEl = document.getElementById('phr-pron');
-  if(pronEl) pronEl.textContent = '발음: ' + (PRON_MAP[zh]||'');
-  const hasPrice = PRICE_PHRASES.includes(zh);
-  const box = document.getElementById('phr-price-box');
-  box.style.display = hasPrice ? 'block' : 'none';
-  // 가격 없으면 한자 아주 크게
-  document.getElementById('phr-zh').className = 'phr-zh' + (hasPrice ? '' : ' big');
-  document.getElementById('phr-pin').className = 'phr-pin' + (hasPrice ? '' : ' big');
-  document.getElementById('phr-ko').className = 'phr-ko' + (hasPrice ? '' : ' big');
-  const pronEl2 = document.getElementById('phr-pron');
-  if(pronEl2) pronEl2.style.fontSize = hasPrice ? '18px' : '26px';
-  if(hasPrice) {
-    phrPriceIn = '0';
-    document.getElementById('phr-price-num').textContent = '0';
-    document.getElementById('phr-price-krw').textContent = '= ₩ 0';
-    document.getElementById('phr-price-label').textContent = zh==='多少钱？' ? '💰 상대방이 부른 가격 입력' : zh==='太贵了！' ? '💰 내가 원하는 가격 입력' : zh==='便宜一点' ? '💰 목표 가격 입력' : '💰 금액 입력';
-  }
+  const pronEl=document.getElementById('phr-pron');
+  if(pronEl) pronEl.textContent='발음: '+(PRON_MAP[zh]||'');
+  const hasPrice=PRICE_PHRASES.includes(zh);
+  document.getElementById('phr-price-box').style.display=hasPrice?'block':'none';
+  document.getElementById('phr-zh').className='phr-zh'+(hasPrice?'':' big');
+  document.getElementById('phr-pin').className='phr-pin'+(hasPrice?'':' big');
+  document.getElementById('phr-ko').className='phr-ko'+(hasPrice?'':' big');
+  if(pronEl) pronEl.style.fontSize=hasPrice?'18px':'26px';
+  if(hasPrice){phrPriceIn='0';document.getElementById('phr-price-num').textContent='0';document.getElementById('phr-price-krw').textContent='= ₩ 0';document.getElementById('phr-price-label').textContent=zh==='多少钱？'?'💰 상대방이 부른 가격 입력':zh==='太贵了！'?'💰 내가 원하는 가격 입력':'💰 목표 가격 입력';}
   document.getElementById('phr-ov').classList.add('active');
-  push();
+  try{history.pushState({app:true},'');}catch(e){}
 }
 function phrPk(k) {
-  if(k==='.') { if(phrPriceIn.includes('.')) return; phrPriceIn+='.'; }
-  else { if(phrPriceIn.includes('.')&&phrPriceIn.split('.')[1].length>=2) return; if(phrPriceIn==='0') phrPriceIn=k; else if(phrPriceIn.length<8) phrPriceIn+=k; }
-  const v = parseFloat(phrPriceIn)||0;
-  document.getElementById('phr-price-num').textContent = phrPriceIn.endsWith('.')?phrPriceIn:fmt(v);
-  document.getElementById('phr-price-krw').textContent = '= ₩ '+Math.round(v*rate).toLocaleString('ko-KR');
+  if(k==='.'){if(phrPriceIn.includes('.'))return;phrPriceIn+='.';}
+  else{if(phrPriceIn.includes('.')&&phrPriceIn.split('.')[1].length>=2)return;if(phrPriceIn==='0')phrPriceIn=k;else if(phrPriceIn.length<8)phrPriceIn+=k;}
+  const v=parseFloat(phrPriceIn)||0;
+  document.getElementById('phr-price-num').textContent=phrPriceIn.endsWith('.')?phrPriceIn:fmt(v);
+  document.getElementById('phr-price-krw').textContent='= ₩ '+Math.round(v*rate).toLocaleString('ko-KR');
 }
-function phrDel() { phrPriceIn=phrPriceIn.length>1?phrPriceIn.slice(0,-1):'0'; phrPk(''); }
-function closeOv(id) { document.getElementById(id).classList.remove('active'); }
-function showToast(msg) { const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2200); }
+function phrDel(){phrPriceIn=phrPriceIn.length>1?phrPriceIn.slice(0,-1):'0';phrPk('');}
+function closeOv(id){document.getElementById(id).classList.remove('active');}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2200);}
 
-const mb = new Blob([JSON.stringify({name:"中韩 여행 도우미",short_name:"중한 환율",start_url:"./",display:"standalone",background_color:"#07070f",theme_color:"#07070f",icons:[{src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='40' fill='%2307070f'/%3E%3Ctext x='96' y='130' font-size='110' text-anchor='middle'%3E🇨🇳%3C/text%3E%3C/svg%3E",sizes:"192x192",type:"image/svg+xml"}]})],{type:'application/json'});
-document.getElementById('manifest-link').href = URL.createObjectURL(mb);
-
+// PWA manifest
+try {
+  const mb=new Blob([JSON.stringify({name:"中韩 여행 도우미",short_name:"중한 환율",start_url:"./",display:"standalone",background_color:"#07070f",theme_color:"#07070f",icons:[{src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='40' fill='%2307070f'/%3E%3Ctext x='96' y='130' font-size='110' text-anchor='middle'%3E🇨🇳%3C/text%3E%3C/svg%3E",sizes:"192x192",type:"image/svg+xml"}]})],{type:'application/json'});
+  document.getElementById('manifest-link').href=URL.createObjectURL(mb);
+} catch(e){}
 
 // ===== 체크리스트 =====
 const CL_DATA = [
-  {
-    cat: "📋 서류·비자",
-    color: "#4A90D9",
-    items: [
-      { id:"cl01", text:"여권 유효기간 6개월 이상 확인", tip:"6개월 미만이면 입국 거부될 수 있어요" },
-      { id:"cl02", text:"비자 불필요 확인 (무비자 30일)", tip:"2026년 12월 31일까지 무비자. 취업·취재·유학은 비자 필요!" },
-      { id:"cl03", text:"여권 사진·사본 별도 보관", tip:"분실 대비 — 갤러리 또는 클라우드에 저장" },
-      { id:"cl04", text:"항공권·호텔 예약확인서 스크린샷 저장", tip:"인터넷 없어도 갤러리에서 볼 수 있게" },
-      { id:"cl05", text:"여행자 보험 가입", tip:"의료비·응급후송 포함 상품 추천" },
-    ]
-  },
-  {
-    cat: "💳 결제 준비",
-    color: "#FFB800",
-    items: [
-      { id:"cl06", text:"알리페이 설치 + 여권 인증 + 카드 등록", tip:"출국 3~5일 전 미리! 공항에서 하면 패닉. 트래블로그/트래블월렛 카드 추천 (수수료 없음)" },
-      { id:"cl07", text:"카카오페이 또는 네이버페이 해외결제 확인", tip:"알리페이+ 연동으로 중국에서 바로 사용 가능!" },
-      { id:"cl08", text:"위챗페이 등록 (선택 권장)", tip:"로컬 식당·시장은 위챗페이만 받는 곳 많음" },
-      { id:"cl09", text:"위안화 현금 소액 준비", tip:"10·20위안 소액권 위주로 준비. 100위안 고액권은 위조지폐 의심받아 잘 안 받음" },
-      { id:"cl10", text:"신용카드 해외결제 차단 해제", tip:"출국 전 카드사에 전화하여 해외결제 차단 해제 요청" },
-    ]
-  },
-  {
-    cat: "📱 인터넷·앱",
-    color: "#03C75A",
-    items: [
-      { id:"cl11", text:"중국 전용 이심/유심 미리 구매", tip:"홍콩 경유 방식 → 구글·카카오·유튜브 다 됨. 현지 유심은 차단 안 풀림 ⚠️" },
-      { id:"cl12", text:"고덕지도 앱 미리 설치", tip:"중국에서 구글 플레이스토어 차단! 한국에서 미리 설치" },
-      { id:"cl13", text:"파파고 앱 미리 설치", tip:"중국에서 VPN 없이도 사용 가능한 번역 앱" },
-      { id:"cl14", text:"이 앱(중한여행) 홈화면에 추가", tip:"홈화면에 추가하면 앱처럼 바로 실행 가능!" },
-      { id:"cl15", text:"필요한 앱 모두 설치 완료 확인", tip:"중국 현지에서 구글 플레이 차단 → 앱 설치 불가" },
-    ]
-  },
-  {
-    cat: "✈️ 입국 주의사항",
-    color: "#FF6300",
-    items: [
-      { id:"cl16", text:"입국 시 열 손가락 지문 등록 준비", tip:"공항 키오스크에서 진행 — 여유있게 이동하세요" },
-      { id:"cl17", text:"체류기한 30일 엄수", tip:"초과 시 관할 출입경 방문하여 임시 체류비자 발급 가능" },
-      { id:"cl18", text:"반간첩법 주의사항 확인", tip:"군사시설·공항·항만·관공서 사진 촬영 금지!" },
-      { id:"cl19", text:"황금연휴 기간 확인 및 회피", tip:"춘절(1~2월)·노동절(5/1)·국경절(10/1) — 관광지 인산인해, 숙박비 폭등" },
-    ]
-  },
-  {
-    cat: "🔌 전기·콘센트",
-    color: "#9B59B6",
-    items: [
-      { id:"cl20", text:"멀티 어댑터 챙기기", tip:"2022년 이후 신축 건물은 한국 플러그 안 맞을 수 있음. 전압은 220V로 동일" },
-      { id:"cl21", text:"보조배터리 확인 (기내 반입용)", tip:"위탁 수하물 금지! 기내 반입만 가능. 용량 제한 확인" },
-    ]
-  },
-  {
-    cat: "💊 건강·위생",
-    color: "#FF2442",
-    items: [
-      { id:"cl22", text:"상비약 챙기기", tip:"소화제·지사제·해열제·두통약·감기약. 현지 약은 이름이 달라 찾기 어려워요" },
-      { id:"cl23", text:"수돗물 마시지 않기 (생수 구매 예정)", tip:"중국 수돗물은 절대 음용 금지. 생수 구매 필수" },
-      { id:"cl24", text:"마스크 챙기기", tip:"미세먼지 심한 날 있음. 지하철·혼잡한 곳에서도 유용" },
-      { id:"cl25", text:"처방약 있으면 영문 소견서 지참", tip:"처방약을 장기간 지참 시 영문 의사 소견서 필요할 수 있음" },
-    ]
-  },
-  {
-    cat: "💡 꼭 알아야 할 것",
-    color: "#FF2442",
-    items: [
-      { id:"cl26", text:"카카오톡·유튜브·인스타 차단됨 인지", tip:"이심/유심(홍콩 경유)으로 해결 가능. VPN 쓸 때 결제는 꺼야 함" },
-      { id:"cl27", text:"QR결제가 기본임을 인지 (현금 잘 안 받음)", tip:"노점상·택시·지하철·식당 모두 QR. 현금은 비상용으로만" },
-      { id:"cl28", text:"차가운 음료는 '삥더(冰的)' 요청 필요", tip:"기본 제공이 따뜻한 물. 차갑게 달라면 삥더라고 하세요" },
-      { id:"cl29", text:"지하철·관광지 X레이 검사 있음 인지", tip:"여유있게 이동하고 가방 정리 미리 해두기" },
-      { id:"cl30", text:"호텔 체크인 시 여권 필수 지참", tip:"주숙등기(투숙 등록) 의무 — 여권 없으면 체크인 불가" },
-    ]
-  },
+  { cat:"📋 서류·비자", color:"#4A90D9", items:[
+    {id:"cl01",text:"여권 유효기간 6개월 이상 확인",tip:"6개월 미만이면 입국 거부될 수 있어요"},
+    {id:"cl02",text:"비자 불필요 확인 (무비자 30일)",tip:"2026년 12월 31일까지. 취업·취재·유학은 비자 필요!"},
+    {id:"cl03",text:"여권 사진·사본 별도 보관",tip:"분실 대비 — 갤러리 또는 클라우드에 저장"},
+    {id:"cl04",text:"항공권·호텔 예약확인서 스크린샷 저장",tip:"인터넷 없어도 갤러리에서 볼 수 있게"},
+    {id:"cl05",text:"여행자 보험 가입",tip:"의료비·응급후송 포함 상품 추천"},
+  ]},
+  { cat:"💳 결제 준비", color:"#FFB800", items:[
+    {id:"cl06",text:"알리페이 설치 + 여권 인증 + 카드 등록",tip:"출국 3~5일 전 미리! 트래블로그/트래블월렛 카드 추천"},
+    {id:"cl07",text:"카카오페이·네이버페이 해외결제 확인",tip:"알리페이+ 연동으로 중국에서 바로 사용 가능!"},
+    {id:"cl08",text:"위챗페이 등록 (선택 권장)",tip:"로컬 식당·시장은 위챗페이만 받는 곳 많음"},
+    {id:"cl09",text:"위안화 현금 소액 준비",tip:"10·20위안 소액권 위주. 100위안 고액권은 위조 의심"},
+    {id:"cl10",text:"신용카드 해외결제 차단 해제",tip:"출국 전 카드사에 전화하여 해제 요청"},
+  ]},
+  { cat:"📱 인터넷·앱", color:"#03C75A", items:[
+    {id:"cl11",text:"중국 전용 이심/유심 미리 구매",tip:"홍콩 경유 방식 → 구글·카카오·유튜브 다 됨. 현지 유심은 차단 안 풀림 ⚠️"},
+    {id:"cl12",text:"고덕지도 앱 미리 설치",tip:"중국에서 구글 플레이스토어 차단! 한국에서 미리 설치"},
+    {id:"cl13",text:"파파고 앱 미리 설치",tip:"중국에서 VPN 없이도 사용 가능한 번역 앱"},
+    {id:"cl14",text:"이 앱 홈화면에 추가",tip:"홈화면에 추가하면 앱처럼 바로 실행 가능!"},
+    {id:"cl15",text:"필요한 앱 모두 설치 완료 확인",tip:"중국 현지에서 구글 플레이 차단 → 앱 설치 불가"},
+  ]},
+  { cat:"✈️ 입국 주의사항", color:"#FF6300", items:[
+    {id:"cl16",text:"입국 시 열 손가락 지문 등록 준비",tip:"공항 키오스크에서 진행 — 여유있게 이동하세요"},
+    {id:"cl17",text:"체류기한 30일 엄수",tip:"초과 시 관할 출입경 방문하여 임시 체류비자 발급 가능"},
+    {id:"cl18",text:"반간첩법 주의사항 확인",tip:"군사시설·공항·항만·관공서 사진 촬영 금지!"},
+    {id:"cl19",text:"황금연휴 기간 확인 및 회피",tip:"춘절·노동절·국경절 — 관광지 인산인해, 숙박비 폭등"},
+  ]},
+  { cat:"🔌 전기·콘센트", color:"#9B59B6", items:[
+    {id:"cl20",text:"멀티 어댑터 챙기기",tip:"2022년 이후 신축 건물은 한국 플러그 안 맞을 수 있음"},
+    {id:"cl21",text:"보조배터리 확인 (기내 반입용)",tip:"위탁 수하물 금지! 기내 반입만 가능. 용량 제한 확인"},
+  ]},
+  { cat:"💊 건강·위생", color:"#FF2442", items:[
+    {id:"cl22",text:"상비약 챙기기",tip:"소화제·지사제·해열제·두통약. 현지 약은 이름이 달라 찾기 어려워요"},
+    {id:"cl23",text:"수돗물 마시지 않기 (생수 구매 예정)",tip:"중국 수돗물은 절대 음용 금지"},
+    {id:"cl24",text:"마스크 챙기기",tip:"미세먼지 심한 날 있음"},
+    {id:"cl25",text:"처방약 있으면 영문 소견서 지참",tip:"처방약을 장기간 지참 시 영문 의사 소견서 필요"},
+  ]},
+  { cat:"💡 꼭 알아야 할 것", color:"#FFB800", items:[
+    {id:"cl26",text:"카카오톡·유튜브·인스타 차단됨 인지",tip:"이심/유심(홍콩 경유)으로 해결 가능"},
+    {id:"cl27",text:"QR결제가 기본임 인지 (현금 잘 안 받음)",tip:"노점·택시·지하철·식당 모두 QR. 현금은 비상용"},
+    {id:"cl28",text:"차가운 음료는 '삥더(冰的)' 요청",tip:"기본 제공이 따뜻한 물. 차갑게 달라면 삥더"},
+    {id:"cl29",text:"지하철·관광지 X레이 검사 있음",tip:"여유있게 이동하고 가방 정리 미리 해두기"},
+    {id:"cl30",text:"호텔 체크인 시 여권 필수 지참",tip:"주숙등기 의무 — 여권 없으면 체크인 불가"},
+  ]},
 ];
+
+function getSavedChecks() {
+  try { return JSON.parse(localStorage.getItem('cl_checks')||'[]'); } catch(e){ return []; }
+}
 
 function buildChecklist() {
   const wrap = document.getElementById('checklist-wrap');
   if(!wrap) return;
   const saved = getSavedChecks();
   let html = '';
-  CL_DATA.forEach(cat => {
-    html += `<div style="margin-bottom:6px">
-      <div style="font-size:12px;font-weight:700;letter-spacing:2px;color:${cat.color};background:rgba(255,255,255,0.04);border-radius:10px;padding:8px 12px;margin-bottom:8px">${cat.cat}</div>
-      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px">`;
-    cat.items.forEach(item => {
-      const checked = saved.includes(item.id);
-      html += `<div onclick="toggleCheck('${item.id}',this)" data-id="${item.id}" style="background:${checked?'rgba(255,184,0,0.08)':'var(--card)'};border:1px solid ${checked?'rgba(255,184,0,0.3)':'var(--border)'};border-radius:14px;padding:13px 14px;cursor:pointer;display:flex;align-items:flex-start;gap:12px;transition:all 0.2s">
-        <div style="width:24px;height:24px;border-radius:50%;border:2px solid ${checked?'var(--gold)':'var(--muted)'};background:${checked?'var(--gold)':'transparent'};display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;transition:all 0.2s">
-          ${checked?'<span style="color:#000;font-size:13px;font-weight:900">✓</span>':''}
-        </div>
-        <div style="flex:1;min-width:0">
-          <div style="font-size:14px;font-weight:${checked?'400':'600'};color:${checked?'var(--muted)':'var(--text)'};text-decoration:${checked?'line-through':'none'};line-height:1.4">${item.text}</div>
-          <div style="font-size:11px;color:${checked?'rgba(255,184,0,0.4)':'rgba(255,255,255,0.3)'};margin-top:4px;line-height:1.4">${item.tip}</div>
-        </div>
-      </div>`;
+  CL_DATA.forEach(function(cat) {
+    html += '<div style="margin-bottom:6px">';
+    html += '<div style="font-size:12px;font-weight:700;letter-spacing:2px;color:'+cat.color+';background:rgba(255,255,255,0.04);border-radius:10px;padding:8px 12px;margin-bottom:8px">'+cat.cat+'</div>';
+    html += '<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px">';
+    cat.items.forEach(function(item) {
+      const checked = saved.indexOf(item.id) >= 0;
+      const bg = checked ? 'rgba(255,184,0,0.08)' : 'var(--card)';
+      const bd = checked ? 'rgba(255,184,0,0.3)' : 'var(--border)';
+      const circleBd = checked ? 'var(--gold)' : 'var(--muted)';
+      const circleBg = checked ? 'var(--gold)' : 'transparent';
+      const check = checked ? '<span style="color:#000;font-size:13px;font-weight:900">✓</span>' : '';
+      const textColor = checked ? 'var(--muted)' : 'var(--text)';
+      const textDeco = checked ? 'line-through' : 'none';
+      const textWeight = checked ? '400' : '600';
+      html += '<div onclick="toggleCheck(\''+item.id+'\',this)" data-id="'+item.id+'" style="background:'+bg+';border:1px solid '+bd+';border-radius:14px;padding:13px 14px;cursor:pointer;display:flex;align-items:flex-start;gap:12px;transition:all 0.2s">';
+      html += '<div style="width:24px;height:24px;border-radius:50%;border:2px solid '+circleBd+';background:'+circleBg+';display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">'+check+'</div>';
+      html += '<div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:'+textWeight+';color:'+textColor+';text-decoration:'+textDeco+';line-height:1.4">'+item.text+'</div>';
+      html += '<div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:4px;line-height:1.4">'+item.tip+'</div></div>';
+      html += '</div>';
     });
     html += '</div></div>';
   });
@@ -1351,13 +790,8 @@ function toggleCheck(id, el) {
   if(idx >= 0) saved.splice(idx,1);
   else saved.push(id);
   try { localStorage.setItem('cl_checks', JSON.stringify(saved)); } catch(e){}
-  // 애니메이션
   el.style.transform = 'scale(0.97)';
-  setTimeout(()=>{ el.style.transform=''; buildChecklist(); },120);
-}
-
-function getSavedChecks() {
-  try { return JSON.parse(localStorage.getItem('cl_checks')||'[]'); } catch(e){ return []; }
+  setTimeout(function(){ el.style.transform=''; buildChecklist(); }, 120);
 }
 
 function resetChecklist() {
@@ -1367,7 +801,7 @@ function resetChecklist() {
 }
 
 function updateProgress() {
-  const total = CL_DATA.reduce((a,c)=>a+c.items.length,0);
+  const total = CL_DATA.reduce(function(a,c){return a+c.items.length;}, 0);
   const done = getSavedChecks().length;
   const pct = total ? Math.round(done/total*100) : 0;
   const bar = document.getElementById('cl-progress-bar');
@@ -1384,27 +818,24 @@ function updateProgress() {
 }
 
 buildChecklist();
-
 fetchRate();
 
 // 카테고리 접기/펴기
-document.querySelectorAll('.phrase-section').forEach(sec => {
-  sec.addEventListener('click', () => {
+document.querySelectorAll('.phrase-section').forEach(function(sec) {
+  sec.addEventListener('click', function() {
     const cat = sec.nextElementSibling;
     if(!cat || !cat.classList.contains('phrase-cat')) return;
-    const isCollapsed = cat.classList.contains('collapsed');
-    if(isCollapsed) {
+    if(cat.classList.contains('collapsed')) {
       cat.style.maxHeight = cat.scrollHeight + 'px';
       cat.classList.remove('collapsed');
       sec.classList.remove('collapsed');
     } else {
       cat.style.maxHeight = cat.scrollHeight + 'px';
-      requestAnimationFrame(() => { cat.style.maxHeight = '0'; });
+      requestAnimationFrame(function(){ cat.style.maxHeight = '0'; });
       cat.classList.add('collapsed');
       sec.classList.add('collapsed');
     }
   });
-  // 초기 접힌 상태
   const cat = sec.nextElementSibling;
   if(cat && cat.classList.contains('phrase-cat')) {
     cat.style.maxHeight = '0';
@@ -1413,30 +844,21 @@ document.querySelectorAll('.phrase-section').forEach(sec => {
   }
 });
 
-// ===== 뒤로가기 처리 =====
-function push() { history.pushState({app:true}, ''); }
-push(); push(); push();
-
+// 뒤로가기
+try { history.pushState({app:true},''); history.pushState({app:true},''); history.pushState({app:true},''); } catch(e){}
 window.addEventListener('popstate', function() {
-  push();
-
-  const overlays = ['show-ov','ci-ov','num-ov','phr-ov'];
-  for(let id of overlays) {
-    const el = document.getElementById(id);
-    if(el && el.classList.contains('active')) {
-      el.classList.remove('active');
-      return;
-    }
+  try { history.pushState({app:true},''); } catch(e){}
+  var overlays = ['show-ov','ci-ov','num-ov','phr-ov'];
+  for(var i=0;i<overlays.length;i++) {
+    var el = document.getElementById(overlays[i]);
+    if(el && el.classList.contains('active')) { el.classList.remove('active'); return; }
   }
-  const ov1 = document.getElementById('interstitial-ov');
-  const ov2 = document.getElementById('install-guide-ov');
-  if(ov1 && ov1.style.display==='flex') { ov1.style.display='none'; return; }
-  if(ov2 && ov2.style.display==='flex') { ov2.style.display='none'; return; }
-
-  const activeIdx = Array.from(document.querySelectorAll('.tab')).findIndex(t=>t.classList.contains('active'));
-  if(activeIdx > 0) { switchTab(0); return; }
-
-  if(confirm('앱을 종료할까요?')) { history.go(-100); }
+  var ov1=document.getElementById('interstitial-ov'), ov2=document.getElementById('install-guide-ov');
+  if(ov1&&ov1.style.display==='flex'){ov1.style.display='none';return;}
+  if(ov2&&ov2.style.display==='flex'){ov2.style.display='none';return;}
+  var activeIdx = Array.from(document.querySelectorAll('.tab')).findIndex(function(t){return t.classList.contains('active');});
+  if(activeIdx>0){switchTab(0);return;}
+  if(confirm('앱을 종료할까요?')){try{history.go(-100);}catch(e){}}
 });
 </script>
 </body>
