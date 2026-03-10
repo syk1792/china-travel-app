@@ -1325,7 +1325,8 @@ function openApp(name) {
   if (isAndroid) {
     // intent:// — 설치돼 있으면 앱 바로 열림, 없으면 플레이스토어
     var fallback = encodeURIComponent('https://play.google.com/store/apps/details?id=' + info.pkg);
-    window.location.href = 'intent://#Intent;scheme=' + info.scheme + ';package=' + info.pkg + ';S.browser_fallback_url=' + fallback + ';end';
+    // scheme 없이 package만으로 열기 — 설치된 앱이면 무조건 열림
+    window.location.href = 'intent://#Intent;package=' + info.pkg + ';S.browser_fallback_url=' + fallback + ';end';
   } else if (isIOS) {
     // iOS: URL scheme 시도 후 앱스토어 폴백
     var t0 = Date.now();
