@@ -1324,10 +1324,13 @@ function openApp(name) {
   if (!info) return;
 
   if (isAndroid) {
-    // intent://HOST#Intent;scheme=SCHEME;package=PKG;S.browser_fallback_url=URL;end
-    // Chrome이 scheme으로 앱 실행 → 없으면 package로 재시도 → 없으면 fallback URL
-    var fallback = encodeURIComponent('https://play.google.com/store/apps/details?id=' + info.pkg);
-    window.location.href = 'intent://' + info.host + '#Intent;scheme=' + info.scheme + ';package=' + info.pkg + ';S.browser_fallback_url=' + fallback + ';end';
+    if (name === 'alipay') {
+      // 알리페이: alipays:// scheme이 앱에 등록돼 있어 직접 열림
+      window.location.href = 'alipays://';
+    } else {
+      // 나머지: 플레이스토어로 이동
+      window.location.href = 'https://play.google.com/store/apps/details?id=' + info.pkg;
+    }
   } else if (isIOS) {
     // iOS: URL scheme 시도 후 앱스토어 폴백
     var t0 = Date.now();
