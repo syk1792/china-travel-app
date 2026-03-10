@@ -734,6 +734,29 @@ function showInstallGuide() {
 }
 function closeInstallGuide() { document.getElementById('install-guide-ov').style.display='none'; }
 
+function openTtsSettings() {
+  var isAndroid = /Android/i.test(navigator.userAgent);
+  var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if (isAndroid) {
+    // 안드로이드: TTS 설정 직접 이동
+    var opened = false;
+    function onHide() { opened = true; }
+    document.addEventListener('visibilitychange', onHide);
+    window.location.href = 'intent:#Intent;action=com.android.settings.TTS_SETTINGS;end';
+    setTimeout(function() {
+      document.removeEventListener('visibilitychange', onHide);
+      if (!opened) {
+        // 폴백: 일반 설정으로
+        window.location.href = 'intent:#Intent;action=android.settings.SETTINGS;end';
+      }
+    }, 1500);
+  } else if (isIOS) {
+    showToast('설정 → 손쉬운 사용 → 말하기 → 음성 → 중국어(간체)');
+  } else {
+    showToast('설정 → 텍스트 음성 변환 → 중문(간체) 설치');
+  }
+}
+
 // ===== 중국어 TTS =====
 // 1순위: Google Translate TTS (가장 정확한 표준 중국어 발음)
 // 2순위: Web Speech API zh-CN 음성
@@ -975,29 +998,30 @@ const CL_DATA = [
     {id:"cl13",text:"파파고 앱 미리 설치",tip:"중국에서 VPN 없이도 사용 가능한 번역 앱"},
     {id:"cl14",text:"이 앱 홈화면에 추가",tip:"홈화면에 추가하면 앱처럼 바로 실행 가능!"},
     {id:"cl15",text:"필요한 앱 모두 설치 완료 확인",tip:"중국 현지에서 구글 플레이 차단 → 앱 설치 불가"},
+    {id:"cl17",text:"중국어 음성팩 설치 (오프라인 발음용)",tip:"설치하면 중국 현지·인터넷 없이도 발음 재생! 아래 바로가기 버튼으로 설치",hasTtsLink:true},
   ]},
   { cat:"✈️ 입국 주의사항", color:"#FF6300", items:[
-    {id:"cl16",text:"입국 시 열 손가락 지문 등록 준비",tip:"공항 키오스크에서 진행 — 여유있게 이동하세요"},
-    {id:"cl17",text:"체류기한 30일 엄수",tip:"초과 시 관할 출입경 방문하여 임시 체류비자 발급 가능"},
-    {id:"cl18",text:"반간첩법 주의사항 확인",tip:"군사시설·공항·항만·관공서 사진 촬영 금지!"},
-    {id:"cl19",text:"황금연휴 기간 확인 및 회피",tip:"춘절·노동절·국경절 — 관광지 인산인해, 숙박비 폭등"},
+    {id:"cl17",text:"입국 시 열 손가락 지문 등록 준비",tip:"공항 키오스크에서 진행 — 여유있게 이동하세요"},
+    {id:"cl18",text:"체류기한 30일 엄수",tip:"초과 시 관할 출입경 방문하여 임시 체류비자 발급 가능"},
+    {id:"cl19",text:"반간첩법 주의사항 확인",tip:"군사시설·공항·항만·관공서 사진 촬영 금지!"},
+    {id:"cl20",text:"황금연휴 기간 확인 및 회피",tip:"춘절·노동절·국경절 — 관광지 인산인해, 숙박비 폭등"},
   ]},
   { cat:"🔌 전기·콘센트", color:"#9B59B6", items:[
-    {id:"cl20",text:"멀티 어댑터 챙기기",tip:"2022년 이후 신축 건물은 한국 플러그 안 맞을 수 있음"},
-    {id:"cl21",text:"보조배터리 확인 (기내 반입용)",tip:"위탁 수하물 금지! 기내 반입만 가능. 용량 제한 확인"},
+    {id:"cl21",text:"멀티 어댑터 챙기기",tip:"2022년 이후 신축 건물은 한국 플러그 안 맞을 수 있음"},
+    {id:"cl22",text:"보조배터리 확인 (기내 반입용)",tip:"위탁 수하물 금지! 기내 반입만 가능. 용량 제한 확인"},
   ]},
   { cat:"💊 건강·위생", color:"#FF2442", items:[
-    {id:"cl22",text:"상비약 챙기기",tip:"소화제·지사제·해열제·두통약. 현지 약은 이름이 달라 찾기 어려워요"},
-    {id:"cl23",text:"수돗물 마시지 않기 (생수 구매 예정)",tip:"중국 수돗물은 절대 음용 금지"},
-    {id:"cl24",text:"마스크 챙기기",tip:"미세먼지 심한 날 있음"},
-    {id:"cl25",text:"처방약 있으면 영문 소견서 지참",tip:"처방약을 장기간 지참 시 영문 의사 소견서 필요"},
+    {id:"cl23",text:"상비약 챙기기",tip:"소화제·지사제·해열제·두통약. 현지 약은 이름이 달라 찾기 어려워요"},
+    {id:"cl24",text:"수돗물 마시지 않기 (생수 구매 예정)",tip:"중국 수돗물은 절대 음용 금지"},
+    {id:"cl25",text:"마스크 챙기기",tip:"미세먼지 심한 날 있음"},
+    {id:"cl26",text:"처방약 있으면 영문 소견서 지참",tip:"처방약을 장기간 지참 시 영문 의사 소견서 필요"},
   ]},
   { cat:"💡 꼭 알아야 할 것", color:"#FFB800", items:[
-    {id:"cl26",text:"카카오톡·유튜브·인스타 차단됨 인지",tip:"이심/유심(홍콩 경유)으로 해결 가능"},
-    {id:"cl27",text:"QR결제가 기본임 인지 (현금 잘 안 받음)",tip:"노점·택시·지하철·식당 모두 QR. 현금은 비상용"},
-    {id:"cl28",text:"차가운 음료는 '삥더(冰的)' 요청",tip:"기본 제공이 따뜻한 물. 차갑게 달라면 삥더"},
-    {id:"cl29",text:"지하철·관광지 X레이 검사 있음",tip:"여유있게 이동하고 가방 정리 미리 해두기"},
-    {id:"cl30",text:"호텔 체크인 시 여권 필수 지참",tip:"주숙등기 의무 — 여권 없으면 체크인 불가"},
+    {id:"cl27",text:"카카오톡·유튜브·인스타 차단됨 인지",tip:"이심/유심(홍콩 경유)으로 해결 가능"},
+    {id:"cl28",text:"QR결제가 기본임 인지 (현금 잘 안 받음)",tip:"노점·택시·지하철·식당 모두 QR. 현금은 비상용"},
+    {id:"cl29",text:"차가운 음료는 '삥더(冰的)' 요청",tip:"기본 제공이 따뜻한 물. 차갑게 달라면 삥더"},
+    {id:"cl30",text:"지하철·관광지 X레이 검사 있음",tip:"여유있게 이동하고 가방 정리 미리 해두기"},
+    {id:"cl31",text:"호텔 체크인 시 여권 필수 지참",tip:"주숙등기 의무 — 여권 없으면 체크인 불가"},
   ]},
 ];
 
@@ -1027,7 +1051,12 @@ function buildChecklist() {
       html += '<div onclick="toggleCheck(\''+item.id+'\',this)" data-id="'+item.id+'" style="background:'+bg+';border:1px solid '+bd+';border-radius:14px;padding:13px 14px;cursor:pointer;display:flex;align-items:flex-start;gap:12px;transition:all 0.2s">';
       html += '<div style="width:24px;height:24px;border-radius:50%;border:2px solid '+circleBd+';background:'+circleBg+';display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">'+check+'</div>';
       html += '<div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:'+textWeight+';color:'+textColor+';text-decoration:'+textDeco+';line-height:1.4">'+item.text+'</div>';
-      html += '<div style="font-size:13px;color:rgba(255,255,255,0.3);margin-top:4px;line-height:1.5">'+item.tip+'</div></div>';
+      html += '<div style="font-size:13px;color:rgba(255,255,255,0.3);margin-top:4px;line-height:1.5">'+item.tip+'</div>';
+      if(item.hasTtsLink) {
+        html += '<div ontouchstart="event.preventDefault();openTtsSettings()" onclick="openTtsSettings()" style="display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:7px 14px;background:rgba(255,184,0,0.12);border:1px solid rgba(255,184,0,0.35);border-radius:20px;cursor:pointer">';
+        html += '<span style="font-size:14px">⚙️</span><span style="font-size:12px;font-weight:700;color:var(--gold)">TTS 설정 바로가기</span></div>';
+      }
+      html += '</div>';
       html += '</div>';
     });
     html += '</div></div>';
