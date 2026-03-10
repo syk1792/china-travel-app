@@ -626,19 +626,72 @@ function showInstallGuide() {
 }
 function closeInstallGuide() { document.getElementById('install-guide-ov').style.display='none'; }
 
+// ===== 중국어 TTS =====
+// 1순위: Google Translate TTS (가장 정확한 표준 중국어 발음)
+// 2순위: Web Speech API zh-CN 음성
+// 3순위: Web Speech API 아무 zh 음성
+
+var _ttsAudio = null;
+
 function speakChinese(text) {
+  // Google Translate TTS 시도
   try {
-    if(!window.speechSynthesis){showToast('이 브라우저는 음성을 지원하지 않아요');return;}
-    window.speechSynthesis.cancel();
-    const utter=new SpeechSynthesisUtterance(text);
-    utter.lang='zh-CN'; utter.rate=0.85; utter.pitch=1;
-    const voices=window.speechSynthesis.getVoices();
-    const zhVoice=voices.find(function(v){return v.lang.startsWith('zh');});
-    if(zhVoice) utter.voice=zhVoice;
-    window.speechSynthesis.speak(utter);
-  } catch(e){}
+    if (_ttsAudio) { _ttsAudio.pause(); _ttsAudio = null; }
+    var url = 'https://translate.google.com/translate_tts?ie=UTF-8&q='
+      + encodeURIComponent(text)
+      + '&tl=zh-CN&client=tw-ob&ttsspeed=0.8';
+    var audio = new Audio(url);
+    audio.volume = 1.0;
+    _ttsAudio = audio;
+    audio.onerror = function() {
+      // Google TTS 실패 시 Web Speech로 폴백
+      _speakWebSpeech(text);
+    };
+    audio.oncanplaythrough = function() { audio.play(); };
+    audio.load();
+    // 2초 내 재생 안 되면 Web Speech로 폴백
+    var fallbackTimer = setTimeout(function() {
+      if (audio.readyState < 3) {
+        audio.pause();
+        _speakWebSpeech(text);
+      }
+    }, 2000);
+    audio.onplaying = function() { clearTimeout(fallbackTimer); };
+  } catch(e) {
+    _speakWebSpeech(text);
+  }
 }
-try { window.speechSynthesis.onvoiceschanged = function(){ window.speechSynthesis.getVoices(); }; } catch(e){}
+
+function _speakWebSpeech(text) {
+  try {
+    if (!window.speechSynthesis) { showToast('음성을 재생할 수 없어요'); return; }
+    window.speechSynthesis.cancel();
+    var utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'zh-CN';
+    utter.rate = 0.8;
+    utter.pitch = 1.0;
+    // zh-CN 우선 → zh- 계열 → 아무거나
+    var voices = window.speechSynthesis.getVoices();
+    var voice =
+      voices.find(function(v){ return v.lang === 'zh-CN'; }) ||
+      voices.find(function(v){ return v.lang === 'zh_CN'; }) ||
+      voices.find(function(v){ return v.lang.startsWith('zh-CN'); }) ||
+      voices.find(function(v){ return v.lang.startsWith('zh'); });
+    if (voice) {
+      utter.voice = voice;
+    } else {
+      showToast('중국어 음성팩이 없어요 — 설정에서 추가하세요');
+    }
+    utter.onerror = function() { showToast('음성 재생 실패'); };
+    window.speechSynthesis.speak(utter);
+  } catch(e) { showToast('음성을 재생할 수 없어요'); }
+}
+
+// 음성 목록 미리 로드
+try {
+  window.speechSynthesis.getVoices();
+  window.speechSynthesis.onvoiceschanged = function(){ window.speechSynthesis.getVoices(); };
+} catch(e) {}
 
 // 앱 실행 - intent:// 방식 (Chrome이 네이티브 처리, JS 타이머 불필요)
 function intentUrl(pkg, scheme, path) {
