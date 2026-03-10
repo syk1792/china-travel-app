@@ -1310,23 +1310,24 @@ function openApp(name) {
   var isAndroid = /Android/i.test(navigator.userAgent);
 
   // 앱 정보 테이블
+  // host: intent URL에 필요한 더미 host, scheme: 앱이 등록한 URL scheme
   var apps = {
-    alipay:     { pkg:'com.eg.android.AlipayGphone',            scheme:'alipays',        iosUrl:'https://apps.apple.com/app/id333206289' },
-    gaode:      { pkg:'com.autonavi.minimap',                   scheme:'iosamap',        iosUrl:'https://apps.apple.com/app/id461703208' },
-    dianping:   { pkg:'com.dianping.v1',                        scheme:'dianping',       iosUrl:'https://apps.apple.com/app/id351091731' },
-    gtranslate: { pkg:'com.google.android.apps.translate',      scheme:'googletranslate',iosUrl:'https://apps.apple.com/app/id414706506' },
-    glens:      { pkg:'com.google.ar.lens',                     scheme:'googlelens',     iosUrl:'https://apps.apple.com/app/id284815942' },
-    papago:     { pkg:'com.naver.labs.translator',              scheme:'naversearchapp', iosUrl:'https://apps.apple.com/app/id1225370913' }
+    alipay:     { pkg:'com.eg.android.AlipayGphone',          host:'alipayclient',  scheme:'alipays',         iosUrl:'https://apps.apple.com/app/id333206289' },
+    gaode:      { pkg:'com.autonavi.minimap',                  host:'map',           scheme:'iosamap',         iosUrl:'https://apps.apple.com/app/id461703208' },
+    dianping:   { pkg:'com.dianping.v1',                       host:'dianping',      scheme:'dianping',        iosUrl:'https://apps.apple.com/app/id351091731' },
+    gtranslate: { pkg:'com.google.android.apps.translate',     host:'translate',     scheme:'googletranslate', iosUrl:'https://apps.apple.com/app/id414706506' },
+    glens:      { pkg:'com.google.ar.lens',                    host:'lens',          scheme:'googlelens',      iosUrl:'https://apps.apple.com/app/id284815942' },
+    papago:     { pkg:'com.naver.labs.translator',             host:'papago',        scheme:'naversearchapp',  iosUrl:'https://apps.apple.com/app/id1225370913' }
   };
 
   var info = apps[name];
   if (!info) return;
 
   if (isAndroid) {
-    // intent:// — 설치돼 있으면 앱 바로 열림, 없으면 플레이스토어
+    // intent://HOST#Intent;scheme=SCHEME;package=PKG;S.browser_fallback_url=URL;end
+    // Chrome이 scheme으로 앱 실행 → 없으면 package로 재시도 → 없으면 fallback URL
     var fallback = encodeURIComponent('https://play.google.com/store/apps/details?id=' + info.pkg);
-    // scheme 없이 package만으로 열기 — 설치된 앱이면 무조건 열림
-    window.location.href = 'intent://#Intent;package=' + info.pkg + ';S.browser_fallback_url=' + fallback + ';end';
+    window.location.href = 'intent://' + info.host + '#Intent;scheme=' + info.scheme + ';package=' + info.pkg + ';S.browser_fallback_url=' + fallback + ';end';
   } else if (isIOS) {
     // iOS: URL scheme 시도 후 앱스토어 폴백
     var t0 = Date.now();
