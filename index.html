@@ -181,7 +181,7 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
       <div style="text-align:center;margin-bottom:8px;animation:bounce 1.5s infinite">
         <span style="font-size:11px;color:var(--muted)">아래로 스크롤 ↓</span>
       </div>
-      <button class="show-btn" style="font-size:18px" onclick="openShowMode()">📱 상대방에게 크게 보여주기</button>
+      <button class="show-btn" style="font-size:18px" ontouchstart="event.preventDefault();openShowMode()" onclick="openShowMode()">📱 상대방에게 크게 보여주기</button>
       <div class="action-row">
         <div class="chinese-btn" onclick="openCI()">
           <span class="zh">多少钱？</span>
@@ -213,7 +213,7 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
             <span style="font-size:20px" id="from-flag">🇨🇳</span>
             <span style="font-size:11px;color:var(--muted)" id="from-name">위안 CNY</span>
           </div>
-          <button class="swap-btn" onclick="swapCurrency()">⇅</button>
+          <button class="swap-btn" ontouchstart="event.preventDefault();swapCurrency()" onclick="swapCurrency()">⇅</button>
           <div style="display:flex;align-items:center;gap:5px">
             <span style="font-size:11px;color:var(--muted);text-align:right" id="to-name">원 KRW</span>
             <span style="font-size:20px" id="to-flag">🇰🇷</span>
@@ -226,11 +226,11 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
         </div>
       </div>
       <div class="keypad">
-        <div class="key" onclick="pk('1')">1</div><div class="key" onclick="pk('2')">2</div><div class="key" onclick="pk('3')">3</div>
-        <div class="key" onclick="pk('4')">4</div><div class="key" onclick="pk('5')">5</div><div class="key" onclick="pk('6')">6</div>
-        <div class="key" onclick="pk('7')">7</div><div class="key" onclick="pk('8')">8</div><div class="key" onclick="pk('9')">9</div>
-        <div class="key dot" onclick="pk('.')">.</div><div class="key" onclick="pk('0')">0</div><div class="key del" onclick="pkDel()">⌫</div>
-        <div class="key clear" onclick="pkClear()">전체 지우기</div>
+        <div class="key" ontouchstart="event.preventDefault();pk('1')" onclick="pk('1')">1</div><div class="key" ontouchstart="event.preventDefault();pk('2')" onclick="pk('2')">2</div><div class="key" ontouchstart="event.preventDefault();pk('3')" onclick="pk('3')">3</div>
+        <div class="key" ontouchstart="event.preventDefault();pk('4')" onclick="pk('4')">4</div><div class="key" ontouchstart="event.preventDefault();pk('5')" onclick="pk('5')">5</div><div class="key" ontouchstart="event.preventDefault();pk('6')" onclick="pk('6')">6</div>
+        <div class="key" ontouchstart="event.preventDefault();pk('7')" onclick="pk('7')">7</div><div class="key" ontouchstart="event.preventDefault();pk('8')" onclick="pk('8')">8</div><div class="key" ontouchstart="event.preventDefault();pk('9')" onclick="pk('9')">9</div>
+        <div class="key dot" ontouchstart="event.preventDefault();pk('.')" onclick="pk('.')">.</div><div class="key" ontouchstart="event.preventDefault();pk('0')" onclick="pk('0')">0</div><div class="key del" ontouchstart="event.preventDefault();pkDel()" onclick="pkDel()">⌫</div>
+        <div class="key clear" ontouchstart="event.preventDefault();pkClear()" onclick="pkClear()">전체 지우기</div>
       </div>
     </div>
   </div>
@@ -391,12 +391,12 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
   </div>
   <div class="ci-pad">
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
-      <div class="ci-key" onclick="numPk('1')">1</div><div class="ci-key" onclick="numPk('2')">2</div><div class="ci-key" onclick="numPk('3')">3</div>
-      <div class="ci-key" onclick="numPk('4')">4</div><div class="ci-key" onclick="numPk('5')">5</div><div class="ci-key" onclick="numPk('6')">6</div>
-      <div class="ci-key" onclick="numPk('7')">7</div><div class="ci-key" onclick="numPk('8')">8</div><div class="ci-key" onclick="numPk('9')">9</div>
-      <div class="ci-key" onclick="numPk('-')" style="color:var(--muted);font-size:22px">—</div>
-      <div class="ci-key" onclick="numPk('0')">0</div><div class="ci-key del" onclick="numDel()">⌫</div>
-      <div class="ci-key clr" onclick="numClr()">전체 지우기</div>
+      <div class="ci-key" ontouchstart="event.preventDefault();numPk('1')" onclick="numPk('1')">1</div><div class="ci-key" ontouchstart="event.preventDefault();numPk('2')" onclick="numPk('2')">2</div><div class="ci-key" ontouchstart="event.preventDefault();numPk('3')" onclick="numPk('3')">3</div>
+      <div class="ci-key" ontouchstart="event.preventDefault();numPk('4')" onclick="numPk('4')">4</div><div class="ci-key" ontouchstart="event.preventDefault();numPk('5')" onclick="numPk('5')">5</div><div class="ci-key" ontouchstart="event.preventDefault();numPk('6')" onclick="numPk('6')">6</div>
+      <div class="ci-key" ontouchstart="event.preventDefault();numPk('7')" onclick="numPk('7')">7</div><div class="ci-key" ontouchstart="event.preventDefault();numPk('8')" onclick="numPk('8')">8</div><div class="ci-key" ontouchstart="event.preventDefault();numPk('9')" onclick="numPk('9')">9</div>
+      <div class="ci-key" ontouchstart="event.preventDefault();numPk('-')" onclick="numPk('-')" style="color:var(--muted);font-size:22px">—</div>
+      <div class="ci-key" ontouchstart="event.preventDefault();numPk('0')" onclick="numPk('0')">0</div><div class="ci-key del" ontouchstart="event.preventDefault();numDel()" onclick="numDel()">⌫</div>
+      <div class="ci-key clr" ontouchstart="event.preventDefault();numClr()" onclick="numClr()">전체 지우기</div>
     </div>
   </div>
 </div>
@@ -415,11 +415,11 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
   </div>
   <div class="ci-pad">
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
-      <div class="ci-key" onclick="ciPk('1')">1</div><div class="ci-key" onclick="ciPk('2')">2</div><div class="ci-key" onclick="ciPk('3')">3</div>
-      <div class="ci-key" onclick="ciPk('4')">4</div><div class="ci-key" onclick="ciPk('5')">5</div><div class="ci-key" onclick="ciPk('6')">6</div>
-      <div class="ci-key" onclick="ciPk('7')">7</div><div class="ci-key" onclick="ciPk('8')">8</div><div class="ci-key" onclick="ciPk('9')">9</div>
-      <div class="ci-key dot" onclick="ciPk('.')">.</div><div class="ci-key" onclick="ciPk('0')">0</div><div class="ci-key del" onclick="ciDel()">⌫</div>
-      <div class="ci-key clr" onclick="ciClr()">전체 지우기</div>
+      <div class="ci-key" ontouchstart="event.preventDefault();ciPk('1')" onclick="ciPk('1')">1</div><div class="ci-key" ontouchstart="event.preventDefault();ciPk('2')" onclick="ciPk('2')">2</div><div class="ci-key" ontouchstart="event.preventDefault();ciPk('3')" onclick="ciPk('3')">3</div>
+      <div class="ci-key" ontouchstart="event.preventDefault();ciPk('4')" onclick="ciPk('4')">4</div><div class="ci-key" ontouchstart="event.preventDefault();ciPk('5')" onclick="ciPk('5')">5</div><div class="ci-key" ontouchstart="event.preventDefault();ciPk('6')" onclick="ciPk('6')">6</div>
+      <div class="ci-key" ontouchstart="event.preventDefault();ciPk('7')" onclick="ciPk('7')">7</div><div class="ci-key" ontouchstart="event.preventDefault();ciPk('8')" onclick="ciPk('8')">8</div><div class="ci-key" ontouchstart="event.preventDefault();ciPk('9')" onclick="ciPk('9')">9</div>
+      <div class="ci-key dot" ontouchstart="event.preventDefault();ciPk('.')" onclick="ciPk('.')">.</div><div class="ci-key" ontouchstart="event.preventDefault();ciPk('0')" onclick="ciPk('0')">0</div><div class="ci-key del" ontouchstart="event.preventDefault();ciDel()" onclick="ciDel()">⌫</div>
+      <div class="ci-key clr" ontouchstart="event.preventDefault();ciClr()" onclick="ciClr()">전체 지우기</div>
     </div>
   </div>
 </div>
@@ -443,18 +443,18 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
         </div>
         <div id="phr-price-krw" style="text-align:center;font-family:'DM Mono',monospace;font-size:16px;color:rgba(255,255,255,0.35);margin-bottom:14px">= ₩ 0</div>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
-          <div onclick="phrPk('1')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">1</div>
-          <div onclick="phrPk('2')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">2</div>
-          <div onclick="phrPk('3')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">3</div>
-          <div onclick="phrPk('4')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">4</div>
-          <div onclick="phrPk('5')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">5</div>
-          <div onclick="phrPk('6')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">6</div>
-          <div onclick="phrPk('7')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">7</div>
-          <div onclick="phrPk('8')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">8</div>
-          <div onclick="phrPk('9')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">9</div>
-          <div onclick="phrPk('.')" style="background:rgba(255,184,0,0.1);border-radius:10px;height:46px;font-size:24px;color:var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer">.</div>
-          <div onclick="phrPk('0')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">0</div>
-          <div onclick="phrDel()" style="background:rgba(255,36,66,0.1);border-radius:10px;height:46px;font-size:20px;color:var(--red);display:flex;align-items:center;justify-content:center;cursor:pointer">⌫</div>
+          <div ontouchstart="event.preventDefault();phrPk('1')" onclick="phrPk('1')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">1</div>
+          <div ontouchstart="event.preventDefault();phrPk('2')" onclick="phrPk('2')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">2</div>
+          <div ontouchstart="event.preventDefault();phrPk('3')" onclick="phrPk('3')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">3</div>
+          <div ontouchstart="event.preventDefault();phrPk('4')" onclick="phrPk('4')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">4</div>
+          <div ontouchstart="event.preventDefault();phrPk('5')" onclick="phrPk('5')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">5</div>
+          <div ontouchstart="event.preventDefault();phrPk('6')" onclick="phrPk('6')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">6</div>
+          <div ontouchstart="event.preventDefault();phrPk('7')" onclick="phrPk('7')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">7</div>
+          <div ontouchstart="event.preventDefault();phrPk('8')" onclick="phrPk('8')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">8</div>
+          <div ontouchstart="event.preventDefault();phrPk('9')" onclick="phrPk('9')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">9</div>
+          <div ontouchstart="event.preventDefault();phrPk('.')" onclick="phrPk('.')" style="background:rgba(255,184,0,0.1);border-radius:10px;height:46px;font-size:24px;color:var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer">.</div>
+          <div ontouchstart="event.preventDefault();phrPk('0')" onclick="phrPk('0')" style="background:rgba(255,255,255,0.08);border-radius:10px;height:46px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer">0</div>
+          <div ontouchstart="event.preventDefault();phrDel()" onclick="phrDel()" style="background:rgba(255,36,66,0.1);border-radius:10px;height:46px;font-size:20px;color:var(--red);display:flex;align-items:center;justify-content:center;cursor:pointer">⌫</div>
         </div>
       </div>
     </div>
