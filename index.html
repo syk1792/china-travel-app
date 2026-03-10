@@ -710,22 +710,22 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
   <div class="screen" id="s1">
     <div class="phrase-wrap">
       <div class="app-grid">
-        <div class="app-item" ontouchstart="event.preventDefault();openAppSmart('alipays://','https://play.google.com/store/apps/details?id=com.eg.android.AlipayGphone','https://apps.apple.com/app/id333206289')" onclick="openAppSmart('alipays://','https://play.google.com/store/apps/details?id=com.eg.android.AlipayGphone','https://apps.apple.com/app/id333206289')" style="border-color:rgba(22,119,255,0.25)">
+        <div class="app-item" ontouchstart="event.preventDefault();openAlipay()" onclick="openAlipay()" style="border-color:rgba(22,119,255,0.25)">
           <div class="app-icon">💙</div><div class="app-name" style="color:#1677FF">알리페이</div><div class="app-sub">支付宝</div>
         </div>
-        <div class="app-item" ontouchstart="event.preventDefault();openAppSmart('androidamap://;iosamap://','https://play.google.com/store/apps/details?id=com.autonavi.minimap','https://apps.apple.com/app/id461703208')" onclick="openAppSmart('androidamap://;iosamap://','https://play.google.com/store/apps/details?id=com.autonavi.minimap','https://apps.apple.com/app/id461703208')" style="border-color:rgba(255,99,0,0.25)">
+        <div class="app-item" ontouchstart="event.preventDefault();openStore('https://play.google.com/store/apps/details?id=com.autonavi.minimap','https://apps.apple.com/app/id461703208')" onclick="openStore('https://play.google.com/store/apps/details?id=com.autonavi.minimap','https://apps.apple.com/app/id461703208')" style="border-color:rgba(255,99,0,0.25)">
           <div class="app-icon">🗺️</div><div class="app-name" style="color:#FF6300">고덕지도</div><div class="app-sub">高德地图</div>
         </div>
-        <div class="app-item" ontouchstart="event.preventDefault();openAppSmart('dianping://','https://play.google.com/store/apps/details?id=com.dianping.v1','https://apps.apple.com/app/id351091731')" onclick="openAppSmart('dianping://','https://play.google.com/store/apps/details?id=com.dianping.v1','https://apps.apple.com/app/id351091731')" style="border-color:rgba(255,36,66,0.25)">
+        <div class="app-item" ontouchstart="event.preventDefault();openStore('https://play.google.com/store/apps/details?id=com.dianping.v1','https://apps.apple.com/app/id351091731')" onclick="openStore('https://play.google.com/store/apps/details?id=com.dianping.v1','https://apps.apple.com/app/id351091731')" style="border-color:rgba(255,36,66,0.25)">
           <div class="app-icon">⭐</div><div class="app-name" style="color:var(--red)">따종디엔핑</div><div class="app-sub">大众点评</div>
         </div>
-        <div class="app-item" ontouchstart="event.preventDefault();openGoogleTranslate()" onclick="openGoogleTranslate()" style="border-color:rgba(66,133,244,0.25)">
+        <div class="app-item" ontouchstart="event.preventDefault();openStore('https://play.google.com/store/apps/details?id=com.google.android.apps.translate','https://apps.apple.com/app/id414706506')" onclick="openStore('https://play.google.com/store/apps/details?id=com.google.android.apps.translate','https://apps.apple.com/app/id414706506')" style="border-color:rgba(66,133,244,0.25)">
           <div class="app-icon">🎙️</div><div class="app-name" style="color:#4285F4">구글 번역</div><div class="app-sub">음성통역</div>
         </div>
-        <div class="app-item" ontouchstart="event.preventDefault();openGoogleLens()" onclick="openGoogleLens()" style="border-color:rgba(234,67,53,0.25)">
+        <div class="app-item" ontouchstart="event.preventDefault();openStore('https://play.google.com/store/apps/details?id=com.google.ar.lens','https://apps.apple.com/app/id284815942')" onclick="openStore('https://play.google.com/store/apps/details?id=com.google.ar.lens','https://apps.apple.com/app/id284815942')" style="border-color:rgba(234,67,53,0.25)">
           <div class="app-icon">📷</div><div class="app-name" style="color:#EA4335">구글 렌즈</div><div class="app-sub">글자·사물인식</div>
         </div>
-        <div class="app-item" ontouchstart="event.preventDefault();openPapago()" onclick="openPapago()" style="border-color:rgba(3,199,90,0.25)">
+        <div class="app-item" ontouchstart="event.preventDefault();openStore('https://play.google.com/store/apps/details?id=com.naver.labs.translator','https://apps.apple.com/app/id1225370913')" onclick="openStore('https://play.google.com/store/apps/details?id=com.naver.labs.translator','https://apps.apple.com/app/id1225370913')" style="border-color:rgba(3,199,90,0.25)">
           <div class="app-icon">🌐</div><div class="app-name" style="color:#03C75A">파파고</div><div class="app-sub">한글→한자</div>
         </div>
       </div>
@@ -1395,6 +1395,11 @@ function openPapago() {
   } else {
     window.open('https://papago.naver.com', '_blank');
   }
+}
+
+function openStore(androidUrl, iosUrl) {
+  var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  window.location.href = isIOS ? iosUrl : androidUrl;
 }
 
 function openAlipay() {
