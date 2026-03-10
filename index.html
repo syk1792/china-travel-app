@@ -649,7 +649,7 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
           <span class="zh">多少钱？</span>
           <span class="ko">이거 얼마에요?</span>
         </div>
-        <div class="alipay-btn" ontouchstart="event.preventDefault();openAlipay()" onclick="openAlipay()">
+        <div class="alipay-btn" ontouchstart="event.preventDefault();openApp('alipay')" onclick="openApp('alipay')">
           <span>알리</span><span>페이</span>
         </div>
       </div>
@@ -708,22 +708,22 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
   <div class="screen" id="s1">
     <div class="phrase-wrap">
       <div class="app-grid">
-        <div class="app-item" ontouchstart="event.preventDefault();openAlipay()" onclick="openAlipay()" style="border-color:rgba(22,119,255,0.25)">
+        <div class="app-item" ontouchstart="event.preventDefault();openApp('alipay')" onclick="openApp('alipay')" style="border-color:rgba(22,119,255,0.25)">
           <div class="app-icon">💙</div><div class="app-name" style="color:#1677FF">알리페이</div><div class="app-sub">支付宝</div>
         </div>
-        <div class="app-item" ontouchstart="event.preventDefault();openStore('https://play.google.com/store/apps/details?id=com.autonavi.minimap','https://apps.apple.com/app/id461703208')" onclick="openStore('https://play.google.com/store/apps/details?id=com.autonavi.minimap','https://apps.apple.com/app/id461703208')" style="border-color:rgba(255,99,0,0.25)">
+        <div class="app-item" ontouchstart="event.preventDefault();openApp('gaode')" onclick="openApp('gaode')" style="border-color:rgba(255,99,0,0.25)">
           <div class="app-icon">🗺️</div><div class="app-name" style="color:#FF6300">고덕지도</div><div class="app-sub">高德地图</div>
         </div>
-        <div class="app-item" ontouchstart="event.preventDefault();openStore('https://play.google.com/store/apps/details?id=com.dianping.v1','https://apps.apple.com/app/id351091731')" onclick="openStore('https://play.google.com/store/apps/details?id=com.dianping.v1','https://apps.apple.com/app/id351091731')" style="border-color:rgba(255,36,66,0.25)">
+        <div class="app-item" ontouchstart="event.preventDefault();openApp('dianping')" onclick="openApp('dianping')" style="border-color:rgba(255,36,66,0.25)">
           <div class="app-icon">⭐</div><div class="app-name" style="color:var(--red)">따종디엔핑</div><div class="app-sub">大众点评</div>
         </div>
-        <div class="app-item" ontouchstart="event.preventDefault();openStore('https://play.google.com/store/apps/details?id=com.google.android.apps.translate','https://apps.apple.com/app/id414706506')" onclick="openStore('https://play.google.com/store/apps/details?id=com.google.android.apps.translate','https://apps.apple.com/app/id414706506')" style="border-color:rgba(66,133,244,0.25)">
+        <div class="app-item" ontouchstart="event.preventDefault();openApp('gtranslate')" onclick="openApp('gtranslate')" style="border-color:rgba(66,133,244,0.25)">
           <div class="app-icon">🎙️</div><div class="app-name" style="color:#4285F4">구글 번역</div><div class="app-sub">음성통역</div>
         </div>
-        <div class="app-item" ontouchstart="event.preventDefault();openStore('https://play.google.com/store/apps/details?id=com.google.ar.lens','https://apps.apple.com/app/id284815942')" onclick="openStore('https://play.google.com/store/apps/details?id=com.google.ar.lens','https://apps.apple.com/app/id284815942')" style="border-color:rgba(234,67,53,0.25)">
+        <div class="app-item" ontouchstart="event.preventDefault();openApp('glens')" onclick="openApp('glens')" style="border-color:rgba(234,67,53,0.25)">
           <div class="app-icon">📷</div><div class="app-name" style="color:#EA4335">구글 렌즈</div><div class="app-sub">글자·사물인식</div>
         </div>
-        <div class="app-item" ontouchstart="event.preventDefault();openStore('https://play.google.com/store/apps/details?id=com.naver.labs.translator','https://apps.apple.com/app/id1225370913')" onclick="openStore('https://play.google.com/store/apps/details?id=com.naver.labs.translator','https://apps.apple.com/app/id1225370913')" style="border-color:rgba(3,199,90,0.25)">
+        <div class="app-item" ontouchstart="event.preventDefault();openApp('papago')" onclick="openApp('papago')" style="border-color:rgba(3,199,90,0.25)">
           <div class="app-icon">🌐</div><div class="app-name" style="color:#03C75A">파파고</div><div class="app-sub">한글→한자</div>
         </div>
       </div>
@@ -1305,123 +1305,37 @@ try {
 } catch(e) {}
 
 // 앱 실행 - intent:// 방식 (Chrome이 네이티브 처리, JS 타이머 불필요)
-function intentUrl(pkg, scheme, path) {
-  var fallback = encodeURIComponent('https://play.google.com/store/apps/details?id=' + pkg);
-  return 'intent://' + path + '#Intent;scheme=' + scheme + ';package=' + pkg + ';S.browser_fallback_url=' + fallback + ';end';
-}
-
-function openAppSmart(scheme, androidStore, iosStore) {
-  var isAndroid = /Android/i.test(navigator.userAgent);
+function openApp(name) {
   var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  var isAndroid = /Android/i.test(navigator.userAgent);
+
+  // 앱 정보 테이블
+  var apps = {
+    alipay:     { pkg:'com.eg.android.AlipayGphone',            scheme:'alipays',        iosUrl:'https://apps.apple.com/app/id333206289' },
+    gaode:      { pkg:'com.autonavi.minimap',                   scheme:'iosamap',        iosUrl:'https://apps.apple.com/app/id461703208' },
+    dianping:   { pkg:'com.dianping.v1',                        scheme:'dianping',       iosUrl:'https://apps.apple.com/app/id351091731' },
+    gtranslate: { pkg:'com.google.android.apps.translate',      scheme:'googletranslate',iosUrl:'https://apps.apple.com/app/id414706506' },
+    glens:      { pkg:'com.google.ar.lens',                     scheme:'googlelens',     iosUrl:'https://apps.apple.com/app/id284815942' },
+    papago:     { pkg:'com.naver.labs.translator',              scheme:'naversearchapp', iosUrl:'https://apps.apple.com/app/id1225370913' }
+  };
+
+  var info = apps[name];
+  if (!info) return;
 
   if (isAndroid) {
-    // 고덕지도
-    if (scheme.includes('androidamap') || scheme.includes('amap')) {
-      window.location.href = intentUrl('com.autonavi.minimap', 'androidamap', 'route/plan');
-      return;
-    }
-    // 알리페이
-    if (scheme.includes('alipay')) {
-      window.location.href = intentUrl('com.eg.android.AlipayGphone', 'alipays', '');
-      return;
-    }
-    // 따종디엔핑
-    if (scheme.includes('dianping')) {
-      window.location.href = intentUrl('com.dianping.v1', 'dianping', '');
-      return;
-    }
-    // 기본: intent 방식 시도
-    if (androidStore) window.location.href = androidStore;
+    // intent:// — 설치돼 있으면 앱 바로 열림, 없으면 플레이스토어
+    var fallback = encodeURIComponent('https://play.google.com/store/apps/details?id=' + info.pkg);
+    window.location.href = 'intent://#Intent;scheme=' + info.scheme + ';package=' + info.pkg + ';S.browser_fallback_url=' + fallback + ';end';
   } else if (isIOS) {
-    var appScheme = scheme.includes(';') ? scheme.split(';')[1] : scheme;
-    var opened = false;
-    function onHide() { opened = true; }
-    document.addEventListener('visibilitychange', onHide);
-    window.location.href = appScheme;
+    // iOS: URL scheme 시도 후 앱스토어 폴백
+    var t0 = Date.now();
+    window.location.href = info.scheme + '://';
     setTimeout(function() {
-      document.removeEventListener('visibilitychange', onHide);
-      if (!opened && iosStore) window.location.href = iosStore;
-    }, 1500);
-  }
-}
-
-function openGoogleTranslate() {
-  var isAndroid = /Android/i.test(navigator.userAgent);
-  var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-  if (isAndroid) {
-    window.location.href = intentUrl('com.google.android.apps.translate', 'googletranslate', '');
-  } else if (isIOS) {
-    var opened = false;
-    function onHide() { opened = true; }
-    document.addEventListener('visibilitychange', onHide);
-    window.location.href = 'googletranslate://';
-    setTimeout(function() {
-      document.removeEventListener('visibilitychange', onHide);
-      if (!opened) window.location.href = 'https://apps.apple.com/app/id414706506';
-    }, 1500);
+      if (Date.now() - t0 < 2000) window.location.href = info.iosUrl;
+    }, 800);
   } else {
-    window.open('https://translate.google.com', '_blank');
-  }
-}
-
-function openGoogleLens() {
-  var isAndroid = /Android/i.test(navigator.userAgent);
-  var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-  if (isAndroid) {
-    // 구글 렌즈 앱 (com.google.ar.lens) 또는 구글 앱 내 렌즈
-    window.location.href = intentUrl('com.google.ar.lens', 'googlelens', '');
-  } else if (isIOS) {
-    var opened = false;
-    function onHide() { opened = true; }
-    document.addEventListener('visibilitychange', onHide);
-    window.location.href = 'googlelens://';
-    setTimeout(function() {
-      document.removeEventListener('visibilitychange', onHide);
-      if (!opened) window.location.href = 'https://apps.apple.com/app/id284815942';
-    }, 1500);
-  } else {
-    window.open('https://lens.google.com', '_blank');
-  }
-}
-
-function openPapago() {
-  var isAndroid = /Android/i.test(navigator.userAgent);
-  var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-  if (isAndroid) {
-    window.location.href = intentUrl('com.naver.labs.translator', 'naverpapagoapp', 'translate');
-  } else if (isIOS) {
-    var opened = false;
-    function onHide() { opened = true; }
-    document.addEventListener('visibilitychange', onHide);
-    window.location.href = 'naverpapagoapp://translate';
-    setTimeout(function() {
-      document.removeEventListener('visibilitychange', onHide);
-      if (!opened) window.location.href = 'https://apps.apple.com/app/id1225370913';
-    }, 1500);
-  } else {
-    window.open('https://papago.naver.com', '_blank');
-  }
-}
-
-function openStore(androidUrl, iosUrl) {
-  var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-  window.location.href = isIOS ? iosUrl : androidUrl;
-}
-
-function openAlipay() {
-  var isAndroid = /Android/i.test(navigator.userAgent);
-  var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-  if (isAndroid) {
-    window.location.href = intentUrl('com.eg.android.AlipayGphone', 'alipays', '');
-  } else {
-    var opened = false;
-    function onHide() { opened = true; }
-    document.addEventListener('visibilitychange', onHide);
-    window.location.href = 'alipays://';
-    setTimeout(function() {
-      document.removeEventListener('visibilitychange', onHide);
-      if (!opened) showToast('알리페이 앱을 먼저 설치해주세요 📱');
-    }, 1500);
+    // PC
+    window.open('https://play.google.com/store/apps/details?id=' + info.pkg, '_blank');
   }
 }
 
