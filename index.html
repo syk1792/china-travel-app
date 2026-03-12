@@ -312,6 +312,124 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
 .app-name { font-size:12px; font-weight:700; line-height:1.3; }
 .app-sub { font-size:9px; color:var(--muted); margin-top:2px; }
 
+/* 대련 핫플 */
+.dalian-section { margin-bottom:16px; }
+.dalian-title {
+  font-size:12px; font-weight:700; color:var(--muted);
+  letter-spacing:0.08em; text-transform:uppercase;
+  padding:4px 2px 8px; display:flex; align-items:center; gap:6px;
+}
+.dalian-title::after { content:''; flex:1; height:1px; background:var(--border); }
+.place-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; }
+
+.place-card { position:relative; }
+.place-map-btn {
+  position:absolute; top:8px; right:8px;
+  width:26px; height:26px; border-radius:50%;
+  background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.13);
+  display:flex; align-items:center; justify-content:center;
+  font-size:13px; cursor:pointer; z-index:2;
+  transition:background 0.15s;
+}
+.place-map-btn:active { background:rgba(255,255,255,0.18); }
+
+/* 장소 상세 오버레이 */
+.place-overlay {
+  display:none; position:fixed; inset:0; background:var(--bg2);
+  z-index:200; flex-direction:column; overflow:hidden;
+}
+.place-overlay.active { display:flex; animation:fadeUp 0.18s ease; }
+.place-ov-header {
+  flex-shrink:0; padding:14px 16px;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  background:rgba(0,0,0,0.5); backdrop-filter:blur(14px);
+  display:flex; align-items:center; gap:12px;
+}
+.place-ov-body {
+  flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch;
+  padding:24px 20px 40px;
+}
+.place-ov-emoji { font-size:48px; text-align:center; margin-bottom:8px; }
+.place-ov-name { font-size:22px; font-weight:900; color:var(--text); text-align:center; margin-bottom:2px; }
+.place-ov-zh { font-family:'Noto Sans SC',sans-serif; font-size:16px; color:var(--muted); text-align:center; margin-bottom:16px; }
+.place-ov-desc {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--r-md); padding:14px 16px;
+  font-size:14px; color:var(--text2); line-height:1.7;
+  margin-bottom:16px;
+}
+.place-ov-taxi-label {
+  font-size:11px; font-weight:700; color:var(--muted); letter-spacing:0.08em;
+  margin-bottom:6px;
+}
+.place-ov-taxi {
+  background:var(--card3); border:1px solid var(--border2);
+  border-radius:var(--r-md); padding:14px 16px;
+  font-family:'Noto Sans SC',sans-serif; font-size:16px;
+  color:var(--text); line-height:1.6; margin-bottom:10px;
+}
+.place-ov-taxi-sub {
+  font-size:12px; color:var(--muted); margin-top:4px;
+  font-family:'Noto Sans KR',sans-serif;
+}
+.place-ov-btns {
+  display:flex; gap:10px; margin-top:16px;
+}
+.place-ov-btn {
+  flex:1; padding:14px; border-radius:var(--r-md);
+  font-size:14px; font-weight:700; cursor:pointer;
+  border:none; display:flex; align-items:center; justify-content:center; gap:6px;
+  transition:opacity 0.15s;
+}
+.place-ov-btn:active { opacity:0.7; }
+.btn-tts  { background:var(--card3); color:var(--text); border:1px solid var(--border2); }
+.btn-map  { background:var(--red); color:white; }
+
+.place-card {
+  background:var(--card2); border:1px solid var(--border);
+  border-radius:var(--r-md); padding:11px 12px;
+  cursor:pointer; transition:all 0.18s;
+  display:flex; flex-direction:column; gap:3px;
+}
+.place-card:active { transform:scale(0.95); background:var(--card3); border-color:var(--border2); }
+.place-emoji { font-size:18px; line-height:1; }
+.place-name { font-size:13px; font-weight:700; color:var(--text); line-height:1.3; }
+.place-sub { font-size:11px; color:var(--muted); }
+.place-tag {
+  display:inline-block; font-size:10px; padding:2px 6px;
+  border-radius:20px; margin-top:2px; font-weight:700;
+}
+.tag-sight { background:rgba(22,119,255,0.15); color:#5b9dff; }
+.tag-food  { background:rgba(255,36,66,0.15);  color:#ff6b87; }
+.tag-shop  { background:rgba(255,184,0,0.15);  color:var(--gold); }
+.tag-conv  { background:rgba(3,199,90,0.15);   color:#3dba6f; }
+
+.dalian-sub {
+  font-size:12px; font-weight:700; color:var(--text2);
+  padding:8px 10px; margin-bottom:4px;
+  background:var(--card2); border:1px solid var(--border);
+  border-radius:var(--r-sm); cursor:pointer;
+  display:flex; align-items:center; justify-content:space-between;
+  transition:all 0.18s;
+}
+.dalian-sub::after { content:'▼'; font-size:9px; color:var(--muted); transition:transform 0.25s; }
+.dalian-sub.collapsed::after { transform:rotate(-90deg); }
+.dalian-sub:active { background:var(--card3); }
+.place-grid.sub-body { overflow:hidden; transition:max-height 0.3s ease, opacity 0.3s ease; max-height:600px; opacity:1; }
+.place-grid.sub-body.collapsed { max-height:0 !important; opacity:0; margin-bottom:0 !important; }
+
+.day-tab {
+  flex:1; text-align:center; padding:7px 0;
+  font-size:13px; font-weight:700; color:var(--muted);
+  background:var(--card2); border:1px solid var(--border);
+  border-radius:var(--r-sm); cursor:pointer; transition:all 0.18s;
+}
+.day-tab.active {
+  color:var(--text); background:var(--card3);
+  border-color:var(--border2);
+  box-shadow:0 0 8px rgba(255,184,0,0.15);
+}
+
 .phrase-section {
   font-size:12px; font-weight:700; letter-spacing:1px; color:var(--text2);
   margin:14px 0 8px; cursor:pointer;
@@ -622,6 +740,8 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
 ::-webkit-scrollbar { width:2px; }
 ::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.08); border-radius:2px; }
 </style>
+
+
 </head>
 <body>
 <div class="app">
@@ -725,6 +845,352 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
         </div>
         <div class="app-item" onclick="openApp('papago')" style="border-color:rgba(3,199,90,0.25)">
           <div class="app-icon">🌐</div><div class="app-name" style="color:#03C75A">파파고</div><div class="app-sub">한글→한자</div>
+        </div>
+      </div>
+
+      <!-- 대련 핫플 -->
+      <div class="dalian-section">
+        <div class="dalian-title">📍 대련 핫플 · 大连</div>
+
+        <div class="dalian-sub collapsed" onclick="toggleSub(this)">🏛️ 관광지</div>
+        <div class="place-grid sub-body collapsed" style="margin-bottom:10px">
+          <div class="place-card" onclick="showPlace('xinghai_hot')">
+            <div class="place-map-btn" onclick="plMapDirect('xinghai_hot')">🗺️</div>
+            <div class="place-emoji">🌊</div>
+            <div class="place-name">싱하이광장</div>
+            <div class="place-sub">星海广场</div>
+            <span class="place-tag tag-sight">아시아 최대광장</span>
+          </div>
+          <div class="place-card" onclick="showPlace('laohu')">
+            <div class="place-emoji">🐬</div>
+            <div class="place-name">노호탄 해양공원</div>
+            <div class="place-sub">老虎滩海洋公园</div>
+            <span class="place-tag tag-sight">5A 해양테마파크</span>
+          </div>
+          <div class="place-card" onclick="showPlace('jinshitan')">
+            <div class="place-emoji">🏖️</div>
+            <div class="place-name">진스탄 해변</div>
+            <div class="place-sub">金石滩</div>
+            <span class="place-tag tag-sight">황금 해안선</span>
+          </div>
+          <div class="place-card" onclick="showPlace('bangchui')">
+            <div class="place-emoji">🏝️</div>
+            <div class="place-name">방추이다오</div>
+            <div class="place-sub">棒棰岛</div>
+            <span class="place-tag tag-sight">웨딩사진 명소</span>
+          </div>
+          <div class="place-card" onclick="showPlace('russia_st')">
+            <div class="place-emoji">🏰</div>
+            <div class="place-name">러시아풍정가</div>
+            <div class="place-sub">俄罗斯风情街</div>
+            <span class="place-tag tag-sight">이국적 건축거리</span>
+          </div>
+          <div class="place-card" onclick="showPlace('zhongshan_sq')">
+            <div class="place-emoji">🏛️</div>
+            <div class="place-name">중산광장</div>
+            <div class="place-sub">中山广场</div>
+            <span class="place-tag tag-sight">유럽풍 랜드마크</span>
+          </div>
+        </div>
+
+        <div class="dalian-sub collapsed" onclick="toggleSub(this)">🍜 맛집</div>
+        <div class="place-grid sub-body collapsed" style="margin-bottom:10px">
+          <div class="place-card" onclick="showPlace('pinhailou')">
+            <div class="place-map-btn" onclick="plMapDirect('pinhailou')">🗺️</div>
+            <div class="place-emoji">🦐</div>
+            <div class="place-name">핀하이러우</div>
+            <div class="place-sub">品海楼</div>
+            <span class="place-tag tag-food">해산물 老字号</span>
+          </div>
+          <div class="place-card" onclick="showPlace('tianjin_food')">
+            <div class="place-emoji">🦪</div>
+            <div class="place-name">톈진제 먹거리</div>
+            <div class="place-sub">天津街</div>
+            <span class="place-tag tag-food">해산물 야시장</span>
+          </div>
+          <div class="place-card" onclick="showPlace('sanba_night')">
+            <div class="place-emoji">🌙</div>
+            <div class="place-name">삼팔광장 야시장</div>
+            <div class="place-sub">三八广场夜市</div>
+            <span class="place-tag tag-food">꼴뚜기·오이스터</span>
+          </div>
+          <div class="place-card" onclick="showPlace('laohu')">
+            <div class="place-emoji">🍱</div>
+            <div class="place-name">항해왕 테마레스토랑</div>
+            <div class="place-sub">航海王主题餐厅</div>
+            <span class="place-tag tag-food">포토맛집·가족</span>
+          </div>
+        </div>
+
+        <div class="dalian-sub collapsed" onclick="toggleSub(this)">🛍️ 쇼핑</div>
+        <div class="place-grid sub-body collapsed" style="margin-bottom:10px">
+          <div class="place-card" onclick="showPlace('tianjin_shop')">
+            <div class="place-map-btn" onclick="plMapDirect('tianjin_shop')">🗺️</div>
+            <div class="place-emoji">🏬</div>
+            <div class="place-name">톈진제 쇼핑거리</div>
+            <div class="place-sub">天津街</div>
+            <span class="place-tag tag-shop">브랜드·특산품</span>
+          </div>
+          <div class="place-card" onclick="showPlace('pavilion')">
+            <div class="place-emoji">🛒</div>
+            <div class="place-name">마이카이러광장</div>
+            <div class="place-sub">迈凯乐广场</div>
+            <span class="place-tag tag-shop">대형 쇼핑몰</span>
+          </div>
+        </div>
+
+        <div class="dalian-sub collapsed" onclick="toggleSub(this)">🏪 편의시설</div>
+        <div class="place-grid sub-body collapsed" style="margin-bottom:4px">
+          <div class="place-card" onclick="showPlace('changxing')">
+            <div class="place-map-btn" onclick="plMapDirect('changxing')">🗺️</div>
+            <div class="place-emoji">🐟</div>
+            <div class="place-name">창싱시장</div>
+            <div class="place-sub">长兴市场</div>
+            <span class="place-tag tag-conv">신선 해산물시장</span>
+          </div>
+          <div class="place-card" onclick="showPlace('dalian_station')">
+            <div class="place-emoji">🚉</div>
+            <div class="place-name">대련역</div>
+            <div class="place-sub">大连站</div>
+            <span class="place-tag tag-conv">기차·교통 허브</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 나의 대련 일정 -->
+      <div class="dalian-section">
+        <div class="dalian-title">🗓️ 나의 대련 일정</div>
+
+        <!-- Day 탭 -->
+        <div id="day-tabs" style="display:flex;gap:6px;margin-bottom:10px">
+          <div class="day-tab active" onclick="switchDay(0)">Day 1</div>
+          <div class="day-tab" onclick="switchDay(1)">Day 2</div>
+          <div class="day-tab" onclick="switchDay(2)">Day 3</div>
+        </div>
+
+        <!-- Day 1 -->
+        <div class="day-panel" id="day0">
+          <div class="place-grid">
+            <div class="place-card" onclick="showPlace('ibis')">
+              <div class="place-map-btn" onclick="plMapDirect('ibis')">🗺️</div>
+              <div class="place-emoji">🏨</div>
+              <div class="place-name">이비스 스타일</div>
+              <div class="place-sub">다롄역점</div>
+              <span class="place-tag tag-conv">숙소</span>
+            </div>
+            <div class="place-card" onclick="showPlace('luckin')">
+              <div class="place-map-btn" onclick="plMapDirect('luckin')">🗺️</div>
+              <div class="place-emoji">☕</div>
+              <div class="place-name">루이싱 커피</div>
+              <div class="place-sub">숙소 1층·아침</div>
+              <span class="place-tag tag-food">커피</span>
+            </div>
+            <div class="place-card" onclick="showPlace('luwangzhai')">
+              <div class="place-map-btn" onclick="plMapDirect('luwangzhai')">🗺️</div>
+              <div class="place-emoji">🥟</div>
+              <div class="place-name">루왕자이</div>
+              <div class="place-sub">성게알만두</div>
+              <span class="place-tag tag-food">맛집·한추천</span>
+            </div>
+            <div class="place-card" onclick="showPlace('xinxing')">
+              <div class="place-map-btn" onclick="plMapDirect('xinxing')">🗺️</div>
+              <div class="place-emoji">🦆</div>
+              <div class="place-name">신흥전승오리구이</div>
+              <div class="place-sub">베이징덕</div>
+              <span class="place-tag tag-food">오리구이</span>
+            </div>
+            <div class="place-card" onclick="showPlace('russia_st')">
+              <div class="place-map-btn" onclick="plMapDirect('russia_st')">🗺️</div>
+              <div class="place-emoji">🏰</div>
+              <div class="place-name">러시아풍정가</div>
+              <div class="place-sub">俄罗斯风情街</div>
+              <span class="place-tag tag-sight">이국거리</span>
+            </div>
+            <div class="place-card" onclick="showPlace('chagee_pav')">
+              <div class="place-map-btn" onclick="plMapDirect('chagee_pav')">🗺️</div>
+              <div class="place-emoji">🧋</div>
+              <div class="place-name">CHAGEE 패황차희</div>
+              <div class="place-sub">파빌리온 B1</div>
+              <span class="place-tag tag-food">티카페</span>
+            </div>
+            <div class="place-card" onclick="showPlace('popmart')">
+              <div class="place-map-btn" onclick="plMapDirect('popmart')">🗺️</div>
+              <div class="place-emoji">🧸</div>
+              <div class="place-name">팝마트</div>
+              <div class="place-sub">파빌리온 4F</div>
+              <span class="place-tag tag-shop">피규어·쇼핑</span>
+            </div>
+            <div class="place-card" onclick="showPlace('holiland')">
+              <div class="place-map-btn" onclick="plMapDirect('holiland')">🗺️</div>
+              <div class="place-emoji">🍞</div>
+              <div class="place-name">Holiland 홀리랜드</div>
+              <div class="place-sub">베이커리</div>
+              <span class="place-tag tag-food">베이커리</span>
+            </div>
+            <div class="place-card" onclick="showPlace('xiding')">
+              <div class="place-map-btn" onclick="plMapDirect('xiding')">🗺️</div>
+              <div class="place-emoji">🦔</div>
+              <div class="place-name">희정 해단수교</div>
+              <div class="place-sub">성게만두 전문</div>
+              <span class="place-tag tag-food">맛집</span>
+            </div>
+            <div class="place-card" onclick="showPlace('dongfang')">
+              <div class="place-map-btn" onclick="plMapDirect('dongfang')">🗺️</div>
+              <div class="place-emoji">🏙️</div>
+              <div class="place-name">동방수성</div>
+              <div class="place-sub">东方水城</div>
+              <span class="place-tag tag-sight">베니스수로</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 2 -->
+        <div class="day-panel" id="day1" style="display:none">
+          <div class="place-grid">
+            <div class="place-card" onclick="showPlace('ibis')">
+              <div class="place-map-btn" onclick="plMapDirect('ibis')">🗺️</div>
+              <div class="place-emoji">🏨</div>
+              <div class="place-name">이비스 스타일</div>
+              <div class="place-sub">아침출발</div>
+              <span class="place-tag tag-conv">숙소</span>
+            </div>
+            <div class="place-card" onclick="showPlace('pavilion')">
+              <div class="place-map-btn" onclick="plMapDirect('pavilion')">🗺️</div>
+              <div class="place-emoji">🛒</div>
+              <div class="place-name">파빌리온</div>
+              <div class="place-sub">柏威年购物中心</div>
+              <span class="place-tag tag-shop">쇼핑몰</span>
+            </div>
+            <div class="place-card" onclick="showPlace('heytea')">
+              <div class="place-map-btn" onclick="plMapDirect('heytea')">🗺️</div>
+              <div class="place-emoji">🍵</div>
+              <div class="place-name">헤이티</div>
+              <div class="place-sub">喜茶</div>
+              <span class="place-tag tag-food">티드링크</span>
+            </div>
+            <div class="place-card" onclick="showPlace('unome')">
+              <div class="place-map-btn" onclick="plMapDirect('unome')">🗺️</div>
+              <div class="place-emoji">🎂</div>
+              <div class="place-name">UNOME 유노메</div>
+              <div class="place-sub">파빌리온 3F·보자기케이크</div>
+              <span class="place-tag tag-food">디저트</span>
+            </div>
+            <div class="place-card" onclick="showPlace('dongguan')">
+              <div class="place-map-btn" onclick="plMapDirect('dongguan')">🗺️</div>
+              <div class="place-emoji">🏛️</div>
+              <div class="place-name">동관지에</div>
+              <div class="place-sub">东关街</div>
+              <span class="place-tag tag-sight">역사거리</span>
+            </div>
+            <div class="place-card" onclick="showPlace('cherryontop')">
+              <div class="place-map-btn" onclick="plMapDirect('cherryontop')">🗺️</div>
+              <div class="place-emoji">🍦</div>
+              <div class="place-name">Cherry On Top</div>
+              <div class="place-sub">디저트</div>
+              <span class="place-tag tag-food">디저트</span>
+            </div>
+            <div class="place-card" onclick="showPlace('toctouch')">
+              <div class="place-map-btn" onclick="plMapDirect('toctouch')">🗺️</div>
+              <div class="place-emoji">👗</div>
+              <div class="place-name">TOCTOUCH</div>
+              <div class="place-sub">패션</div>
+              <span class="place-tag tag-shop">패션</span>
+            </div>
+            <div class="place-card" onclick="showPlace('ariseism')">
+              <div class="place-map-btn" onclick="plMapDirect('ariseism')">🗺️</div>
+              <div class="place-emoji">👘</div>
+              <div class="place-name">ARISEISM</div>
+              <div class="place-sub">파빌리온 B1</div>
+              <span class="place-tag tag-shop">패션</span>
+            </div>
+            <div class="place-card" onclick="showPlace('hotcrush')">
+              <div class="place-map-btn" onclick="plMapDirect('hotcrush')">🗺️</div>
+              <div class="place-emoji">🧃</div>
+              <div class="place-name">HOT CRUSH</div>
+              <div class="place-sub">파빌리온 B1</div>
+              <span class="place-tag tag-food">과일주스</span>
+            </div>
+            <div class="place-card" onclick="showPlace('gelato')">
+              <div class="place-map-btn" onclick="plMapDirect('gelato')">🗺️</div>
+              <div class="place-emoji">🍨</div>
+              <div class="place-name">젤라또</div>
+              <div class="place-sub">파빌리온 B1</div>
+              <span class="place-tag tag-food">아이스크림</span>
+            </div>
+            <div class="place-card" onclick="showPlace('yangkochi')">
+              <div class="place-map-btn" onclick="plMapDirect('yangkochi')">🗺️</div>
+              <div class="place-emoji">🍢</div>
+              <div class="place-name">양꼬치 풍무뀀성</div>
+              <div class="place-sub">烤羊肉串</div>
+              <span class="place-tag tag-food">꼬치구이</span>
+            </div>
+            <div class="place-card" onclick="showPlace('xianlu_night')">
+              <div class="place-map-btn" onclick="plMapDirect('xianlu_night')">🗺️</div>
+              <div class="place-emoji">🌙</div>
+              <div class="place-name">서안로 야시장</div>
+              <div class="place-sub">西安路夜市</div>
+              <span class="place-tag tag-food">야시장</span>
+            </div>
+          </div>
+        </div>
+        <!-- Day 3 -->
+        <div class="day-panel" id="day2" style="display:none">
+          <div class="place-grid">
+            <div class="place-card" onclick="openAmap('https://surl.amap.com/pud8ZVTr4xd')">
+              <div class="place-emoji">🐟</div>
+              <div class="place-name">밍지카오위</div>
+              <div class="place-sub">파빌리온몰 5F</div>
+              <span class="place-tag tag-food">카오위·생선구이</span>
+            </div>
+            <div class="place-card" onclick="openAmap('https://surl.amap.com/yzEnyB1of8L')">
+              <div class="place-emoji">🌿</div>
+              <div class="place-name">The Green Party</div>
+              <div class="place-sub"></div>
+              <span class="place-tag tag-food">카페·브런치</span>
+            </div>
+            <div class="place-card" onclick="openAmap('https://surl.amap.com/rJjW009H5sN')">
+              <div class="place-emoji">🏰</div>
+              <div class="place-name">더 캐슬 호텔</div>
+              <div class="place-sub">The Castle</div>
+              <span class="place-tag tag-conv">숙소</span>
+            </div>
+            <div class="place-card" onclick="openAmap('https://surl.amap.com/qX5vKHfH4C3')">
+              <div class="place-emoji">🌊</div>
+              <div class="place-name">성해광장</div>
+              <div class="place-sub">星海广场</div>
+              <span class="place-tag tag-sight">아시아최대광장</span>
+            </div>
+            <div class="place-card" onclick="openAmap('https://surl.amap.com/rRncOKJ6dyL')">
+              <div class="place-emoji">🛒</div>
+              <div class="place-name">빅유마트</div>
+              <div class="place-sub">大U超市</div>
+              <span class="place-tag tag-conv">대형마트</span>
+            </div>
+            <div class="place-card" onclick="openAmap('https://surl.amap.com/rNFbnAZ1ycXZ')">
+              <div class="place-emoji">🧋</div>
+              <div class="place-name">CHAGEE</div>
+              <div class="place-sub">霸王茶姬</div>
+              <span class="place-tag tag-food">티카페</span>
+            </div>
+            <div class="place-card" onclick="openAmap('https://surl.amap.com/qfAHpqNG8aR')">
+              <div class="place-emoji">🍲</div>
+              <div class="place-name">하이디라오</div>
+              <div class="place-sub">서안로 야시장 맨위층</div>
+              <span class="place-tag tag-food">훠궈</span>
+            </div>
+            <div class="place-card" onclick="openAmap('https://surl.amap.com/rsHybXj1zdrI')">
+              <div class="place-emoji">☕</div>
+              <div class="place-name">루이싱커피</div>
+              <div class="place-sub">파빌리온 B1</div>
+              <span class="place-tag tag-food">커피</span>
+            </div>
+            <div class="place-card" onclick="openAmap('https://surl.amap.com/pwDFvXr1fcwk')">
+              <div class="place-emoji">🥗</div>
+              <div class="place-name">Ole's Food Hall</div>
+              <div class="place-sub">파빌리온 B1</div>
+              <span class="place-tag tag-food">푸드홀</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -906,6 +1372,26 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
       <div class="ci-key" ontouchstart="event.preventDefault();ciPk('7')" onclick="ciPk('7')">7</div><div class="ci-key" ontouchstart="event.preventDefault();ciPk('8')" onclick="ciPk('8')">8</div><div class="ci-key" ontouchstart="event.preventDefault();ciPk('9')" onclick="ciPk('9')">9</div>
       <div class="ci-key dot" ontouchstart="event.preventDefault();ciPk('.')" onclick="ciPk('.')">.</div><div class="ci-key" ontouchstart="event.preventDefault();ciPk('0')" onclick="ciPk('0')">0</div><div class="ci-key del" ontouchstart="event.preventDefault();ciDel()" onclick="ciDel()">⌫</div>
       <div class="ci-key clr" ontouchstart="event.preventDefault();ciClr()" onclick="ciClr()">전체 지우기</div>
+    </div>
+  </div>
+</div>
+
+<!-- 장소 상세 오버레이 -->
+<div class="place-overlay" id="pl-ov">
+  <div class="place-ov-header">
+    <div class="ov-back" ontouchstart="event.preventDefault();closePlaceOv()" onclick="closePlaceOv()">← 뒤로</div>
+  </div>
+  <div class="place-ov-body">
+    <div class="place-ov-emoji" id="pl-emoji">📍</div>
+    <div class="place-ov-name" id="pl-name"></div>
+    <div class="place-ov-zh" id="pl-zh"></div>
+    <div class="place-ov-desc" id="pl-desc"></div>
+    <div class="place-ov-taxi-label">🚕 택시 기사님께 보여주세요</div>
+    <div class="place-ov-taxi" id="pl-taxi"></div>
+    <div class="place-ov-taxi-sub" id="pl-taxi-ko"></div>
+    <div class="place-ov-btns">
+      <div class="place-ov-btn btn-tts" ontouchstart="event.preventDefault();plTTS()" onclick="plTTS()">🔊 발음 듣기</div>
+      <div class="place-ov-btn btn-map" ontouchstart="event.preventDefault();plMap()" onclick="plMap()">🗺️ 고덕지도 열기</div>
     </div>
   </div>
 </div>
@@ -1304,6 +1790,416 @@ try {
   window.speechSynthesis.onvoiceschanged = function(){ window.speechSynthesis.getVoices(); };
 } catch(e) {}
 
+function toggleSub(el) {
+  el.classList.toggle('collapsed');
+  var grid = el.nextElementSibling;
+  if (grid) grid.classList.toggle('collapsed');
+}
+
+
+// 장소 상세 오버레이
+function showPlace(key) {
+  var p = PLACES[key];
+  if (!p) return;
+  document.getElementById('pl-emoji').textContent = p.emoji;
+  document.getElementById('pl-name').textContent = p.name;
+  document.getElementById('pl-zh').textContent = p.zh;
+  document.getElementById('pl-desc').textContent = p.desc;
+  document.getElementById('pl-taxi').textContent = p.taxi;
+  document.getElementById('pl-taxi-ko').textContent = p.taxiKo;
+  document.getElementById('pl-ov')._amap = p.amap;
+  document.getElementById('pl-ov').classList.add('active');
+}
+function closePlaceOv() {
+  document.getElementById('pl-ov').classList.remove('active');
+}
+function plTTS() {
+  var taxi = document.getElementById('pl-taxi').textContent;
+  speakChinese(taxi);
+}
+function plMap() {
+  var url = document.getElementById('pl-ov')._amap;
+  if (url) openAmap(url);
+}
+function plMapDirect(key) {
+  event.stopPropagation();
+  var p = PLACES[key];
+  if (p) openAmap(p.amap);
+}
+
+// 고덕 단축 URL 열기
+function openAmap(url) {
+  window.open(url, '_blank');
+}
+
+// Day 탭 전환
+function switchDay(idx) {
+  document.querySelectorAll('.day-panel').forEach(function(p, i) {
+    p.style.display = i === idx ? '' : 'none';
+  });
+  document.querySelectorAll('.day-tab').forEach(function(t, i) {
+    t.classList.toggle('active', i === idx);
+  });
+}
+
+
+// ── 장소 데이터 ──────────────────────────────────────────────
+var PLACES = {
+  // Day 1
+  ibis: {
+    emoji:'🏨', name:'이비스 스타일 다롄', zh:'宜必思尚品酒店 (大连天津街店)',
+    tag:'숙소', tagClass:'tag-conv',
+    desc:'다롄역 근처 천진가(天津街) 171호에 위치한 숙소. 건물 1층 또는 바로 옆에 루이싱 커피가 있어 아침식사가 편리합니다.',
+    taxi:'师傅，请去中山区天津街171号的宜必思尚品酒店。',
+    taxiKo:'기사님, 중산구 천진가 171호의 이비스 스타일 호텔로 가주세요.',
+    amap:'https://surl.amap.com/1gNhovbVeg1'
+  },
+  luwangzhai: {
+    emoji:'🥟', name:'루왕자이', zh:'卤王寨',
+    tag:'맛집·한추천', tagClass:'tag-food',
+    desc:'성게알 만두(海胆水饺)로 유명한 현지인 맛집. 한국 여행객들이 강력 추천하는 곳으로, 만두국과 게살 비빔면도 인기입니다.',
+    taxi:'师傅，请去卤王寨。',
+    taxiKo:'기사님, 루왕자이로 가주세요.',
+    amap:'https://surl.amap.com/ps6owtz1j8h3'
+  },
+  chagee_pav: {
+    emoji:'🧋', name:'CHAGEE 패황차희', zh:'霸王茶姬 (柏威年B1)',
+    tag:'티카페', tagClass:'tag-food',
+    desc:'중국 대표 티카페 브랜드. 파빌리온(柏威年) B1층에 위치. 당도 조절 시 70%(七分糖) 또는 50%(半糖) 추천.',
+    taxi:'师傅，请去中山路的柏威年购物中心。',
+    taxiKo:'기사님, 중산로 파빌리온 쇼핑몰로 가주세요.',
+    amap:'https://surl.amap.com/pzH8lO91a956'
+  },
+  popmart: {
+    emoji:'🧸', name:'팝마트', zh:'泡泡玛特 (柏威年4F)',
+    tag:'쇼핑', tagClass:'tag-shop',
+    desc:'파빌리온 4층에 위치한 중국 최대 피규어·아트토이 브랜드. 한정판 블라인드박스가 인기.',
+    taxi:'师傅，请去中山路的柏威年购物中心。',
+    taxiKo:'기사님, 중산로 파빌리온 쇼핑몰로 가주세요.',
+    amap:'https://surl.amap.com/pQ1OVL3q5X1'
+  },
+  holiland: {
+    emoji:'🍞', name:'Holiland 홀리랜드', zh:'好利来',
+    tag:'베이커리', tagClass:'tag-food',
+    desc:'중국 유명 베이커리 체인. 갓 구운 빵과 디저트가 많아 간단한 아침식사로 안성맞춤.',
+    taxi:'师傅，请去好利来(大连)。',
+    taxiKo:'기사님, 홀리랜드(好利来)로 가주세요.',
+    amap:'https://surl.amap.com/pVCnhLrA2ND'
+  },
+  xinxing: {
+    emoji:'🦆', name:'신흥전승오리구이', zh:'新兴传承烤鸭',
+    tag:'베이징덕', tagClass:'tag-food',
+    desc:'현지인들이 즐겨 찾는 베이징덕 전문점. 만보해선방(万宝海鲜坊) 근처에 위치.',
+    taxi:'师傅，请去中山区的新兴传承烤鸭，就在万宝海鲜坊附近。',
+    taxiKo:'기사님, 중산구 신흥전승오리구이로 가주세요. 만보해선방 근처입니다.',
+    amap:'https://surl.amap.com/pXF14nvY0Qx'
+  },
+  dongfang: {
+    emoji:'🏙️', name:'동방수성', zh:'东方水城',
+    tag:'관광', tagClass:'tag-sight',
+    desc:'다롄 동항 비즈니스 구역의 베니스식 수로 관광지. 다롄 국제 컨벤션 센터 인근 위치. 야경이 특히 아름답습니다.',
+    taxi:'师傅，请去东港的东方水城。',
+    taxiKo:'기사님, 동항의 동방수성으로 가주세요.',
+    amap:'https://surl.amap.com/pZz4Owh12aIc'
+  },
+  xiding: {
+    emoji:'🦔', name:'희정 해단수교', zh:'喜鼎海胆水饺 (东港店)',
+    tag:'성게만두', tagClass:'tag-food',
+    desc:'신선한 성게알(海胆)을 넣은 만두로 유명한 맛집. 동항점 기준 보통 오전 11시경 오픈.',
+    taxi:'师傅，请去喜鼎海胆水饺东港店。',
+    taxiKo:'기사님, 희정 해단수교 동항점으로 가주세요.',
+    amap:'https://surl.amap.com/ps6owtz1j8h3'
+  },
+  // Day 2
+  xianlu_night: {
+    emoji:'🌙', name:'서안로 야시장', zh:'西安路夜市',
+    tag:'야시장', tagClass:'tag-food',
+    desc:'다롄 현지인들의 저녁 명소. 해산물 구이, 꼬치, 꼴뚜기, 현지 간식 등 다양. 저녁 7시 이후 붐빔.',
+    taxi:'师傅，请去西安路夜市。',
+    taxiKo:'기사님, 서안로 야시장으로 가주세요.',
+    amap:'https://surl.amap.com/q28gpbX31D8'
+  },
+  heytea: {
+    emoji:'🍵', name:'헤이티', zh:'喜茶 HEYTEA',
+    tag:'티드링크', tagClass:'tag-food',
+    desc:'한국인들에게 가장 유명한 중국 티카페. 신선한 포도·딸기를 갈아 넣은 차 위에 짭짤한 치즈 크림이 올라가는 시그니처 메뉴 추천. 당도 70%(七分糖) 또는 50%(半糖) 추천.',
+    taxi:'师傅，请去中山路的柏威年购物中心。',
+    taxiKo:'기사님, 파빌리온 쇼핑몰로 가주세요.',
+    amap:'https://surl.amap.com/q5YIeud1mbc3'
+  },
+  dongguan: {
+    emoji:'🏛️', name:'동관지에', zh:'东关街',
+    tag:'역사거리', tagClass:'tag-sight',
+    desc:'다롄의 역사적인 골목 거리. 유럽풍 건축물과 현지 카페, 소품샵들이 모여 있는 감성 명소.',
+    taxi:'师傅，请去东关街。',
+    taxiKo:'기사님, 동관가(东关街)로 가주세요.',
+    amap:'https://surl.amap.com/qhK9iHvM0qT'
+  },
+  cherryontop: {
+    emoji:'🍦', name:'Cherry On Top', zh:'Cherry On Top',
+    tag:'디저트', tagClass:'tag-food',
+    desc:'감각적인 디저트 카페. 쇼핑 중 달콤한 휴식 장소로 인기.',
+    taxi:'师傅，请去Cherry On Top甜品店。',
+    taxiKo:'기사님, Cherry On Top 디저트샵으로 가주세요.',
+    amap:'https://surl.amap.com/qiXx6YxUeEJ'
+  },
+  toctouch: {
+    emoji:'👗', name:'TOCTOUCH', zh:'TOCTOUCH',
+    tag:'패션', tagClass:'tag-shop',
+    desc:'중국 감성 패션 브랜드. 젊은 감각의 의류와 소품.',
+    taxi:'师傅，请去TOCTOUCH服装店。',
+    taxiKo:'기사님, TOCTOUCH 매장으로 가주세요.',
+    amap:'https://surl.amap.com/qlDZLjbJgvD'
+  },
+  yangkochi: {
+    emoji:'🍢', name:'양꼬치 (풍무뀀성)', zh:'烤羊肉串',
+    tag:'꼬치구이', tagClass:'tag-food',
+    desc:'테이블마다 자동 회전 구이 기계가 있어 편리. 추천: 양꼬치(羊肉串)·소꼬치(牛肉串)·궈바로우·오이무침(拍黄瓜)·설화맥주(雪花啤酒). 저녁 7시 이후 대기 발생.',
+    taxi:'师傅，请去西安路夜市附近的烤肉店。',
+    taxiKo:'기사님, 서안로 야시장 근처 꼬치구이집으로 가주세요.',
+    amap:'https://surl.amap.com/qoqySMx1h0LC'
+  },
+  gelato: {
+    emoji:'🍨', name:'젤라또', zh:'Gelato (柏威年B1)',
+    tag:'아이스크림', tagClass:'tag-food',
+    desc:'파빌리온 B1층의 수제 젤라또 전문점. 쇼핑 중 가볍게 즐기기 좋음.',
+    taxi:'师傅，请去中山路的柏威年购物中心。',
+    taxiKo:'기사님, 파빌리온 쇼핑몰로 가주세요.',
+    amap:'https://surl.amap.com/qpNMmdX18b3f'
+  },
+  hotcrush: {
+    emoji:'🧃', name:'HOT CRUSH', zh:'HOT CRUSH (柏威年B1)',
+    tag:'과일주스', tagClass:'tag-food',
+    desc:'파빌리온 B1층. 신선한 과일을 그대로 갈아 만든 주스 전문점.',
+    taxi:'师傅，请去中山路的柏威年购物中心。',
+    taxiKo:'기사님, 파빌리온 쇼핑몰로 가주세요.',
+    amap:'https://surl.amap.com/rrryQ4x4fim'
+  },
+  ariseism: {
+    emoji:'👘', name:'ARISEISM', zh:'ARISEISM (柏威年B1)',
+    tag:'패션', tagClass:'tag-shop',
+    desc:'파빌리온 B1층. 독특한 감성의 중국 패션 브랜드.',
+    taxi:'师傅，请去中山路的柏威年购物中心。',
+    taxiKo:'기사님, 파빌리온 쇼핑몰로 가주세요.',
+    amap:'https://surl.amap.com/rPNepQJh8TX'
+  },
+  // Day 3
+  mingji: {
+    emoji:'🐟', name:'밍지카오위', zh:'鸣记烤鱼 (柏威年5F)',
+    tag:'카오위·생선구이', tagClass:'tag-food',
+    desc:'파빌리온몰 5층의 인기 생선구이(카오위) 전문점. 외파가 바로 옆. 점심 피크 전 방문 추천.',
+    taxi:'师傅，请去中山路的柏威年购物中心。',
+    taxiKo:'기사님, 파빌리온 쇼핑몰로 가주세요.',
+    amap:'https://surl.amap.com/pud8ZVTr4xd'
+  },
+  waipojia: {
+    emoji:'🍱', name:'외파가', zh:'外婆家 (柏威年5F)',
+    tag:'가성비맛집', tagClass:'tag-food',
+    desc:'파빌리온 5층. 한국 여행객 실패 없는 중식당. 추천 메뉴: 외파홍사로(동파육)·당면새우(蒜蓉粉丝虾)·마파두부·궈바로우·양배추볶음(手撕包菜).',
+    taxi:'师傅，请去中山路的柏威年购物中心。',
+    taxiKo:'기사님, 파빌리온 쇼핑몰로 가주세요.',
+    amap:'https://surl.amap.com/pud8ZVTr4xd'
+  },
+  greenparty: {
+    emoji:'🌿', name:'The Green Party', zh:'The Green Party',
+    tag:'카페·브런치', tagClass:'tag-food',
+    desc:'분위기 좋은 브런치 카페. 식물 인테리어가 돋보이는 감성 공간.',
+    taxi:'师傅，请去The Green Party咖啡店。',
+    taxiKo:'기사님, The Green Party 카페로 가주세요.',
+    amap:'https://surl.amap.com/yzEnyB1of8L'
+  },
+  castle: {
+    emoji:'🏰', name:'더 캐슬 호텔', zh:'大连城堡豪华精选酒店',
+    tag:'숙소', tagClass:'tag-conv',
+    desc:'성해광장 인근의 고급 호텔. 유럽 성 스타일 건축으로 유명한 랜드마크 호텔.',
+    taxi:'师傅，请去星海广场附近的城堡酒店。',
+    taxiKo:'기사님, 성해광장 근처 캐슬 호텔로 가주세요.',
+    amap:'https://surl.amap.com/rJjW009H5sN'
+  },
+  xinghai: {
+    emoji:'🌊', name:'성해광장', zh:'星海广场',
+    tag:'아시아최대광장', tagClass:'tag-sight',
+    desc:'아시아 최대 규모의 도시 광장(110만㎡). 바다 뷰와 야경이 아름다워 저녁 산책 명소. 백년 도시조각(百年城雕) 포토존 필수.',
+    taxi:'师傅，请去星海广场。',
+    taxiKo:'기사님, 성해광장으로 가주세요.',
+    amap:'https://surl.amap.com/qX5vKHfH4C3'
+  },
+  bigU: {
+    emoji:'🛒', name:'빅유마트', zh:'大U超市',
+    tag:'대형마트', tagClass:'tag-conv',
+    desc:'현지 대형마트. 중국 과자·식품·기념품 쇼핑에 좋음.',
+    taxi:'师傅，请去大U超市。',
+    taxiKo:'기사님, 빅유마트(大U超市)로 가주세요.',
+    amap:'https://surl.amap.com/rRncOKJ6dyL'
+  },
+  chagee_xh: {
+    emoji:'🧋', name:'CHAGEE', zh:'霸王茶姬',
+    tag:'티카페', tagClass:'tag-food',
+    desc:'중국 대표 티카페. 당도 조절 시 70%(七分糖) 또는 50%(半糖) 추천. 얼음 少冰(적게)로 주문하면 끝까지 진하게 마실 수 있어요.',
+    taxi:'师傅，请去星海广场附近的霸王茶姬。',
+    taxiKo:'기사님, 성해광장 근처 패황차희로 가주세요.',
+    amap:'https://surl.amap.com/rNFbnAZ1ycXZ'
+  },
+  haidilao: {
+    emoji:'🍲', name:'하이디라오', zh:'海底捞 (西安路)',
+    tag:'훠궈', tagClass:'tag-food',
+    desc:'서안로 야시장 건물 맨 위층. 중국 최대 훠궈 체인. 서비스가 극진하기로 유명. 알리페이로 대기 현황 확인 가능.',
+    taxi:'师傅，请去西安路夜市大楼最顶层的海底捞火锅。',
+    taxiKo:'기사님, 서안로 야시장 건물 맨 위층 하이디라오로 가주세요.',
+    amap:'https://surl.amap.com/qfAHpqNG8aR'
+  },
+  luckin: {
+    emoji:'☕', name:'루이싱 커피', zh:'瑞幸咖啡',
+    tag:'커피', tagClass:'tag-food',
+    desc:'중국의 스타벅스. 생코코넛 라떼(Raw Coconut Latte)가 한국인 입맛에 딱. 숙소 이비스 건물 1층 매장이 아침식사로 편리.',
+    taxi:'师傅，请去瑞幸咖啡。',
+    taxiKo:'기사님, 루이싱 커피로 가주세요.',
+    amap:'https://surl.amap.com/rsHybXj1zdrI'
+  },
+  olesfood: {
+    emoji:'🥗', name:"Ole's Food Hall", zh:'Ole生鲜 (柏威年B1)',
+    tag:'푸드홀', tagClass:'tag-food',
+    desc:'파빌리온 B1층의 고급 푸드마켓. 신선 식재료와 완성 음식, 수입 식품을 한자리에서.',
+    taxi:'师傅，请去中山路的柏威年购物中心。',
+    taxiKo:'기사님, 파빌리온 쇼핑몰로 가주세요.',
+    amap:'https://surl.amap.com/pwDFvXr1fcwk'
+  },
+  unome: {
+    emoji:'🎂', name:'UNOME 유노메', zh:'UNOME (柏威年3F)',
+    tag:'보자기케이크', tagClass:'tag-food',
+    desc:'파빌리온 3층. 보자기 케이크로 유명한 감성 카페. 케이크와 시원한 과일 에이드 세트 추천.',
+    taxi:'师傅，请去中山路的柏威年购物中心。',
+    taxiKo:'기사님, 파빌리온 쇼핑몰로 가주세요.',
+    amap:'https://surl.amap.com/pQ1OVL3q5X1'
+  },
+  // 핫플 섹션 (기존 좌표 기반)
+  xinghai_hot: {
+    emoji:'🌊', name:'싱하이광장', zh:'星海广场',
+    tag:'아시아 최대광장', tagClass:'tag-sight',
+    desc:'아시아 최대 규모의 도시 광장(110만㎡). 바다 뷰와 야경이 아름다워 저녁 산책 명소.',
+    taxi:'师傅，请去星海广场。',
+    taxiKo:'기사님, 성해광장으로 가주세요.',
+    amap:'https://uri.amap.com/marker?position=121.5424,38.8589&name=星海广场'
+  },
+  laohu: {
+    emoji:'🐬', name:'노호탄 해양공원', zh:'老虎滩海洋公园',
+    tag:'5A 해양테마파크', tagClass:'tag-sight',
+    desc:'중국 최대 규모의 5A급 해양테마파크. 극지관·산호관·해수관이 있으며 돌고래·백고래 공연으로 유명.',
+    taxi:'师傅，请去老虎滩海洋公园。',
+    taxiKo:'기사님, 노호탄 해양공원으로 가주세요.',
+    amap:'https://uri.amap.com/marker?position=121.6589,38.8742&name=老虎滩海洋公园'
+  },
+  jinshitan: {
+    emoji:'🏖️', name:'진스탄 해변', zh:'金石滩',
+    tag:'황금 해안선', tagClass:'tag-sight',
+    desc:'국가 5A급 관광지. 황금빛 해안선과 기암괴석이 아름다운 다롄 대표 해변.',
+    taxi:'师傅，请去金石滩旅游度假区。',
+    taxiKo:'기사님, 진스탄 관광지로 가주세요.',
+    amap:'https://uri.amap.com/marker?position=121.9303,39.0525&name=金石滩'
+  },
+  bangchui: {
+    emoji:'🏝️', name:'방추이다오', zh:'棒棰岛',
+    tag:'웨딩사진 명소', tagClass:'tag-sight',
+    desc:'다롄의 작은 섬. 맑은 바다와 아름다운 풍경으로 웨딩 촬영지로 유명. 노호탄에서 쾌속선으로 이동 가능.',
+    taxi:'师傅，请去棒棰岛。',
+    taxiKo:'기사님, 방추이다오로 가주세요.',
+    amap:'https://uri.amap.com/marker?position=121.6783,38.9047&name=棒棰岛'
+  },
+  russia_st: {
+    emoji:'🏰', name:'러시아풍정가', zh:'俄罗斯风情街',
+    tag:'이국적 건축거리', tagClass:'tag-sight',
+    desc:'19세기 말~20세기 초 러시아 스타일 건축이 즐비한 보행자 거리. 러시아 상품·음식·수공예품 판매.',
+    taxi:'师傅，请去俄罗斯风情街，在西岗区胜利桥北端附近。',
+    taxiKo:'기사님, 러시아 풍정가로 가주세요. 승리교 북단 근처입니다.',
+    amap:'https://uri.amap.com/marker?position=121.6395,38.9242&name=俄罗斯风情街'
+  },
+  zhongshan_sq: {
+    emoji:'🏛️', name:'중산광장', zh:'中山广场',
+    tag:'유럽풍 랜드마크', tagClass:'tag-sight',
+    desc:'다롄의 상징적인 원형 광장. 20세기 초 지어진 일식·러식·프랑스식 유럽 건축물들이 원형으로 둘러싸고 있음. 카페와 서점 다수.',
+    taxi:'师傅，请去中山广场。',
+    taxiKo:'기사님, 중산광장으로 가주세요.',
+    amap:'https://uri.amap.com/marker?position=121.6414,38.9157&name=中山广场'
+  },
+  pinhailou: {
+    emoji:'🦐', name:'핀하이러우', zh:'品海楼海鲜酒楼',
+    tag:'해산물 老字号', tagClass:'tag-food',
+    desc:'1992년 창업한 다롄 토박이 해산물 레스토랑. 여행객에게 바가지 없는 정직한 가격. 인당 약 100위안.',
+    taxi:'师傅，请去品海楼海鲜酒楼。',
+    taxiKo:'기사님, 핀하이러우 해산물 식당으로 가주세요.',
+    amap:'https://uri.amap.com/marker?position=121.6011,38.9089&name=品海楼'
+  },
+  tianjin_food: {
+    emoji:'🦪', name:'톈진제 먹거리', zh:'天津街',
+    tag:'해산물 야시장', tagClass:'tag-food',
+    desc:'다롄 최대 상업가. 생굴·가리비·소라 등 해산물 BBQ가 유명. 저녁에 특히 활기차고 먹거리가 풍성.',
+    taxi:'师傅，请去天津街。',
+    taxiKo:'기사님, 천진가(天津街)로 가주세요.',
+    amap:'https://uri.amap.com/marker?position=121.6275,38.9165&name=天津街'
+  },
+  sanba_night: {
+    emoji:'🌙', name:'삼팔광장 야시장', zh:'三八广场夜市',
+    tag:'꼴뚜기·오이스터', tagClass:'tag-food',
+    desc:'해 지면 활기차지는 야시장. 대련 명물 멘즈(焖子)·오징어구이·해산물이 집결. 대련 밤 문화 체험.',
+    taxi:'师傅，请去三八广场夜市。',
+    taxiKo:'기사님, 삼팔광장 야시장으로 가주세요.',
+    amap:'https://uri.amap.com/marker?position=121.6183,38.9282&name=三八广场夜市'
+  },
+  tianjin_shop: {
+    emoji:'🏬', name:'톈진제 쇼핑거리', zh:'天津街步行街',
+    tag:'브랜드·특산품', tagClass:'tag-shop',
+    desc:'대련 최대 쇼핑 보행자 거리. 유명 브랜드부터 현지 특산품, 길거리 간식까지 즐길 수 있음.',
+    taxi:'师傅，请去天津街步行街。',
+    taxiKo:'기사님, 천진가 보행자 거리로 가주세요.',
+    amap:'https://uri.amap.com/marker?position=121.6275,38.9165&name=天津街步行街'
+  },
+  pavilion: {
+    emoji:'🛒', name:'파빌리온 (백위년)', zh:'柏威年购物中心',
+    tag:'대형 쇼핑몰', tagClass:'tag-shop',
+    desc:'중산로 129-3호. 다롄 최대 쇼핑몰 중 하나. 팝마트·외파가·CHAGEE·루이싱커피·유노메 등 입점. B1~5F.',
+    taxi:'师傅，请去中山路的柏威年购物中心。',
+    taxiKo:'기사님, 중산로 백위년(파빌리온) 쇼핑몰로 가주세요.',
+    amap:'https://uri.amap.com/marker?position=121.6298,38.9161&name=柏威年购物中心'
+  },
+  changxing: {
+    emoji:'🐟', name:'창싱시장', zh:'长兴市场',
+    tag:'신선 해산물시장', tagClass:'tag-conv',
+    desc:'현지인들이 이용하는 신선 해산물 시장. 구입 후 근처 식당에서 조리 의뢰 가능.',
+    taxi:'师傅，请去长兴市场。',
+    taxiKo:'기사님, 창싱시장으로 가주세요.',
+    amap:'https://uri.amap.com/marker?position=121.6241,38.9201&name=长兴市场'
+  },
+  dalian_station: {
+    emoji:'🚉', name:'대련역', zh:'大连站',
+    tag:'기차·교통 허브', tagClass:'tag-conv',
+    desc:'다롄 중심 기차역. 공항·시내 주요 지점과 연결되는 교통 허브. 이비스 스타일 호텔이 도보권.',
+    taxi:'师傅，请去大连火车站。',
+    taxiKo:'기사님, 대련역으로 가주세요.',
+    amap:'https://uri.amap.com/marker?position=121.6354,38.9209&name=大连站'
+  }
+};
+
+// 대련 핫플 - 고덕지도 연결
+function openPlace(name, lat, lon) {
+  var isAndroid = /Android/i.test(navigator.userAgent);
+  var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  var encodedName = encodeURIComponent(name);
+
+  if (isAndroid) {
+    // 고덕지도 앱으로 POI 표시 → 없으면 웹으로 폴백
+    var fallback = encodeURIComponent('https://uri.amap.com/marker?position=' + lon + ',' + lat + '&name=' + encodedName);
+    window.location.href = 'intent://viewMap?sourceApplication=chinatravel&poiname=' + encodedName + '&lat=' + lat + '&lon=' + lon + '&dev=0#Intent;scheme=amapuri;package=com.autonavi.minimap;S.browser_fallback_url=' + fallback + ';end';
+  } else if (isIOS) {
+    // iOS 고덕지도 앱
+    window.location.href = 'iosamap://viewMap?sourceApplication=chinatravel&poiname=' + encodedName + '&lat=' + lat + '&lon=' + lon + '&dev=0';
+    setTimeout(function() {
+      window.location.href = 'https://uri.amap.com/marker?position=' + lon + ',' + lat + '&name=' + encodedName;
+    }, 800);
+  } else {
+    window.open('https://uri.amap.com/marker?position=' + lon + ',' + lat + '&name=' + encodedName, '_blank');
+  }
+}
+
 // 앱 실행 - intent:// 방식 (Chrome이 네이티브 처리, JS 타이머 불필요)
 function openApp(name) {
   var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -1540,7 +2436,7 @@ document.querySelectorAll('.phrase-section').forEach(function(sec) {
 try { history.pushState({app:true},''); history.pushState({app:true},''); history.pushState({app:true},''); } catch(e){}
 window.addEventListener('popstate', function() {
   try { history.pushState({app:true},''); } catch(e){}
-  var overlays = ['show-ov','ci-ov','num-ov','phr-ov'];
+  var overlays = ['show-ov','ci-ov','num-ov','phr-ov','pl-ov'];
   for(var i=0;i<overlays.length;i++) {
     var el = document.getElementById(overlays[i]);
     if(el && el.classList.contains('active')) { el.classList.remove('active'); return; }
