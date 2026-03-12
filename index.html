@@ -415,8 +415,8 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
 .dalian-sub::after { content:'▼'; font-size:9px; color:var(--muted); transition:transform 0.25s; }
 .dalian-sub.collapsed::after { transform:rotate(-90deg); }
 .dalian-sub:active { background:var(--card3); }
-.place-grid.sub-body { overflow:hidden; transition:max-height 0.3s ease, opacity 0.3s ease; max-height:600px; opacity:1; }
-.place-grid.sub-body.collapsed { max-height:0 !important; opacity:0; margin-bottom:0 !important; }
+.place-grid.sub-body, .sub-body { overflow:hidden; transition:max-height 0.3s ease, opacity 0.3s ease; max-height:1200px; opacity:1; }
+.place-grid.sub-body.collapsed, .sub-body.collapsed { max-height:0 !important; opacity:0; margin-bottom:0 !important; }
 
 .day-tab {
   flex:1; text-align:center; padding:7px 0;
@@ -850,10 +850,11 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
 
       <!-- 대련 핫플 -->
       <div class="dalian-section">
-        <div class="dalian-title">📍 대련 핫플 · 大连</div>
+        <div class="dalian-sub collapsed" onclick="toggleSub(this)">📍 대련 핫플 · 大连</div>
+        <div class="sub-body collapsed">
 
-        <div class="dalian-sub collapsed" onclick="toggleSub(this)">🏛️ 관광지</div>
-        <div class="place-grid sub-body collapsed" style="margin-bottom:10px">
+          <div class="dalian-sub collapsed" onclick="toggleSub(this)" style="margin-top:8px">🏛️ 관광지</div>
+          <div class="place-grid sub-body collapsed" style="margin-bottom:10px">
           <div class="place-card" onclick="showPlace('xinghai_hot')">
             <div class="place-map-btn" onclick="plMapDirect('xinghai_hot')">🗺️</div>
             <div class="place-emoji">🌊</div>
@@ -862,39 +863,72 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
             <span class="place-tag tag-sight">아시아 최대광장</span>
           </div>
           <div class="place-card" onclick="showPlace('laohu')">
+            <div class="place-map-btn" onclick="plMapDirect('laohu')">🗺️</div>
             <div class="place-emoji">🐬</div>
             <div class="place-name">노호탄 해양공원</div>
             <div class="place-sub">老虎滩海洋公园</div>
             <span class="place-tag tag-sight">5A 해양테마파크</span>
           </div>
           <div class="place-card" onclick="showPlace('jinshitan')">
+            <div class="place-map-btn" onclick="plMapDirect('jinshitan')">🗺️</div>
             <div class="place-emoji">🏖️</div>
             <div class="place-name">진스탄 해변</div>
             <div class="place-sub">金石滩</div>
             <span class="place-tag tag-sight">황금 해안선</span>
           </div>
           <div class="place-card" onclick="showPlace('bangchui')">
+            <div class="place-map-btn" onclick="plMapDirect('bangchui')">🗺️</div>
             <div class="place-emoji">🏝️</div>
             <div class="place-name">방추이다오</div>
             <div class="place-sub">棒棰岛</div>
             <span class="place-tag tag-sight">웨딩사진 명소</span>
           </div>
           <div class="place-card" onclick="showPlace('russia_st')">
+            <div class="place-map-btn" onclick="plMapDirect('russia_st')">🗺️</div>
             <div class="place-emoji">🏰</div>
             <div class="place-name">러시아풍정가</div>
             <div class="place-sub">俄罗斯风情街</div>
             <span class="place-tag tag-sight">이국적 건축거리</span>
           </div>
           <div class="place-card" onclick="showPlace('zhongshan_sq')">
+            <div class="place-map-btn" onclick="plMapDirect('zhongshan_sq')">🗺️</div>
             <div class="place-emoji">🏛️</div>
             <div class="place-name">중산광장</div>
             <div class="place-sub">中山广场</div>
             <span class="place-tag tag-sight">유럽풍 랜드마크</span>
           </div>
-        </div>
+          <div class="place-card" onclick="showPlace('dongguan')">
+            <div class="place-map-btn" onclick="plMapDirect('dongguan')">🗺️</div>
+            <div class="place-emoji">🏛️</div>
+            <div class="place-name">동관지에</div>
+            <div class="place-sub">东关街</div>
+            <span class="place-tag tag-sight">역사거리</span>
+          </div>
+          <div class="place-card" onclick="showPlace('dongfang')">
+            <div class="place-map-btn" onclick="plMapDirect('dongfang')">🗺️</div>
+            <div class="place-emoji">🏙️</div>
+            <div class="place-name">동방수성</div>
+            <div class="place-sub">东方水城</div>
+            <span class="place-tag tag-sight">베니스수로</span>
+          </div>
+          </div>
 
-        <div class="dalian-sub collapsed" onclick="toggleSub(this)">🍜 맛집</div>
-        <div class="place-grid sub-body collapsed" style="margin-bottom:10px">
+          <div class="dalian-sub collapsed" onclick="toggleSub(this)">🍜 맛집</div>
+          <div class="place-grid sub-body collapsed" style="margin-bottom:10px">
+          <div class="place-card" onclick="showPlace('luwangzhai')">
+            <div class="place-map-btn" onclick="plMapDirect('luwangzhai')">🗺️</div>
+            <div class="place-emoji">🥟</div>
+            <div class="place-name">루왕자이</div>
+            <div class="place-sub">卤王寨</div>
+            <span class="place-tag tag-food">성게알만두·한추천</span>
+          </div>
+          <div class="place-card" onclick="showPlace('xiding')">
+            <div class="place-map-btn" onclick="plMapDirect('xiding')">🗺️</div>
+            <div class="place-emoji">🦔</div>
+            <div class="place-name">희정 해단수교</div>
+            <div class="place-sub">喜鼎海胆水饺</div>
+            <span class="place-tag tag-food">성게만두 전문</span>
+          </div>
           <div class="place-card" onclick="showPlace('pinhailou')">
             <div class="place-map-btn" onclick="plMapDirect('pinhailou')">🗺️</div>
             <div class="place-emoji">🦐</div>
@@ -902,28 +936,140 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
             <div class="place-sub">品海楼</div>
             <span class="place-tag tag-food">해산물 老字号</span>
           </div>
+          <div class="place-card" onclick="showPlace('xinxing')">
+            <div class="place-map-btn" onclick="plMapDirect('xinxing')">🗺️</div>
+            <div class="place-emoji">🦆</div>
+            <div class="place-name">신흥전승오리구이</div>
+            <div class="place-sub">新兴传承烤鸭</div>
+            <span class="place-tag tag-food">베이징덕</span>
+          </div>
+          <div class="place-card" onclick="showPlace('waipojia')">
+            <div class="place-map-btn" onclick="plMapDirect('waipojia')">🗺️</div>
+            <div class="place-emoji">🍱</div>
+            <div class="place-name">외파가</div>
+            <div class="place-sub">外婆家·파빌리온5F</div>
+            <span class="place-tag tag-food">가성비 중식당</span>
+          </div>
+          <div class="place-card" onclick="showPlace('mingji')">
+            <div class="place-map-btn" onclick="plMapDirect('mingji')">🗺️</div>
+            <div class="place-emoji">🐟</div>
+            <div class="place-name">밍지카오위</div>
+            <div class="place-sub">鸣记烤鱼·파빌리온5F</div>
+            <span class="place-tag tag-food">카오위</span>
+          </div>
+          <div class="place-card" onclick="showPlace('haidilao')">
+            <div class="place-map-btn" onclick="plMapDirect('haidilao')">🗺️</div>
+            <div class="place-emoji">🍲</div>
+            <div class="place-name">하이디라오</div>
+            <div class="place-sub">海底捞·서안로</div>
+            <span class="place-tag tag-food">훠궈</span>
+          </div>
+          <div class="place-card" onclick="showPlace('yangkochi')">
+            <div class="place-map-btn" onclick="plMapDirect('yangkochi')">🗺️</div>
+            <div class="place-emoji">🍢</div>
+            <div class="place-name">양꼬치</div>
+            <div class="place-sub">烤羊肉串</div>
+            <span class="place-tag tag-food">꼬치구이</span>
+          </div>
+          <div class="place-card" onclick="showPlace('xianlu_night')">
+            <div class="place-map-btn" onclick="plMapDirect('xianlu_night')">🗺️</div>
+            <div class="place-emoji">🌙</div>
+            <div class="place-name">서안로 야시장</div>
+            <div class="place-sub">西安路夜市</div>
+            <span class="place-tag tag-food">야시장</span>
+          </div>
           <div class="place-card" onclick="showPlace('tianjin_food')">
+            <div class="place-map-btn" onclick="plMapDirect('tianjin_food')">🗺️</div>
             <div class="place-emoji">🦪</div>
             <div class="place-name">톈진제 먹거리</div>
             <div class="place-sub">天津街</div>
             <span class="place-tag tag-food">해산물 야시장</span>
           </div>
           <div class="place-card" onclick="showPlace('sanba_night')">
+            <div class="place-map-btn" onclick="plMapDirect('sanba_night')">🗺️</div>
             <div class="place-emoji">🌙</div>
             <div class="place-name">삼팔광장 야시장</div>
             <div class="place-sub">三八广场夜市</div>
             <span class="place-tag tag-food">꼴뚜기·오이스터</span>
           </div>
-          <div class="place-card" onclick="showPlace('laohu')">
-            <div class="place-emoji">🍱</div>
-            <div class="place-name">항해왕 테마레스토랑</div>
-            <div class="place-sub">航海王主题餐厅</div>
-            <span class="place-tag tag-food">포토맛집·가족</span>
           </div>
-        </div>
 
-        <div class="dalian-sub collapsed" onclick="toggleSub(this)">🛍️ 쇼핑</div>
-        <div class="place-grid sub-body collapsed" style="margin-bottom:10px">
+          <div class="dalian-sub collapsed" onclick="toggleSub(this)">☕ 카페·음료</div>
+          <div class="place-grid sub-body collapsed" style="margin-bottom:10px">
+          <div class="place-card" onclick="showPlace('heytea')">
+            <div class="place-map-btn" onclick="plMapDirect('heytea')">🗺️</div>
+            <div class="place-emoji">🍵</div>
+            <div class="place-name">헤이티</div>
+            <div class="place-sub">喜茶</div>
+            <span class="place-tag tag-food">치즈폼 과일차</span>
+          </div>
+          <div class="place-card" onclick="showPlace('chagee_pav')">
+            <div class="place-map-btn" onclick="plMapDirect('chagee_pav')">🗺️</div>
+            <div class="place-emoji">🧋</div>
+            <div class="place-name">CHAGEE 패황차희</div>
+            <div class="place-sub">霸王茶姬</div>
+            <span class="place-tag tag-food">티카페</span>
+          </div>
+          <div class="place-card" onclick="showPlace('luckin')">
+            <div class="place-map-btn" onclick="plMapDirect('luckin')">🗺️</div>
+            <div class="place-emoji">☕</div>
+            <div class="place-name">루이싱 커피</div>
+            <div class="place-sub">瑞幸咖啡</div>
+            <span class="place-tag tag-food">생코코넛라떼</span>
+          </div>
+          <div class="place-card" onclick="showPlace('greenparty')">
+            <div class="place-map-btn" onclick="plMapDirect('greenparty')">🗺️</div>
+            <div class="place-emoji">🌿</div>
+            <div class="place-name">The Green Party</div>
+            <div class="place-sub">카페·브런치</div>
+            <span class="place-tag tag-food">카페</span>
+          </div>
+          <div class="place-card" onclick="showPlace('unome')">
+            <div class="place-map-btn" onclick="plMapDirect('unome')">🗺️</div>
+            <div class="place-emoji">🎂</div>
+            <div class="place-name">UNOME 유노메</div>
+            <div class="place-sub">파빌리온3F</div>
+            <span class="place-tag tag-food">보자기케이크</span>
+          </div>
+          <div class="place-card" onclick="showPlace('cherryontop')">
+            <div class="place-map-btn" onclick="plMapDirect('cherryontop')">🗺️</div>
+            <div class="place-emoji">🍦</div>
+            <div class="place-name">Cherry On Top</div>
+            <div class="place-sub">디저트</div>
+            <span class="place-tag tag-food">디저트</span>
+          </div>
+          <div class="place-card" onclick="showPlace('hotcrush')">
+            <div class="place-map-btn" onclick="plMapDirect('hotcrush')">🗺️</div>
+            <div class="place-emoji">🧃</div>
+            <div class="place-name">HOT CRUSH</div>
+            <div class="place-sub">파빌리온B1</div>
+            <span class="place-tag tag-food">과일주스</span>
+          </div>
+          <div class="place-card" onclick="showPlace('gelato')">
+            <div class="place-map-btn" onclick="plMapDirect('gelato')">🗺️</div>
+            <div class="place-emoji">🍨</div>
+            <div class="place-name">젤라또</div>
+            <div class="place-sub">파빌리온B1</div>
+            <span class="place-tag tag-food">아이스크림</span>
+          </div>
+          <div class="place-card" onclick="showPlace('holiland')">
+            <div class="place-map-btn" onclick="plMapDirect('holiland')">🗺️</div>
+            <div class="place-emoji">🍞</div>
+            <div class="place-name">Holiland 홀리랜드</div>
+            <div class="place-sub">好利来</div>
+            <span class="place-tag tag-food">베이커리</span>
+          </div>
+          </div>
+
+          <div class="dalian-sub collapsed" onclick="toggleSub(this)">🛍️ 쇼핑</div>
+          <div class="place-grid sub-body collapsed" style="margin-bottom:10px">
+          <div class="place-card" onclick="showPlace('pavilion')">
+            <div class="place-map-btn" onclick="plMapDirect('pavilion')">🗺️</div>
+            <div class="place-emoji">🛒</div>
+            <div class="place-name">파빌리온</div>
+            <div class="place-sub">柏威年购物中心</div>
+            <span class="place-tag tag-shop">대형 쇼핑몰</span>
+          </div>
           <div class="place-card" onclick="showPlace('tianjin_shop')">
             <div class="place-map-btn" onclick="plMapDirect('tianjin_shop')">🗺️</div>
             <div class="place-emoji">🏬</div>
@@ -931,16 +1077,63 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
             <div class="place-sub">天津街</div>
             <span class="place-tag tag-shop">브랜드·특산품</span>
           </div>
-          <div class="place-card" onclick="showPlace('pavilion')">
-            <div class="place-emoji">🛒</div>
-            <div class="place-name">마이카이러광장</div>
-            <div class="place-sub">迈凯乐广场</div>
-            <span class="place-tag tag-shop">대형 쇼핑몰</span>
+          <div class="place-card" onclick="showPlace('popmart')">
+            <div class="place-map-btn" onclick="plMapDirect('popmart')">🗺️</div>
+            <div class="place-emoji">🧸</div>
+            <div class="place-name">팝마트</div>
+            <div class="place-sub">파빌리온4F</div>
+            <span class="place-tag tag-shop">피규어·쇼핑</span>
           </div>
-        </div>
+          <div class="place-card" onclick="showPlace('toctouch')">
+            <div class="place-map-btn" onclick="plMapDirect('toctouch')">🗺️</div>
+            <div class="place-emoji">👗</div>
+            <div class="place-name">TOCTOUCH</div>
+            <div class="place-sub">패션</div>
+            <span class="place-tag tag-shop">패션</span>
+          </div>
+          <div class="place-card" onclick="showPlace('ariseism')">
+            <div class="place-map-btn" onclick="plMapDirect('ariseism')">🗺️</div>
+            <div class="place-emoji">👘</div>
+            <div class="place-name">ARISEISM</div>
+            <div class="place-sub">파빌리온B1</div>
+            <span class="place-tag tag-shop">패션</span>
+          </div>
+          <div class="place-card" onclick="showPlace('olesfood')">
+            <div class="place-map-btn" onclick="plMapDirect('olesfood')">🗺️</div>
+            <div class="place-emoji">🥗</div>
+            <div class="place-name">Ole's Food Hall</div>
+            <div class="place-sub">파빌리온B1</div>
+            <span class="place-tag tag-shop">푸드홀</span>
+          </div>
+          <div class="place-card" onclick="showPlace('bigU')">
+            <div class="place-map-btn" onclick="plMapDirect('bigU')">🗺️</div>
+            <div class="place-emoji">🛒</div>
+            <div class="place-name">빅유마트</div>
+            <div class="place-sub">大U超市</div>
+            <span class="place-tag tag-conv">대형마트</span>
+          </div>
+          </div>
 
-        <div class="dalian-sub collapsed" onclick="toggleSub(this)">🏪 편의시설</div>
-        <div class="place-grid sub-body collapsed" style="margin-bottom:4px">
+          <div class="dalian-sub collapsed" onclick="toggleSub(this)">🏨 숙박</div>
+          <div class="place-grid sub-body collapsed" style="margin-bottom:10px">
+          <div class="place-card" onclick="showPlace('ibis')">
+            <div class="place-map-btn" onclick="plMapDirect('ibis')">🗺️</div>
+            <div class="place-emoji">🏨</div>
+            <div class="place-name">이비스 스타일</div>
+            <div class="place-sub">宜必思尚品酒店</div>
+            <span class="place-tag tag-conv">다롄역 근처</span>
+          </div>
+          <div class="place-card" onclick="showPlace('castle')">
+            <div class="place-map-btn" onclick="plMapDirect('castle')">🗺️</div>
+            <div class="place-emoji">🏰</div>
+            <div class="place-name">더 캐슬 호텔</div>
+            <div class="place-sub">大连城堡酒店</div>
+            <span class="place-tag tag-conv">성해광장 근처</span>
+          </div>
+          </div>
+
+          <div class="dalian-sub collapsed" onclick="toggleSub(this)">🏪 편의시설</div>
+          <div class="place-grid sub-body collapsed" style="margin-bottom:4px">
           <div class="place-card" onclick="showPlace('changxing')">
             <div class="place-map-btn" onclick="plMapDirect('changxing')">🗺️</div>
             <div class="place-emoji">🐟</div>
@@ -949,249 +1142,15 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
             <span class="place-tag tag-conv">신선 해산물시장</span>
           </div>
           <div class="place-card" onclick="showPlace('dalian_station')">
+            <div class="place-map-btn" onclick="plMapDirect('dalian_station')">🗺️</div>
             <div class="place-emoji">🚉</div>
             <div class="place-name">대련역</div>
             <div class="place-sub">大连站</div>
             <span class="place-tag tag-conv">기차·교통 허브</span>
           </div>
-        </div>
-      </div>
-
-      <!-- 나의 대련 일정 -->
-      <div class="dalian-section">
-        <div class="dalian-title">🗓️ 나의 대련 일정</div>
-
-        <!-- Day 탭 -->
-        <div id="day-tabs" style="display:flex;gap:6px;margin-bottom:10px">
-          <div class="day-tab active" onclick="switchDay(0)">Day 1</div>
-          <div class="day-tab" onclick="switchDay(1)">Day 2</div>
-          <div class="day-tab" onclick="switchDay(2)">Day 3</div>
-        </div>
-
-        <!-- Day 1 -->
-        <div class="day-panel" id="day0">
-          <div class="place-grid">
-            <div class="place-card" onclick="showPlace('ibis')">
-              <div class="place-map-btn" onclick="plMapDirect('ibis')">🗺️</div>
-              <div class="place-emoji">🏨</div>
-              <div class="place-name">이비스 스타일</div>
-              <div class="place-sub">다롄역점</div>
-              <span class="place-tag tag-conv">숙소</span>
-            </div>
-            <div class="place-card" onclick="showPlace('luckin')">
-              <div class="place-map-btn" onclick="plMapDirect('luckin')">🗺️</div>
-              <div class="place-emoji">☕</div>
-              <div class="place-name">루이싱 커피</div>
-              <div class="place-sub">숙소 1층·아침</div>
-              <span class="place-tag tag-food">커피</span>
-            </div>
-            <div class="place-card" onclick="showPlace('luwangzhai')">
-              <div class="place-map-btn" onclick="plMapDirect('luwangzhai')">🗺️</div>
-              <div class="place-emoji">🥟</div>
-              <div class="place-name">루왕자이</div>
-              <div class="place-sub">성게알만두</div>
-              <span class="place-tag tag-food">맛집·한추천</span>
-            </div>
-            <div class="place-card" onclick="showPlace('xinxing')">
-              <div class="place-map-btn" onclick="plMapDirect('xinxing')">🗺️</div>
-              <div class="place-emoji">🦆</div>
-              <div class="place-name">신흥전승오리구이</div>
-              <div class="place-sub">베이징덕</div>
-              <span class="place-tag tag-food">오리구이</span>
-            </div>
-            <div class="place-card" onclick="showPlace('russia_st')">
-              <div class="place-map-btn" onclick="plMapDirect('russia_st')">🗺️</div>
-              <div class="place-emoji">🏰</div>
-              <div class="place-name">러시아풍정가</div>
-              <div class="place-sub">俄罗斯风情街</div>
-              <span class="place-tag tag-sight">이국거리</span>
-            </div>
-            <div class="place-card" onclick="showPlace('chagee_pav')">
-              <div class="place-map-btn" onclick="plMapDirect('chagee_pav')">🗺️</div>
-              <div class="place-emoji">🧋</div>
-              <div class="place-name">CHAGEE 패황차희</div>
-              <div class="place-sub">파빌리온 B1</div>
-              <span class="place-tag tag-food">티카페</span>
-            </div>
-            <div class="place-card" onclick="showPlace('popmart')">
-              <div class="place-map-btn" onclick="plMapDirect('popmart')">🗺️</div>
-              <div class="place-emoji">🧸</div>
-              <div class="place-name">팝마트</div>
-              <div class="place-sub">파빌리온 4F</div>
-              <span class="place-tag tag-shop">피규어·쇼핑</span>
-            </div>
-            <div class="place-card" onclick="showPlace('holiland')">
-              <div class="place-map-btn" onclick="plMapDirect('holiland')">🗺️</div>
-              <div class="place-emoji">🍞</div>
-              <div class="place-name">Holiland 홀리랜드</div>
-              <div class="place-sub">베이커리</div>
-              <span class="place-tag tag-food">베이커리</span>
-            </div>
-            <div class="place-card" onclick="showPlace('xiding')">
-              <div class="place-map-btn" onclick="plMapDirect('xiding')">🗺️</div>
-              <div class="place-emoji">🦔</div>
-              <div class="place-name">희정 해단수교</div>
-              <div class="place-sub">성게만두 전문</div>
-              <span class="place-tag tag-food">맛집</span>
-            </div>
-            <div class="place-card" onclick="showPlace('dongfang')">
-              <div class="place-map-btn" onclick="plMapDirect('dongfang')">🗺️</div>
-              <div class="place-emoji">🏙️</div>
-              <div class="place-name">동방수성</div>
-              <div class="place-sub">东方水城</div>
-              <span class="place-tag tag-sight">베니스수로</span>
-            </div>
           </div>
-        </div>
 
-        <!-- Day 2 -->
-        <div class="day-panel" id="day1" style="display:none">
-          <div class="place-grid">
-            <div class="place-card" onclick="showPlace('ibis')">
-              <div class="place-map-btn" onclick="plMapDirect('ibis')">🗺️</div>
-              <div class="place-emoji">🏨</div>
-              <div class="place-name">이비스 스타일</div>
-              <div class="place-sub">아침출발</div>
-              <span class="place-tag tag-conv">숙소</span>
-            </div>
-            <div class="place-card" onclick="showPlace('pavilion')">
-              <div class="place-map-btn" onclick="plMapDirect('pavilion')">🗺️</div>
-              <div class="place-emoji">🛒</div>
-              <div class="place-name">파빌리온</div>
-              <div class="place-sub">柏威年购物中心</div>
-              <span class="place-tag tag-shop">쇼핑몰</span>
-            </div>
-            <div class="place-card" onclick="showPlace('heytea')">
-              <div class="place-map-btn" onclick="plMapDirect('heytea')">🗺️</div>
-              <div class="place-emoji">🍵</div>
-              <div class="place-name">헤이티</div>
-              <div class="place-sub">喜茶</div>
-              <span class="place-tag tag-food">티드링크</span>
-            </div>
-            <div class="place-card" onclick="showPlace('unome')">
-              <div class="place-map-btn" onclick="plMapDirect('unome')">🗺️</div>
-              <div class="place-emoji">🎂</div>
-              <div class="place-name">UNOME 유노메</div>
-              <div class="place-sub">파빌리온 3F·보자기케이크</div>
-              <span class="place-tag tag-food">디저트</span>
-            </div>
-            <div class="place-card" onclick="showPlace('dongguan')">
-              <div class="place-map-btn" onclick="plMapDirect('dongguan')">🗺️</div>
-              <div class="place-emoji">🏛️</div>
-              <div class="place-name">동관지에</div>
-              <div class="place-sub">东关街</div>
-              <span class="place-tag tag-sight">역사거리</span>
-            </div>
-            <div class="place-card" onclick="showPlace('cherryontop')">
-              <div class="place-map-btn" onclick="plMapDirect('cherryontop')">🗺️</div>
-              <div class="place-emoji">🍦</div>
-              <div class="place-name">Cherry On Top</div>
-              <div class="place-sub">디저트</div>
-              <span class="place-tag tag-food">디저트</span>
-            </div>
-            <div class="place-card" onclick="showPlace('toctouch')">
-              <div class="place-map-btn" onclick="plMapDirect('toctouch')">🗺️</div>
-              <div class="place-emoji">👗</div>
-              <div class="place-name">TOCTOUCH</div>
-              <div class="place-sub">패션</div>
-              <span class="place-tag tag-shop">패션</span>
-            </div>
-            <div class="place-card" onclick="showPlace('ariseism')">
-              <div class="place-map-btn" onclick="plMapDirect('ariseism')">🗺️</div>
-              <div class="place-emoji">👘</div>
-              <div class="place-name">ARISEISM</div>
-              <div class="place-sub">파빌리온 B1</div>
-              <span class="place-tag tag-shop">패션</span>
-            </div>
-            <div class="place-card" onclick="showPlace('hotcrush')">
-              <div class="place-map-btn" onclick="plMapDirect('hotcrush')">🗺️</div>
-              <div class="place-emoji">🧃</div>
-              <div class="place-name">HOT CRUSH</div>
-              <div class="place-sub">파빌리온 B1</div>
-              <span class="place-tag tag-food">과일주스</span>
-            </div>
-            <div class="place-card" onclick="showPlace('gelato')">
-              <div class="place-map-btn" onclick="plMapDirect('gelato')">🗺️</div>
-              <div class="place-emoji">🍨</div>
-              <div class="place-name">젤라또</div>
-              <div class="place-sub">파빌리온 B1</div>
-              <span class="place-tag tag-food">아이스크림</span>
-            </div>
-            <div class="place-card" onclick="showPlace('yangkochi')">
-              <div class="place-map-btn" onclick="plMapDirect('yangkochi')">🗺️</div>
-              <div class="place-emoji">🍢</div>
-              <div class="place-name">양꼬치 풍무뀀성</div>
-              <div class="place-sub">烤羊肉串</div>
-              <span class="place-tag tag-food">꼬치구이</span>
-            </div>
-            <div class="place-card" onclick="showPlace('xianlu_night')">
-              <div class="place-map-btn" onclick="plMapDirect('xianlu_night')">🗺️</div>
-              <div class="place-emoji">🌙</div>
-              <div class="place-name">서안로 야시장</div>
-              <div class="place-sub">西安路夜市</div>
-              <span class="place-tag tag-food">야시장</span>
-            </div>
-          </div>
-        </div>
-        <!-- Day 3 -->
-        <div class="day-panel" id="day2" style="display:none">
-          <div class="place-grid">
-            <div class="place-card" onclick="openAmap('https://surl.amap.com/pud8ZVTr4xd')">
-              <div class="place-emoji">🐟</div>
-              <div class="place-name">밍지카오위</div>
-              <div class="place-sub">파빌리온몰 5F</div>
-              <span class="place-tag tag-food">카오위·생선구이</span>
-            </div>
-            <div class="place-card" onclick="openAmap('https://surl.amap.com/yzEnyB1of8L')">
-              <div class="place-emoji">🌿</div>
-              <div class="place-name">The Green Party</div>
-              <div class="place-sub"></div>
-              <span class="place-tag tag-food">카페·브런치</span>
-            </div>
-            <div class="place-card" onclick="openAmap('https://surl.amap.com/rJjW009H5sN')">
-              <div class="place-emoji">🏰</div>
-              <div class="place-name">더 캐슬 호텔</div>
-              <div class="place-sub">The Castle</div>
-              <span class="place-tag tag-conv">숙소</span>
-            </div>
-            <div class="place-card" onclick="openAmap('https://surl.amap.com/qX5vKHfH4C3')">
-              <div class="place-emoji">🌊</div>
-              <div class="place-name">성해광장</div>
-              <div class="place-sub">星海广场</div>
-              <span class="place-tag tag-sight">아시아최대광장</span>
-            </div>
-            <div class="place-card" onclick="openAmap('https://surl.amap.com/rRncOKJ6dyL')">
-              <div class="place-emoji">🛒</div>
-              <div class="place-name">빅유마트</div>
-              <div class="place-sub">大U超市</div>
-              <span class="place-tag tag-conv">대형마트</span>
-            </div>
-            <div class="place-card" onclick="openAmap('https://surl.amap.com/rNFbnAZ1ycXZ')">
-              <div class="place-emoji">🧋</div>
-              <div class="place-name">CHAGEE</div>
-              <div class="place-sub">霸王茶姬</div>
-              <span class="place-tag tag-food">티카페</span>
-            </div>
-            <div class="place-card" onclick="openAmap('https://surl.amap.com/qfAHpqNG8aR')">
-              <div class="place-emoji">🍲</div>
-              <div class="place-name">하이디라오</div>
-              <div class="place-sub">서안로 야시장 맨위층</div>
-              <span class="place-tag tag-food">훠궈</span>
-            </div>
-            <div class="place-card" onclick="openAmap('https://surl.amap.com/rsHybXj1zdrI')">
-              <div class="place-emoji">☕</div>
-              <div class="place-name">루이싱커피</div>
-              <div class="place-sub">파빌리온 B1</div>
-              <span class="place-tag tag-food">커피</span>
-            </div>
-            <div class="place-card" onclick="openAmap('https://surl.amap.com/pwDFvXr1fcwk')">
-              <div class="place-emoji">🥗</div>
-              <div class="place-name">Ole's Food Hall</div>
-              <div class="place-sub">파빌리온 B1</div>
-              <span class="place-tag tag-food">푸드홀</span>
-            </div>
-          </div>
-        </div>
+        </div><!-- /sub-body -->
       </div>
 
       <div class="phrase-section">🙏 인사</div>
@@ -1792,8 +1751,8 @@ try {
 
 function toggleSub(el) {
   el.classList.toggle('collapsed');
-  var grid = el.nextElementSibling;
-  if (grid) grid.classList.toggle('collapsed');
+  var next = el.nextElementSibling;
+  if (next) next.classList.toggle('collapsed');
 }
 
 
