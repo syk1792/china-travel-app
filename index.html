@@ -1767,6 +1767,7 @@ function showPlace(key) {
   document.getElementById('pl-taxi').textContent = p.taxi;
   document.getElementById('pl-taxi-ko').textContent = p.taxiKo;
   document.getElementById('pl-ov')._amap = p.amap;
+  document.getElementById('pl-ov')._name = p.zh ? p.zh.split('(')[0].trim() : p.name;
   document.getElementById('pl-ov').classList.add('active');
 }
 function closePlaceOv() {
@@ -1778,12 +1779,24 @@ function plTTS() {
 }
 function plMap() {
   var url = document.getElementById('pl-ov')._amap;
-  if (url) openAmap(url);
+  var name = document.getElementById('pl-ov')._name || '';
+  if (!url) return;
+  if (url.indexOf('uri.amap.com/search') !== -1) {
+    openPlace(name, 0, 0);
+  } else {
+    openAmap(url);
+  }
 }
 function plMapDirect(key) {
   event.stopPropagation();
   var p = PLACES[key];
-  if (p) openAmap(p.amap);
+  if (!p) return;
+  if (p.amap.indexOf('uri.amap.com/search') !== -1) {
+    var name = p.zh ? p.zh.split('(')[0].trim() : p.name;
+    openPlace(name, 0, 0);
+  } else {
+    openAmap(p.amap);
+  }
 }
 
 // 고덕 단축 URL 열기
@@ -2147,10 +2160,17 @@ var PLACES = {
 // 대련 핫플 - 고덕지도 연결
 function openPlace(name, lat, lon) {
   var keyword = encodeURIComponent(name);
-  var url = 'https://uri.amap.com/search?keyword=' + keyword + '&city=%E5%A4%A7%E8%BF%9E';
-  var a = document.createElement('a');
-  a.href = url; a.target = '_blank'; a.rel = 'noopener';
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  var city = encodeURIComponent('大连');
+  var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if (isIOS) {
+    window.location.href = 'iosamap://poi?sourceApplication=chinatravel&keywords=' + keyword + '&city=' + city + '&dev=0';
+    setTimeout(function() {
+      window.open('https://m.amap.com/search/?query=' + keyword, '_blank');
+    }, 1200);
+  } else {
+    var fallback = encodeURIComponent('https://m.amap.com/search/?query=' + keyword);
+    window.location.href = 'intent://poi/search?keywords=' + keyword + '&city=' + city + '#Intent;scheme=amapuri;package=com.autonavi.minimap;S.browser_fallback_url=' + fallback + ';end';
+  }
 }
 
 // 앱 실행 - intent:// 방식 (Chrome이 네이티브 처리, JS 타이머 불필요)
