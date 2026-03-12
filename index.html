@@ -308,7 +308,9 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
   background:linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);
 }
 .app-item:active { transform:scale(0.92); }
-.app-icon { font-size:28px; margin-bottom:6px; }
+.app-icon { font-size:28px; margin-bottom:6px; display:flex; align-items:center; justify-content:center; }
+.app-icon img { width:32px; height:32px; border-radius:8px; object-fit:contain; }
+.ai { width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:900; letter-spacing:-0.5px; }
 .app-name { font-size:12px; font-weight:700; line-height:1.3; }
 .app-sub { font-size:9px; color:var(--muted); margin-top:2px; }
 
@@ -829,22 +831,31 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
     <div class="phrase-wrap">
       <div class="app-grid">
         <div class="app-item" onclick="openApp('alipay')" style="border-color:rgba(22,119,255,0.25)">
-          <div class="app-icon">💙</div><div class="app-name" style="color:#1677FF">알리페이</div><div class="app-sub">支付宝</div>
+          <div class="app-icon"><div class="ai" style="background:#1677FF;color:#fff">支付宝</div></div><div class="app-name" style="color:#1677FF">알리페이</div><div class="app-sub">支付宝</div>
         </div>
         <div class="app-item" onclick="openApp('gaode')" style="border-color:rgba(255,99,0,0.25)">
-          <div class="app-icon">🗺️</div><div class="app-name" style="color:#FF6300">고덕지도</div><div class="app-sub">高德地图</div>
+          <div class="app-icon"><div class="ai" style="background:#FF6300;color:#fff">高德</div></div><div class="app-name" style="color:#FF6300">고덕지도</div><div class="app-sub">高德地图</div>
         </div>
         <div class="app-item" onclick="openApp('dianping')" style="border-color:rgba(255,36,66,0.25)">
-          <div class="app-icon">⭐</div><div class="app-name" style="color:var(--red)">따종디엔핑</div><div class="app-sub">大众点评</div>
+          <div class="app-icon"><div class="ai" style="background:#FF2442;color:#fff">点评</div></div><div class="app-name" style="color:var(--red)">따종디엔핑</div><div class="app-sub">大众点评</div>
         </div>
         <div class="app-item" onclick="openApp('gtranslate')" style="border-color:rgba(66,133,244,0.25)">
-          <div class="app-icon">🎙️</div><div class="app-name" style="color:#4285F4">구글 번역</div><div class="app-sub">음성통역</div>
+          <div class="app-icon"><div class="ai" style="background:#4285F4;color:#fff">번역</div></div><div class="app-name" style="color:#4285F4">구글 번역</div><div class="app-sub">음성통역</div>
         </div>
         <div class="app-item" onclick="openApp('glens')" style="border-color:rgba(234,67,53,0.25)">
-          <div class="app-icon">📷</div><div class="app-name" style="color:#EA4335">구글 렌즈</div><div class="app-sub">글자·사물인식</div>
+          <div class="app-icon"><div class="ai" style="background:#EA4335;color:#fff">Lens</div></div><div class="app-name" style="color:#EA4335">구글 렌즈</div><div class="app-sub">글자·사물인식</div>
         </div>
         <div class="app-item" onclick="openApp('papago')" style="border-color:rgba(3,199,90,0.25)">
-          <div class="app-icon">🌐</div><div class="app-name" style="color:#03C75A">파파고</div><div class="app-sub">한글→한자</div>
+          <div class="app-icon"><div class="ai" style="background:#03C75A;color:#fff">Pago</div></div><div class="app-name" style="color:#03C75A">파파고</div><div class="app-sub">한글→한자</div>
+        </div>
+        <div class="app-item" onclick="openApp('naverpay')" style="border-color:rgba(3,199,90,0.25)">
+          <div class="app-icon"><div class="ai" style="background:#03C75A;color:#fff">N Pay</div></div><div class="app-name" style="color:#03C75A">네이버페이</div><div class="app-sub">수수료 없음</div>
+        </div>
+        <div class="app-item" onclick="openApp('kakaopay')" style="border-color:rgba(254,229,0,0.35)">
+          <div class="app-icon"><div class="ai" style="background:#FEE500;color:#3A1D1D">K Pay</div></div><div class="app-name" style="color:#F9E000">카카오페이</div><div class="app-sub">수수료 없음</div>
+        </div>
+        <div class="app-item" onclick="openApp('toss')" style="border-color:rgba(82,110,255,0.3)">
+          <div class="app-icon"><div class="ai" style="background:#526EFF;color:#fff">toss</div></div><div class="app-name" style="color:#526EFF">토스</div><div class="app-sub">수수료 없음</div>
         </div>
       </div>
 
@@ -1173,8 +1184,8 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
       <div class="phrase-cat" id="cat-pay">
         <div class="phrase-card" onclick="showPhrase('我用支付宝付款','Wǒ yòng Zhīfùbǎo fùkuǎn','알리페이로 결제할게요')"><div class="p-zh">我用支付宝付款</div><div class="p-pin">Wǒ yòng Zhīfùbǎo fùkuǎn</div><div class="p-pron">발음: 워 용 즈푸바오 푸콴</div><div class="p-ko">알리페이로 결제할게요</div><div class="phrase-tts" onclick="event.stopPropagation();speakChinese('我用支付宝付款')">🔊</div></div>
         <div class="phrase-card" onclick="showPhrase('我可以用现金付200元，剩下的用支付宝可以吗？','Wǒ kěyǐ yòng xiànjīn fù liǎngbǎi yuán, shèngxià de yòng Zhīfùbǎo kěyǐ ma?','현금 200위안 내고 나머지는 알리페이로 결제해도 될까요?')"><div class="p-zh">我可以用现金付200元，剩下的用支付宝可以吗？</div><div class="p-pin">Wǒ kěyǐ yòng xiànjīn fù liǎngbǎi yuán...</div><div class="p-pron">발음: 워 커이 용 시엔진 푸 량바이 위엔...</div><div class="p-ko">현금 200위안 내고 나머지는 알리페이로 결제해도 될까요?</div><div class="phrase-tts" onclick="event.stopPropagation();speakChinese('我可以用现金付200元，剩下的用支付宝可以吗？')">🔊</div></div>
-        <div class="phrase-card" onclick="showPhrase('我用支付宝付两次，一次100元，可以吗？','Wǒ yòng Zhīfùbǎo fù liǎng cì, yī cì yībǎi yuán, kěyǐ ma?','알리페이로 두 번 결제할게요. 한 번에 100위안씩 괜찮나요?')"><div class="p-zh">我用支付宝付两次，一次100元，可以吗？</div><div class="p-pin">Wǒ yòng Zhīfùbǎo fù liǎng cì...</div><div class="p-pron">발음: 워 용 즈푸바오 푸 량 츠...</div><div class="p-ko">알리페이로 두 번 결제할게요. 한 번에 100위안씩 괜찮나요?</div><div class="phrase-tts" onclick="event.stopPropagation();speakChinese('我用支付宝付两次，一次100元，可以吗？')">🔊</div></div>
-        <div class="phrase-card" onclick="showPhrase('我们各自用支付宝付，每人100元，可以吗？','Wǒmen gèzì yòng Zhīfùbǎo fù, měi rén yībǎi yuán, kěyǐ ma?','저희 각자 알리페이로 결제할게요. 한 사람당 100위안씩 괜찮을까요?')"><div class="p-zh">我们各自用支付宝付，每人100元，可以吗？</div><div class="p-pin">Wǒmen gèzì yòng Zhīfùbǎo fù...</div><div class="p-pron">발음: 워먼 거즈 용 즈푸바오 푸...</div><div class="p-ko">저희 각자 알리페이로 결제할게요. 한 사람당 100위안씩 괜찮을까요?</div><div class="phrase-tts" onclick="event.stopPropagation();speakChinese('我们各自用支付宝付，每人100元，可以吗？')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('我用支付宝付两次，可以吗？','Wǒ yòng Zhīfùbǎo fù liǎng cì, kěyǐ ma?','알리페이로 두 번 결제할게요. 괜찮나요?')"><div class="p-zh">我用支付宝付两次，可以吗？</div><div class="p-pin">Wǒ yòng Zhīfùbǎo fù liǎng cì, kěyǐ ma?</div><div class="p-pron">발음: 워 용 즈푸바오 푸 량 츠, 커이 마?</div><div class="p-ko">알리페이로 두 번 결제할게요. 괜찮나요?</div><div class="phrase-tts" onclick="event.stopPropagation();speakChinese('我用支付宝付两次，可以吗？')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('我们各自用支付宝付，可以吗？','Wǒmen gèzì yòng Zhīfùbǎo fù, kěyǐ ma?','저희 각자 알리페이로 결제할게요. 괜찮을까요?')"><div class="p-zh">我们各自用支付宝付，可以吗？</div><div class="p-pin">Wǒmen gèzì yòng Zhīfùbǎo fù, kěyǐ ma?</div><div class="p-pron">발음: 워먼 거즈 용 즈푸바오 푸, 커이 마?</div><div class="p-ko">저희 각자 알리페이로 결제할게요. 괜찮을까요?</div><div class="phrase-tts" onclick="event.stopPropagation();speakChinese('我们各自用支付宝付，可以吗？')">🔊</div></div>
         <div class="phrase-card" onclick="showPhrase('可以扫码吗？','Kěyǐ sāo mǎ ma?','QR코드로 결제 가능한가요?')"><div class="p-zh">可以扫码吗？</div><div class="p-pin">Kěyǐ sāo mǎ ma?</div><div class="p-pron">발음: 커이 싸오 마 마?</div><div class="p-ko">QR코드로 결제 가능한가요?</div><div class="phrase-tts" onclick="event.stopPropagation();speakChinese('可以扫码吗？')">🔊</div></div>
         <div class="phrase-card" onclick="showPhrase('能开发票吗？','Néng kāi fāpiào ma?','영수증 발급 가능한가요?')"><div class="p-zh">能开发票吗？</div><div class="p-pin">Néng kāi fāpiào ma?</div><div class="p-pron">발음: 넝 카이 파피아오 마?</div><div class="p-ko">영수증 발급 가능한가요?</div><div class="phrase-tts" onclick="event.stopPropagation();speakChinese('能开发票吗？')">🔊</div></div>
       </div>
@@ -2201,7 +2212,10 @@ function openApp(name) {
     dianping:   { pkg:'com.dianping.v1',                       host:'dianping',      scheme:'dianping',        iosUrl:'https://apps.apple.com/app/id351091731' },
     gtranslate: { pkg:'com.google.android.apps.translate',     host:'translate',     scheme:'googletranslate', iosUrl:'https://apps.apple.com/app/id414706506' },
     glens:      { pkg:'com.google.ar.lens',                    host:'lens',          scheme:'googlelens',      iosUrl:'https://apps.apple.com/app/id284815942' },
-    papago:     { pkg:'com.naver.labs.translator',             host:'papago',        scheme:'naversearchapp',  iosUrl:'https://apps.apple.com/app/id1225370913' }
+    papago:     { pkg:'com.naver.labs.translator',             host:'papago',        scheme:'naversearchapp',  iosUrl:'https://apps.apple.com/app/id1225370913' },
+    naverpay:   { pkg:'com.nhn.android.naverpay',             host:'naverpay',      scheme:'naverpay',        iosUrl:'https://apps.apple.com/app/id1312608290' },
+    kakaopay:   { pkg:'com.kakaopay.app',                     host:'kakaopay',      scheme:'kakaopay',        iosUrl:'https://apps.apple.com/app/id1464496236' },
+    toss:       { pkg:'viva.republica.toss',                  host:'toss',          scheme:'supertoss',       iosUrl:'https://apps.apple.com/app/id839333328' }
   };
 
   var info = apps[name];
@@ -2276,7 +2290,8 @@ const CL_DATA = [
   ]},
   { cat:"💳 결제 준비", color:"#FFB800", items:[
     {id:"cl06",text:"알리페이 설치 + 여권 인증 + 카드 등록",tip:"출국 3~5일 전 미리! 트래블로그/트래블월렛 카드 추천"},
-    {id:"cl07",text:"카카오페이·네이버페이 해외결제 확인",tip:"알리페이+ 연동으로 중국에서 바로 사용 가능!"},
+    {id:"cl07",text:"네이버페이 앱 설치 + 머니 충전",tip:"200위안 초과 결제도 수수료 없음! 알리페이+ 가맹점에서 사용 가능"},
+    {id:"cl07b",text:"네이버페이·카카오페이 해외결제 활성화",tip:"앱 설정에서 해외결제 활성화 필수! 미리 안 하면 현지에서 결제 안 됨"},
     {id:"cl08",text:"위챗페이 등록 (선택 권장)",tip:"로컬 식당·시장은 위챗페이만 받는 곳 많음"},
     {id:"cl09",text:"위안화 현금 소액 준비",tip:"10·20위안 소액권 위주. 100위안 고액권은 위조 의심"},
     {id:"cl10",text:"신용카드 해외결제 차단 해제",tip:"출국 전 카드사에 전화하여 해제 요청"},
