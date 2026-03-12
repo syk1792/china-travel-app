@@ -2225,17 +2225,11 @@ function openApp(name) {
     // scheme:// 직접 호출 → 앱 설치 시 바로 열림, 미설치 시 무반응
     var schemeMap = {
       alipay:   'alipays://',
-      kakaopay: 'kakaopay://',
+      kakaopay: 'kakaopay://pay',
       toss:     'supertoss://'
-    };
-    var intentMap = {
-      naverpay: 'com.naverfin.payapp'
     };
     if (schemeMap[name]) {
       window.location.href = schemeMap[name];
-    } else if (intentMap[name]) {
-      // intent package 방식 - 앱 설치 시 직접 실행
-      window.location.href = 'intent://#Intent;package=' + intentMap[name] + ';end';
     } else {
       // 나머지(지도·번역류): 플레이스토어
       window.location.href = 'https://play.google.com/store/apps/details?id=' + info.pkg;
