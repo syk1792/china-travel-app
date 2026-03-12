@@ -1829,7 +1829,13 @@ function plMapDirect(key) {
 
 // 고덕 단축 URL 열기
 function openAmap(url) {
-  window.open(url, '_blank');
+  var a = document.createElement('a');
+  a.href = url;
+  a.target = '_blank';
+  a.rel = 'noopener';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 }
 
 // Day 탭 전환
