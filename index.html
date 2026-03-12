@@ -2222,11 +2222,17 @@ function openApp(name) {
   if (!info) return;
 
   if (isAndroid) {
-    if (name === 'alipay') {
-      // 알리페이: alipays:// scheme이 앱에 등록돼 있어 직접 열림
-      window.location.href = 'alipays://';
+    // scheme:// 직접 호출 → 앱 설치 시 바로 열림, 미설치 시 무반응
+    var schemeMap = {
+      alipay:   'alipays://',
+      naverpay: 'naverpay://',
+      kakaopay: 'kakaopay://',
+      toss:     'supertoss://'
+    };
+    if (schemeMap[name]) {
+      window.location.href = schemeMap[name];
     } else {
-      // 나머지: 플레이스토어로 이동
+      // 나머지(지도·번역류): 플레이스토어
       window.location.href = 'https://play.google.com/store/apps/details?id=' + info.pkg;
     }
   } else if (isIOS) {
