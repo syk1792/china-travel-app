@@ -1205,6 +1205,7 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
         <div class="phrase-card" onclick="showPhrase('听不懂','Tīng bù dǒng','못 알아듣겠어요')"><div class="p-zh">听不懂</div><div class="p-pin">Tīng bù dǒng</div><div class="p-pron">발음: 팅 뿌 동</div><div class="p-ko">못 알아듣겠어요</div><div class="phrase-tts" onclick="event.stopPropagation();speakChinese('听不懂')">🔊</div></div>
         <div class="phrase-card" onclick="showPhrase('请帮我叫出租车','Qǐng bāng wǒ jiào chūzū chē','택시 불러주세요')"><div class="p-zh">请帮我叫出租车</div><div class="p-pin">Qǐng bāng wǒ jiào chūzū chē</div><div class="p-pron">발음: 칭 방 워 지아오 추주 처</div><div class="p-ko">택시 불러주세요</div><div class="phrase-tts" onclick="event.stopPropagation();speakChinese('请帮我叫出租车')">🔊</div></div>
         <div class="phrase-card" onclick="showPhrase('怎么走？','Zěnme zǒu?','어떻게 가요?')"><div class="p-zh">怎么走？</div><div class="p-pin">Zěnme zǒu?</div><div class="p-pron">발음: 전머 저우?</div><div class="p-ko">어떻게 가요?</div><div class="phrase-tts" onclick="event.stopPropagation();speakChinese('怎么走？')">🔊</div></div>
+        <div class="phrase-card" onclick="showPhrase('请送我去机场','Qǐng sòng wǒ qù jīchǎng','공항까지 가주세요')"><div class="p-zh">请送我去机场</div><div class="p-pin">Qǐng sòng wǒ qù jīchǎng</div><div class="p-pron">발음: 칭 쏭 워 취 지창</div><div class="p-ko">공항까지 가주세요</div><div class="phrase-tts" onclick="event.stopPropagation();speakChinese('请送我去机场')">🔊</div></div>
       </div>
 
       <div class="phrase-section" style="color:#FF2442;background:rgba(255,36,66,0.12)">🚨 긴급 전화번호</div>
@@ -1416,9 +1417,7 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
       <div style="font-size:13px;color:var(--muted)">잠시 후 설치 안내로 이동합니다</div>
       <div id="ad-countdown" style="background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-family:'DM Mono',monospace;font-size:13px;color:var(--gold)">5초</div>
     </div>
-    <div style="background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;min-height:280px;display:flex;align-items:center;justify-content:center">
-      <div style="text-align:center;color:var(--muted);padding:40px 20px"><div style="font-size:40px;margin-bottom:12px">📢</div><div style="font-size:12px;letter-spacing:1px">광고 영역</div></div>
-    </div>
+    <div id="cp-ad-area" style="border-radius:20px;overflow:hidden"></div>
     <div id="ad-skip-btn" onclick="showInstallGuide()" style="width:100%;height:52px;background:var(--card2);border:1px solid var(--border);border-radius:16px;color:var(--muted);font-size:14px;font-weight:700;cursor:not-allowed;display:flex;align-items:center;justify-content:center;margin-top:12px">설치 안내 보기 (5초)</div>
   </div>
 </div>
@@ -1658,7 +1657,28 @@ window.addEventListener('beforeinstallprompt', function(e) {
   e.preventDefault(); deferredPrompt = e;
   if(location.search.includes('install=1')) { setTimeout(function(){e.prompt();e.userChoice.then(function(){deferredPrompt=null;});},800); }
 });
+var cpProducts=[
+  {name:'해외여행 멀티어댑터',desc:'중국 포함 전세계 호환 · 여행 필수템',icon:'🔌',q:'해외여행 멀티어댑터'},
+  {name:'여행용 보조배터리',desc:'기내반입 가능 / 대용량 추천',icon:'🔋',q:'여행용 보조배터리 기내반입'},
+  {name:'여행 상비약 세트',desc:'소화제·지사제·해열제 한 번에',icon:'💊',q:'여행 상비약 세트'},
+  {name:'여행용 넥파우치',desc:'여권·현금 분실 방지 필수',icon:'👜',q:'여행용 넥파우치 여권'},
+  {name:'여행용 크로스백',desc:'기내 반입 / 가벼운 여행가방',icon:'🎒',q:'여행용 크로스백 기내반입'},
+];
+function cpUrl(q){return 'https://www.coupang.com/np/search?q='+encodeURIComponent(q)+'&affiliate=AF9861451&subId=china-travel';}
+function renderCpAd(){
+  var p=cpProducts[Math.floor(Math.random()*cpProducts.length)];
+  var el=document.getElementById('cp-ad-area');
+  if(!el)return;
+  el.innerHTML='<a href="'+cpUrl(p.q)+'" target="_blank" rel="noopener sponsored" style="display:block;background:linear-gradient(135deg,#e8290b,#b01f08);padding:28px 20px;text-align:center;text-decoration:none">'
+    +'<div style="font-size:44px;margin-bottom:10px">'+p.icon+'</div>'
+    +'<div style="font-size:18px;font-weight:900;color:white;margin-bottom:6px">'+p.name+'</div>'
+    +'<div style="font-size:13px;color:rgba(255,255,255,0.75);margin-bottom:16px">'+p.desc+'</div>'
+    +'<div style="background:rgba(0,0,0,0.25);border-radius:10px;padding:9px 18px;display:inline-block;font-size:13px;color:white;font-weight:700">🛒 쿠팡 최저가 보기</div>'
+    +'</a>'
+    +'<div style="background:#111;padding:8px 12px;text-align:center"><span style="font-size:10px;color:rgba(255,255,255,0.3)">이 포스팅은 쿠팡 파트너스 활동의 일환으로 수수료를 제공받습니다</span></div>';
+}
 function addToHome() {
+  renderCpAd();
   const ov=document.getElementById('interstitial-ov'); ov.style.display='flex';
   try{history.pushState({app:true},'');}catch(e){}
   let sec=5;
@@ -2083,7 +2103,7 @@ var PLACES = {
     desc:'아시아 최대 규모의 도시 광장(110만㎡). 바다 뷰와 야경이 아름다워 저녁 산책 명소.',
     taxi:'师傅，请去星海广场。',
     taxiKo:'기사님, 성해광장으로 가주세요.',
-    amap:'https://uri.amap.com/marker?position=121.5828,38.8811&name=星海广场'
+    amap:'https://uri.amap.com/search?keyword=No.572+Zhongshan+Road+Shahekou+District+Dalian&city=大连'
   },
   laohu: {
     emoji:'🐬', name:'노호탄 해양공원', zh:'老虎滩海洋公园',
@@ -2091,7 +2111,7 @@ var PLACES = {
     desc:'중국 최대 규모의 5A급 해양테마파크. 극지관·산호관·해수관이 있으며 돌고래·백고래 공연으로 유명.',
     taxi:'师傅，请去老虎滩海洋公园。',
     taxiKo:'기사님, 노호탄 해양공원으로 가주세요.',
-    amap:'https://uri.amap.com/marker?position=121.6486,38.8697&name=老虎滩海洋公园'
+    amap:'https://uri.amap.com/search?keyword=No.9+Binhai+Middle+Road+Zhongshan+District+Dalian&city=大连'
   },
   jinshitan: {
     emoji:'🏖️', name:'진스탄 해변', zh:'金石滩',
@@ -2249,7 +2269,7 @@ function openApp(name) {
 
 let phrPriceIn='0';
 const PRICE_PHRASES=['多少钱？','太贵了！','便宜一点','我要这个'];
-const PRON_MAP={"多少钱？":"뚜어샤오 치엔?","太贵了！":"타이 꾸에이 러!","便宜一点":"피엔이 이디엔","我要这个":"워 야오 쩌거","不要":"뿌 야오","菜单":"차이단","好吃！":"하오 츠!","买单":"마이 단","辣的":"라 더","去这里":"취 쩌리","谢谢":"씨에씨에","听不懂":"팅 뿌 동","你好":"니 하오","对不起":"뚜이부치","请帮我叫出租车":"칭 방 워 지아오 추주 처","怎么走？":"전머 저우?","我不能吃猪肉":"워 뿌 넝 츠 주로우","我对坚果过敏":"워 뚜이 지엔궈 궈민","不要放辣椒":"뿌야오 팡 라지아오","我是素食者":"워 스 쑤스 저","我来办理入住":"워 라이 반리 루주","WiFi密码是多少？":"와이파이 미마 스 뚜어샤오?","空调坏了":"쿵티아오 화이 러","我要退房":"워 야오 투이팡","我肚子疼":"워 두쯔 텅","我发烧了":"워 파샤오 러","请给我退烧药":"칭 게이 워 투이샤오야오","最近的医院在哪里？":"쭈이진 더 이위엔 짜이 나리?"};
+const PRON_MAP={"多少钱？":"뚜어샤오 치엔?","太贵了！":"타이 꾸에이 러!","便宜一点":"피엔이 이디엔","我要这个":"워 야오 쩌거","不要":"뿌 야오","菜单":"차이단","好吃！":"하오 츠!","买单":"마이 단","辣的":"라 더","去这里":"취 쩌리","谢谢":"씨에씨에","听不懂":"팅 뿌 동","你好":"니 하오","对不起":"뚜이부치","请帮我叫出租车":"칭 방 워 지아오 추주 처","怎么走？":"전머 저우?","请送我去机场":"칭 쏭 워 취 지창","我不能吃猪肉":"워 뿌 넝 츠 주로우","我对坚果过敏":"워 뚜이 지엔궈 궈민","不要放辣椒":"뿌야오 팡 라지아오","我是素食者":"워 스 쑤스 저","我来办理入住":"워 라이 반리 루주","WiFi密码是多少？":"와이파이 미마 스 뚜어샤오?","空调坏了":"쿵티아오 화이 러","我要退房":"워 야오 투이팡","我肚子疼":"워 두쯔 텅","我发烧了":"워 파샤오 러","请给我退烧药":"칭 게이 워 투이샤오야오","最近的医院在哪里？":"쭈이진 더 이위엔 짜이 나리?"};
 function showPhrase(zh,pin,ko) {
   document.getElementById('phr-zh').textContent=zh;
   // phr-pin removed
@@ -2290,8 +2310,11 @@ const CL_DATA = [
     {id:"cl02",text:"비자 불필요 확인 (무비자 30일)",tip:"2026년 12월 31일까지. 취업·취재·유학은 비자 필요!"},
     {id:"cl03",text:"여권 사진·사본 별도 보관",tip:"분실 대비 — 갤러리 또는 클라우드에 저장"},
     {id:"cl04",text:"항공권·호텔 예약확인서 스크린샷 저장",tip:"인터넷 없어도 갤러리에서 볼 수 있게"},
-    {id:"cl05",text:"여행자 보험 가입",tip:"의료비·응급후송 포함 상품 추천"},
-    {id:"cl05b",text:"전자 입국신고서(Arrival Card) 작성 + QR코드 저장",tip:"2025년 11월 20일부터 의무! 출국 1주일 전 미리 작성. 인터넷 없어도 QR코드 갤러리에 저장해두기",hasArrivalLink:true},
+    {id:"cl04b",text:"온라인 체크인 + 좌석 선택",tip:"출발 24~48시간 전부터 가능 (항공사마다 다름). 미리 하면 창가·복도 원하는 자리 선택 가능! 탑승권은 갤러리에 저장해두기"},
+    {id:"cl05",text:"여행자 보험 가입",tip:"의료비·응급후송 포함 상품 추천. 현지 병원비 매우 비쌀 수 있음"},
+    {id:"cl05c",text:"비상연락처 저장",tip:"한국 대사관 심양총영사관 +86-24-2385-3380 / 긴급 +86-24-2386-1188 · 경찰 110 · 구급 120"},
+    {id:"cl05d",text:"인천공항 장기주차 사전 예약",tip:"미예약 시 만차 가능! 출발 전 airport.kr에서 예약", hasAirportLink:true},
+    {id:"cl05b",text:"전자 입국신고서(Arrival Card) 작성 + QR코드 스크린샷 저장",tip:"✈️ 작성방법 두 가지\n① 알리페이 → 검색창 → 12367 → '移民局12367' 애플릿 선택\n② 아래 웹사이트 바로가기\n\n⚠️ 작성 완료 후 QR코드 반드시 스크린샷 저장! 입국심사장에서 데이터 불안정할 수 있음",hasArrivalLink:true},
   ]},
   { cat:"💳 결제 준비", color:"#FFB800", items:[
     {id:"cl06",text:"알리페이 설치 + 여권 인증 + 카드 등록",tip:"출국 3~5일 전 미리! 트래블로그/트래블월렛 카드 추천"},
@@ -2303,6 +2326,8 @@ const CL_DATA = [
   ]},
   { cat:"📱 인터넷·앱", color:"#03C75A", items:[
     {id:"cl11",text:"중국 전용 이심/유심 미리 구매",tip:"홍콩 경유 방식 → 구글·카카오·유튜브 다 됨. 현지 유심은 차단 안 풀림 ⚠️"},
+    {id:"cl11b",text:"이심 개통 및 APN 설정 확인",tip:"구매 후 개통 안 하면 현지에서 데이터 불가! QR코드 설치 or APN 수동 설정 미리 완료"},
+    {id:"cl11c",text:"통신사 로밍 자동연결 끄기",tip:"이심 쓸 경우 통신사 로밍이 자동 연결되면 요금 폭탄! 설정 → 모바일 네트워크 → 로밍 OFF"},
     {id:"cl12",text:"고덕지도 앱 미리 설치",tip:"중국에서 구글 플레이스토어 차단! 한국에서 미리 설치"},
     {id:"cl13",text:"파파고 앱 미리 설치",tip:"중국에서 VPN 없이도 사용 가능한 번역 앱"},
     {id:"cl14",text:"이 앱 홈화면에 추가",tip:"홈화면에 추가하면 앱처럼 바로 실행 가능!"},
@@ -2320,7 +2345,10 @@ const CL_DATA = [
     {id:"cl22",text:"보조배터리 확인 (기내 반입용)",tip:"위탁 수하물 금지! 기내 반입만 가능. 용량 제한 확인"},
   ]},
   { cat:"💊 건강·위생", color:"#FF2442", items:[
-    {id:"cl23",text:"상비약 챙기기",tip:"소화제·지사제·해열제·두통약. 현지 약은 이름이 달라 찾기 어려워요"},
+    {id:"cl23a",text:"소화제·지사제 챙기기",tip:"중국 음식은 기름지고 향신료 강함. 정로환·훼스탈·스멕타 추천"},
+    {id:"cl23b",text:"해열제·두통약 챙기기",tip:"타이레놀·이부프로펜. 현지 약은 이름 달라 찾기 어려워요"},
+    {id:"cl23c",text:"감기약·코막힘약 챙기기",tip:"밤낮 기온차 크고 냉방 강한 실내 많음"},
+    {id:"cl23d",text:"밴드·소독약 챙기기",tip:"편의점에서 못 구할 수도 있어요"},
     {id:"cl24",text:"수돗물 마시지 않기 (생수 구매 예정)",tip:"중국 수돗물은 절대 음용 금지"},
     {id:"cl25",text:"마스크 챙기기",tip:"미세먼지 심한 날 있음"},
     {id:"cl26",text:"처방약 있으면 영문 소견서 지참",tip:"처방약을 장기간 지참 시 영문 의사 소견서 필요"},
@@ -2368,6 +2396,10 @@ function buildChecklist() {
       if(item.hasArrivalLink) {
         html += '<a href="https://s.nia.gov.cn/ArrivalCardFillingPC/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:7px 14px;background:rgba(22,119,255,0.10);border:1px solid rgba(22,119,255,0.28);border-radius:20px;cursor:pointer;text-decoration:none">';
         html += '<span style="font-size:14px">✈️</span><span style="font-size:12px;font-weight:700;color:#4da6ff">입국신고서 작성 바로가기</span></a>';
+      }
+      if(item.hasAirportLink) {
+        html += '<a href="https://www.airport.kr/ap/ko/prkng/longTermPrkngResve/index.do" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:7px 14px;background:rgba(74,144,217,0.10);border:1px solid rgba(74,144,217,0.28);border-radius:20px;cursor:pointer;text-decoration:none">';
+        html += '<span style="font-size:14px">🅿️</span><span style="font-size:12px;font-weight:700;color:#4A90D9">장기주차 예약 바로가기</span></a>';
       }
       html += '</div>';
       html += '</div>';
