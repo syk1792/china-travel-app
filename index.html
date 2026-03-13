@@ -1805,17 +1805,41 @@ function showPlace(key) {
   document.getElementById('pl-name').textContent = p.name;
   document.getElementById('pl-zh').textContent = p.zh;
   document.getElementById('pl-desc').textContent = p.desc;
-  document.getElementById('pl-taxi').textContent = p.taxi;
+  var taxiHtml = p.taxi;
+  if(p.zh) {
+    var dest = p.zh.split('(')[0].trim();
+    taxiHtml = p.taxi.replace(dest,
+      '<span onclick="copyDest(this)" style="color:#FFB800;font-weight:900;border-bottom:2px solid #FFB800;padding-bottom:1px;cursor:pointer" title="탭하면 복사">'+dest+'</span>');
+  }
+  document.getElementById('pl-taxi').innerHTML = taxiHtml;
   document.getElementById('pl-taxi-ko').textContent = p.taxiKo;
   document.getElementById('pl-ov')._amap = p.amap;
   document.getElementById('pl-ov')._name = p.zh ? p.zh.split('(')[0].trim() : p.name;
   document.getElementById('pl-ov').classList.add('active');
 }
+function copyDest(el) {
+  var txt = el.textContent;
+  if(navigator.clipboard) {
+    navigator.clipboard.writeText(txt).then(function(){
+      var orig = el.style.color;
+      el.textContent = '복사됨 ✓';
+      el.style.color = '#03C75A';
+      setTimeout(function(){ el.textContent = txt; el.style.color = '#FFB800'; }, 1500);
+    });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = txt; document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    var orig = el.textContent;
+    el.textContent = '복사됨 ✓'; el.style.color='#03C75A';
+    setTimeout(function(){ el.textContent = txt; el.style.color='#FFB800'; },1500);
+  }
+}
 function closePlaceOv() {
   document.getElementById('pl-ov').classList.remove('active');
 }
 function plTTS() {
-  var taxi = document.getElementById('pl-taxi').textContent;
+  var taxi = document.getElementById('pl-taxi').innerText;
   speakChinese(taxi);
 }
 function plMap() {
