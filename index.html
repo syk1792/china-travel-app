@@ -877,61 +877,41 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
 
           <div class="dalian-sub collapsed" onclick="toggleSub(this)" style="margin-top:8px">🏛️ 관광지</div>
           <div class="place-grid sub-body collapsed" style="margin-bottom:10px">
-          <div class="place-card" onclick="showPlace('xinghai_hot')" ontouchstart="loadWikiImg('xinghai_hot')" onmouseenter="loadWikiImg('xinghai_hot')" style="padding:0;overflow:hidden">
-            <div class="place-thumb-wrap" id="pwrap-xinghai_hot" style="position:relative">
-              <div class="place-map-btn" onclick="event.stopPropagation();plMapDirect('xinghai_hot')" style="position:absolute;top:6px;right:6px;z-index:2">🗺️</div>
-            </div>
-            <div style="padding:8px 12px 10px">
+          <div class="place-card" onclick="showPlace('xinghai_hot')">
+            <div class="place-map-btn" onclick="event.stopPropagation();plMapDirect('xinghai_hot')">🗺️</div>
             <div class="place-emoji">🌊</div>
             <div class="place-name">싱하이광장</div>
             <div class="place-sub">星海广场</div>
             <span class="place-tag tag-sight">아시아 최대광장</span>
           </div>
-            </div>
-          <div class="place-card" onclick="showPlace('laohu')" ontouchstart="loadWikiImg('laohu')" onmouseenter="loadWikiImg('laohu')" style="padding:0;overflow:hidden">
-            <div class="place-thumb-wrap" id="pwrap-laohu" style="position:relative">
-              <div class="place-map-btn" onclick="event.stopPropagation();plMapDirect('laohu')" style="position:absolute;top:6px;right:6px;z-index:2">🗺️</div>
-            </div>
-            <div style="padding:8px 12px 10px">
+          <div class="place-card" onclick="showPlace('laohu')">
+            <div class="place-map-btn" onclick="event.stopPropagation();plMapDirect('laohu')">🗺️</div>
             <div class="place-emoji">🐬</div>
             <div class="place-name">노호탄 해양공원</div>
             <div class="place-sub">老虎滩海洋公园</div>
             <span class="place-tag tag-sight">5A 해양테마파크</span>
           </div>
-            </div>
-          <div class="place-card" onclick="showPlace('jinshitan')" ontouchstart="loadWikiImg('jinshitan')" onmouseenter="loadWikiImg('jinshitan')" style="padding:0;overflow:hidden">
-            <div class="place-thumb-wrap" id="pwrap-jinshitan" style="position:relative">
-              <div class="place-map-btn" onclick="event.stopPropagation();plMapDirect('jinshitan')" style="position:absolute;top:6px;right:6px;z-index:2">🗺️</div>
-            </div>
-            <div style="padding:8px 12px 10px">
+          <div class="place-card" onclick="showPlace('jinshitan')">
+            <div class="place-map-btn" onclick="event.stopPropagation();plMapDirect('jinshitan')">🗺️</div>
             <div class="place-emoji">🏖️</div>
             <div class="place-name">진스탄 해변</div>
             <div class="place-sub">金石滩</div>
             <span class="place-tag tag-sight">황금 해안선</span>
           </div>
-            </div>
-          <div class="place-card" onclick="showPlace('bangchui')" ontouchstart="loadWikiImg('bangchui')" onmouseenter="loadWikiImg('bangchui')" style="padding:0;overflow:hidden">
-            <div class="place-thumb-wrap" id="pwrap-bangchui" style="position:relative">
-              <div class="place-map-btn" onclick="event.stopPropagation();plMapDirect('bangchui')" style="position:absolute;top:6px;right:6px;z-index:2">🗺️</div>
-            </div>
-            <div style="padding:8px 12px 10px">
+          <div class="place-card" onclick="showPlace('bangchui')">
+            <div class="place-map-btn" onclick="event.stopPropagation();plMapDirect('bangchui')">🗺️</div>
             <div class="place-emoji">🏝️</div>
             <div class="place-name">방추이다오</div>
             <div class="place-sub">棒棰岛</div>
             <span class="place-tag tag-sight">웨딩사진 명소</span>
           </div>
-            </div>
-          <div class="place-card" onclick="showPlace('russia_st')" ontouchstart="loadWikiImg('russia_st')" onmouseenter="loadWikiImg('russia_st')" style="padding:0;overflow:hidden">
-            <div class="place-thumb-wrap" id="pwrap-russia_st" style="position:relative">
-              <div class="place-map-btn" onclick="event.stopPropagation();plMapDirect('russia_st')" style="position:absolute;top:6px;right:6px;z-index:2">🗺️</div>
-            </div>
-            <div style="padding:8px 12px 10px">
+          <div class="place-card" onclick="showPlace('russia_st')">
+            <div class="place-map-btn" onclick="event.stopPropagation();plMapDirect('russia_st')">🗺️</div>
             <div class="place-emoji">🏰</div>
             <div class="place-name">러시아풍정가</div>
             <div class="place-sub">俄罗斯风情街</div>
             <span class="place-tag tag-sight">이국적 건축거리</span>
           </div>
-            </div>
           <div class="place-card" onclick="showPlace('zhongshan_sq')">
             <div class="place-map-btn" onclick="plMapDirect('zhongshan_sq')">🗺️</div>
             <div class="place-emoji">🏛️</div>
@@ -1394,6 +1374,9 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
     <div class="ov-back" ontouchstart="event.preventDefault();closePlaceOv()" onclick="closePlaceOv()">← 뒤로</div>
   </div>
   <div class="place-ov-body">
+    <div id="pl-img-wrap" style="width:100%;height:200px;background:var(--card2);border-radius:12px;overflow:hidden;margin-bottom:12px;display:none">
+      <img id="pl-img" src="" alt="" style="width:100%;height:100%;object-fit:cover">
+    </div>
     <div class="place-ov-emoji" id="pl-emoji">📍</div>
     <div class="place-ov-name" id="pl-name"></div>
     <div class="place-ov-zh" id="pl-zh"></div>
@@ -1852,6 +1835,18 @@ function showPlace(key) {
   var p = PLACES[key];
   if (!p) return;
   if(p.wikiTitle) loadWikiImg(key, p.wikiTitle);
+  // 오버레이 이미지
+  var plImg = document.getElementById('pl-img');
+  var plImgWrap = document.getElementById('pl-img-wrap');
+  if(p.img) {
+    plImg.src = p.img;
+    plImgWrap.style.display = 'block';
+    document.getElementById('pl-emoji').style.display = 'none';
+  } else {
+    plImgWrap.style.display = 'none';
+    plImg.src = '';
+    document.getElementById('pl-emoji').style.display = '';
+  }
   document.getElementById('pl-emoji').textContent = p.emoji;
   document.getElementById('pl-name').textContent = p.name;
   document.getElementById('pl-zh').textContent = p.zh;
@@ -2181,7 +2176,7 @@ var PLACES = {
     amap:'https://uri.amap.com/search?keyword=No.572+Zhongshan+Road+Shahekou+District+Dalian&city=大连'
   },
   laohu: {
-    emoji:'🐬', name:'노호탄 해양공원', zh:'老虎滩海洋公园', wikiTitle:'Laohutan Ocean Park', img:'https://gbaike-image.cdn.bcebos.com/b58f8c5494eef01f9ca0ccd6eefe9925bc317d69/b58f8c5494eef01f9ca0ccd6eefe9925bc317d69_url?x-bce-process=image/format,f_auto/watermark,image_d2F0ZXJtYXJrL3dhdGVybWFyaw,t_60,g_7,xp_5,yp_2,P_20',
+    emoji:'🐬', name:'노호탄 해양공원', zh:'老虎滩海洋公园', wikiTitle:'Laohutan Ocean Park', img:'https://raw.githubusercontent.com/syk1792/china-travel-app/main/images/Dalian%20Laohutan%20Ocean%20Park.webp',
     tag:'5A 해양테마파크', tagClass:'tag-sight',
     desc:'중국 최대 규모의 5A급 해양테마파크. 극지관·산호관·해수관이 있으며 돌고래·백고래 공연으로 유명.',
     taxi:'师傅，请去老虎滩海洋公园。',
