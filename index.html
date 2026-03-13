@@ -395,6 +395,17 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
 }
 .place-card:active { transform:scale(0.95); background:var(--card3); border-color:var(--border2); }
 .place-emoji { font-size:18px; line-height:1; }
+.place-thumb {
+  width:100%; height:80px; object-fit:cover;
+  border-radius:8px; margin-bottom:4px;
+  background:var(--card3);
+}
+.place-thumb-wrap {
+  width:100%; height:80px; border-radius:8px;
+  overflow:hidden; margin-bottom:4px;
+  background:var(--card3); display:flex;
+  align-items:center; justify-content:center;
+}
 .place-name { font-size:13px; font-weight:700; color:var(--text); line-height:1.3; }
 .place-sub { font-size:11px; color:var(--muted); }
 .place-tag {
@@ -866,41 +877,61 @@ html, body { height:100%; background:var(--bg); color:var(--text); font-family:'
 
           <div class="dalian-sub collapsed" onclick="toggleSub(this)" style="margin-top:8px">🏛️ 관광지</div>
           <div class="place-grid sub-body collapsed" style="margin-bottom:10px">
-          <div class="place-card" onclick="showPlace('xinghai_hot')">
-            <div class="place-map-btn" onclick="plMapDirect('xinghai_hot')">🗺️</div>
+          <div class="place-card" onclick="showPlace('xinghai_hot')" ontouchstart="loadWikiImg('xinghai_hot')" onmouseenter="loadWikiImg('xinghai_hot')" style="padding:0;overflow:hidden">
+            <div class="place-thumb-wrap" id="pwrap-xinghai_hot" style="position:relative">
+              <div class="place-map-btn" onclick="event.stopPropagation();plMapDirect('xinghai_hot')" style="position:absolute;top:6px;right:6px;z-index:2">🗺️</div>
+            </div>
+            <div style="padding:8px 12px 10px">
             <div class="place-emoji">🌊</div>
             <div class="place-name">싱하이광장</div>
             <div class="place-sub">星海广场</div>
             <span class="place-tag tag-sight">아시아 최대광장</span>
           </div>
-          <div class="place-card" onclick="showPlace('laohu')">
-            <div class="place-map-btn" onclick="plMapDirect('laohu')">🗺️</div>
+            </div>
+          <div class="place-card" onclick="showPlace('laohu')" ontouchstart="loadWikiImg('laohu')" onmouseenter="loadWikiImg('laohu')" style="padding:0;overflow:hidden">
+            <div class="place-thumb-wrap" id="pwrap-laohu" style="position:relative">
+              <div class="place-map-btn" onclick="event.stopPropagation();plMapDirect('laohu')" style="position:absolute;top:6px;right:6px;z-index:2">🗺️</div>
+            </div>
+            <div style="padding:8px 12px 10px">
             <div class="place-emoji">🐬</div>
             <div class="place-name">노호탄 해양공원</div>
             <div class="place-sub">老虎滩海洋公园</div>
             <span class="place-tag tag-sight">5A 해양테마파크</span>
           </div>
-          <div class="place-card" onclick="showPlace('jinshitan')">
-            <div class="place-map-btn" onclick="plMapDirect('jinshitan')">🗺️</div>
+            </div>
+          <div class="place-card" onclick="showPlace('jinshitan')" ontouchstart="loadWikiImg('jinshitan')" onmouseenter="loadWikiImg('jinshitan')" style="padding:0;overflow:hidden">
+            <div class="place-thumb-wrap" id="pwrap-jinshitan" style="position:relative">
+              <div class="place-map-btn" onclick="event.stopPropagation();plMapDirect('jinshitan')" style="position:absolute;top:6px;right:6px;z-index:2">🗺️</div>
+            </div>
+            <div style="padding:8px 12px 10px">
             <div class="place-emoji">🏖️</div>
             <div class="place-name">진스탄 해변</div>
             <div class="place-sub">金石滩</div>
             <span class="place-tag tag-sight">황금 해안선</span>
           </div>
-          <div class="place-card" onclick="showPlace('bangchui')">
-            <div class="place-map-btn" onclick="plMapDirect('bangchui')">🗺️</div>
+            </div>
+          <div class="place-card" onclick="showPlace('bangchui')" ontouchstart="loadWikiImg('bangchui')" onmouseenter="loadWikiImg('bangchui')" style="padding:0;overflow:hidden">
+            <div class="place-thumb-wrap" id="pwrap-bangchui" style="position:relative">
+              <div class="place-map-btn" onclick="event.stopPropagation();plMapDirect('bangchui')" style="position:absolute;top:6px;right:6px;z-index:2">🗺️</div>
+            </div>
+            <div style="padding:8px 12px 10px">
             <div class="place-emoji">🏝️</div>
             <div class="place-name">방추이다오</div>
             <div class="place-sub">棒棰岛</div>
             <span class="place-tag tag-sight">웨딩사진 명소</span>
           </div>
-          <div class="place-card" onclick="showPlace('russia_st')">
-            <div class="place-map-btn" onclick="plMapDirect('russia_st')">🗺️</div>
+            </div>
+          <div class="place-card" onclick="showPlace('russia_st')" ontouchstart="loadWikiImg('russia_st')" onmouseenter="loadWikiImg('russia_st')" style="padding:0;overflow:hidden">
+            <div class="place-thumb-wrap" id="pwrap-russia_st" style="position:relative">
+              <div class="place-map-btn" onclick="event.stopPropagation();plMapDirect('russia_st')" style="position:absolute;top:6px;right:6px;z-index:2">🗺️</div>
+            </div>
+            <div style="padding:8px 12px 10px">
             <div class="place-emoji">🏰</div>
             <div class="place-name">러시아풍정가</div>
             <div class="place-sub">俄罗斯风情街</div>
             <span class="place-tag tag-sight">이국적 건축거리</span>
           </div>
+            </div>
           <div class="place-card" onclick="showPlace('zhongshan_sq')">
             <div class="place-map-btn" onclick="plMapDirect('zhongshan_sq')">🗺️</div>
             <div class="place-emoji">🏛️</div>
@@ -1798,9 +1829,29 @@ function toggleSub(el) {
 
 
 // 장소 상세 오버레이
+var wikiImgCache = {};
+function loadWikiImg(key, wikiTitle) {
+  var wrap = document.getElementById('pwrap-'+key);
+  if(!wrap) return;
+  var p = PLACES[key];
+  if(p && p.img) { applyWikiImg(wrap, p.img, key); return; }
+  if(!wikiTitle) return;
+  if(wikiImgCache[key]) { applyWikiImg(wrap, wikiImgCache[key], key); return; }
+  var api = 'https://en.wikipedia.org/w/api.php?action=query&titles='+encodeURIComponent(wikiTitle)+'&prop=pageimages&format=json&pithumbsize=400&origin=*';
+  fetch(api).then(function(r){return r.json();}).then(function(data){
+    var pages = data.query.pages;
+    var page = Object.values(pages)[0];
+    var src = page && page.thumbnail && page.thumbnail.source;
+    if(src){ wikiImgCache[key]=src; applyWikiImg(wrap, src, key); }
+  }).catch(function(){});
+}
+function applyWikiImg(wrap, src, key) {
+  var img=document.createElement('img'); img.src=src; img.className='place-thumb'; img.alt=''; img.onerror=function(){wrap.style.display='none';}; wrap.innerHTML=''; wrap.appendChild(img);
+}
 function showPlace(key) {
   var p = PLACES[key];
   if (!p) return;
+  if(p.wikiTitle) loadWikiImg(key, p.wikiTitle);
   document.getElementById('pl-emoji').textContent = p.emoji;
   document.getElementById('pl-name').textContent = p.name;
   document.getElementById('pl-zh').textContent = p.zh;
@@ -2122,7 +2173,7 @@ var PLACES = {
   },
   // 핫플 섹션 (기존 좌표 기반)
   xinghai_hot: {
-    emoji:'🌊', name:'싱하이광장', zh:'星海广场',
+    emoji:'🌊', name:'싱하이광장', zh:'星海广场', wikiTitle:'Xinghai Square', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Xinghai_Square_Dalian.jpg/400px-Xinghai_Square_Dalian.jpg',
     tag:'아시아 최대광장', tagClass:'tag-sight',
     desc:'아시아 최대 규모의 도시 광장(110만㎡). 바다 뷰와 야경이 아름다워 저녁 산책 명소.',
     taxi:'师傅，请去星海广场。',
@@ -2130,7 +2181,7 @@ var PLACES = {
     amap:'https://uri.amap.com/search?keyword=No.572+Zhongshan+Road+Shahekou+District+Dalian&city=大连'
   },
   laohu: {
-    emoji:'🐬', name:'노호탄 해양공원', zh:'老虎滩海洋公园',
+    emoji:'🐬', name:'노호탄 해양공원', zh:'老虎滩海洋公园', wikiTitle:'Laohutan Ocean Park', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Laohutan_Ocean_Park.jpg/400px-Laohutan_Ocean_Park.jpg',
     tag:'5A 해양테마파크', tagClass:'tag-sight',
     desc:'중국 최대 규모의 5A급 해양테마파크. 극지관·산호관·해수관이 있으며 돌고래·백고래 공연으로 유명.',
     taxi:'师傅，请去老虎滩海洋公园。',
@@ -2138,7 +2189,7 @@ var PLACES = {
     amap:'https://uri.amap.com/search?keyword=No.9+Binhai+Middle+Road+Zhongshan+District+Dalian&city=大连'
   },
   jinshitan: {
-    emoji:'🏖️', name:'진스탄 해변', zh:'金石滩',
+    emoji:'🏖️', name:'진스탄 해변', zh:'金石滩', wikiTitle:'Jinshitan National Holiday Resort', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Jinshitan_beach.jpg/400px-Jinshitan_beach.jpg',
     tag:'황금 해안선', tagClass:'tag-sight',
     desc:'국가 5A급 관광지. 황금빛 해안선과 기암괴석이 아름다운 다롄 대표 해변.',
     taxi:'师傅，请去金石滩旅游度假区。',
@@ -2146,7 +2197,7 @@ var PLACES = {
     amap:'https://uri.amap.com/marker?position=121.9303,39.0525&name=金石滩旅游度假区'
   },
   bangchui: {
-    emoji:'🏝️', name:'방추이다오', zh:'棒棰岛',
+    emoji:'🏝️', name:'방추이다오', zh:'棒棰岛', wikiTitle:'Bangchuidao scenic area', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Bangchuidao_Island.jpg/400px-Bangchuidao_Island.jpg',
     tag:'웨딩사진 명소', tagClass:'tag-sight',
     desc:'다롄의 작은 섬. 맑은 바다와 아름다운 풍경으로 웨딩 촬영지로 유명. 노호탄에서 쾌속선으로 이동 가능.',
     taxi:'师傅，请去棒棰岛。',
@@ -2154,7 +2205,7 @@ var PLACES = {
     amap:'https://uri.amap.com/marker?position=121.6892,38.9015&name=棒棰岛景区'
   },
   russia_st: {
-    emoji:'🏰', name:'러시아풍정가', zh:'俄罗斯风情街',
+    emoji:'🏰', name:'러시아풍정가', zh:'俄罗斯风情街', wikiTitle:'Dalian Russian Street', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Dalian_Russian_Street.jpg/400px-Dalian_Russian_Street.jpg',
     tag:'이국적 건축거리', tagClass:'tag-sight',
     desc:'19세기 말~20세기 초 러시아 스타일 건축이 즐비한 보행자 거리. 러시아 상품·음식·수공예품 판매.',
     taxi:'师傅，请去俄罗斯风情街，在西岗区胜利桥北端附近。',
@@ -2471,6 +2522,12 @@ function updateProgress() {
 function initApp() {
   buildChecklist();
   fetchRate();
+  // 이미지 있는 장소 카드 자동 미리 로드
+  setTimeout(function(){
+    ['xinghai_hot','laohu','jinshitan','bangchui','russia_st'].forEach(function(k){
+      if(PLACES[k]) loadWikiImg(k, PLACES[k].wikiTitle);
+    });
+  }, 500);
 
   // 카테고리 접기/펴기
 document.querySelectorAll('.phrase-section').forEach(function(sec) {
